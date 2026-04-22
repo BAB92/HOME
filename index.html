@@ -382,10 +382,10 @@ footer{background:var(--bg3);border-top:1px solid var(--b1);padding:1.8rem 2rem;
     <a href="#capacity">용량선정</a>
     <a href="#glossary">용어집</a>
     <a href="#regulation">법규</a>
-    <a href="#quiz">퀴즈</a>
     <a href="#smart">스마트</a>
     <a href="#checklist">점검표</a>
     <a href="#layout">배치기준</a>
+    <a href="#quiz">퀴즈</a>
   </div>
 </nav>
 
@@ -926,6 +926,8 @@ footer{background:var(--bg3);border-top:1px solid var(--b1);padding:1.8rem 2rem;
   <div class="ctabs">
     <button class="ctab on" onclick="cTab('p1',this)">단상 전력</button>
     <button class="ctab" onclick="cTab('p3',this)">3상 전력</button>
+    <button class="ctab" onclick="cTab('rated1',this)">단상 정격전류</button>
+    <button class="ctab" onclick="cTab('rated3',this)">3상 정격전류</button>
     <button class="ctab" onclick="cTab('tr',this)">변압기 용량</button>
     <button class="ctab" onclick="cTab('vd',this)">전압강하</button>
     <button class="ctab" onclick="cTab('wire',this)">전선 굵기</button>
@@ -942,6 +944,95 @@ footer{background:var(--bg3);border-top:1px solid var(--b1);padding:1.8rem 2rem;
       <div class="ccard"><div class="ctitle">3상 피상전력</div><code class="fml">S = &#8730;3 &#215; V &#215; I  [VA]</code><div class="cres" style="margin-bottom:10px;"><div class="creslbl">피상전력 S</div><div class="cresval" id="r-p3s">32,942 VA</div><div class="cressub" id="r-p3skva">= 32.9 kVA</div></div><div style="margin-top:10px;padding:9px 11px;background:rgba(56,189,248,.05);border-radius:6px;font-size:12px;color:var(--tx3);">3상 4선식 Y결선: 상전압 = 선간전압 &#247; &#8730;3<br>380V 계통 &#8594; 상전압 &#8776; 220V</div></div>
     </div>
   </div>
+  <div class="cpanel" id="cp-rated1">
+    <div class="cgrid">
+      <div class="ccard">
+        <div class="ctitle">단상 정격전류 계산</div>
+        <code class="fml">I = P / (V &times; cos&theta;)  &nbsp;&nbsp;&nbsp; 또는 &nbsp;&nbsp;&nbsp; I = S / V  [A]</code>
+        <div class="cfield"><label>계산 기준 선택</label>
+          <select id="r1mode" onchange="cRated1()">
+            <option value="power">유효전력(kW)으로 계산</option>
+            <option value="apparent">피상전력(kVA)으로 계산</option>
+          </select>
+        </div>
+        <div class="cfield"><label>전압 V (V)</label><input type="number" id="r1v" value="220" oninput="cRated1()"></div>
+        <div class="cfield" id="r1-kw-field"><label>유효전력 P (kW)</label><input type="number" id="r1kw" value="5" oninput="cRated1()"></div>
+        <div class="cfield" id="r1-kva-field" style="display:none;"><label>피상전력 S (kVA)</label><input type="number" id="r1kva" value="5.5" oninput="cRated1()"></div>
+        <div class="cfield" id="r1-pf-field"><label>역률 cos&theta; (0~1)</label><input type="number" id="r1pf" value="0.9" step="0.01" min="0.01" max="1" oninput="cRated1()"></div>
+        <div class="cres">
+          <div class="creslbl">정격전류 I</div>
+          <div class="cresval" id="r-r1i">25.3 A</div>
+          <div class="cressub" id="r-r1sub">안전율 1.25배 적용 &rarr; 31.6 A 이상 차단기 선정</div>
+        </div>
+      </div>
+      <div class="ccard">
+        <div class="ctitle">단상 정격전류 계산 원리</div>
+        <code class="fml">부하전류 = 유효전력 &divide; (전압 &times; 역률)</code>
+        <div style="margin-top:10px;padding:10px 12px;background:var(--bg3);border-radius:8px;font-size:13px;color:var(--tx2);line-height:1.8;">
+          <div style="margin-bottom:8px;"><span style="color:var(--ac);font-weight:700;">&#9654; 계산 용도</span><br>부하 기기의 정격전류를 구해 차단기 정격 및 전선 굵기를 선정할 때 사용합니다.</div>
+          <div style="margin-bottom:8px;"><span style="color:var(--gold);font-weight:700;">&#9654; 안전율 적용</span><br>계산된 전류에 <strong style="color:var(--gold);">1.25배</strong> 안전율을 곱한 값 이상의 차단기와 전선을 선정합니다.</div>
+          <div style="margin-bottom:8px;"><span style="color:var(--grn);font-weight:700;">&#9654; 콘센트·조명 분기</span><br>220V 단상: 소형 에어컨(2kW) &rarr; I = 2000&divide;(220&times;1.0) &asymp; 9.1A</div>
+          <div><span style="color:var(--red);font-weight:700;">&#9654; 주의사항</span><br>전동기는 기동전류가 정격의 5~7배이므로 차단기 선정 시 기동전류 특성도 고려합니다.</div>
+        </div>
+        <div style="margin-top:10px;">
+          <div style="font-size:12px;font-weight:700;color:var(--ac);margin-bottom:6px;">표준 차단기 정격전류 (A)</div>
+          <div class="stdg">
+            <div class="stdi">5</div><div class="stdi">10</div>
+            <div class="stdi">15</div><div class="stdi">20</div>
+            <div class="stdi">30</div><div class="stdi">40</div>
+            <div class="stdi">50</div><div class="stdi">60</div>
+            <div class="stdi">75</div><div class="stdi">100</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cpanel" id="cp-rated3">
+    <div class="cgrid">
+      <div class="ccard">
+        <div class="ctitle">3상 정격전류 계산</div>
+        <code class="fml">I = P / (&radic;3 &times; V &times; cos&theta;) &nbsp; 또는 &nbsp; I = S / (&radic;3 &times; V)  [A]</code>
+        <div class="cfield"><label>계산 기준 선택</label>
+          <select id="r3mode" onchange="cRated3()">
+            <option value="power">유효전력(kW)으로 계산</option>
+            <option value="apparent">피상전력(kVA)으로 계산</option>
+          </select>
+        </div>
+        <div class="cfield"><label>선간전압 VL (V)</label><input type="number" id="r3v" value="380" oninput="cRated3()"></div>
+        <div class="cfield" id="r3-kw-field"><label>유효전력 P (kW)</label><input type="number" id="r3kw" value="30" oninput="cRated3()"></div>
+        <div class="cfield" id="r3-kva-field" style="display:none;"><label>피상전력 S (kVA)</label><input type="number" id="r3kva" value="33" oninput="cRated3()"></div>
+        <div class="cfield" id="r3-pf-field"><label>역률 cos&theta; (0~1)</label><input type="number" id="r3pf" value="0.9" step="0.01" min="0.01" max="1" oninput="cRated3()"></div>
+        <div class="cres">
+          <div class="creslbl">정격전류 I</div>
+          <div class="cresval" id="r-r3i">50.6 A</div>
+          <div class="cressub" id="r-r3sub">안전율 1.25배 적용 &rarr; 63.3 A 이상 차단기 선정</div>
+        </div>
+      </div>
+      <div class="ccard">
+        <div class="ctitle">3상 정격전류 계산 원리 및 활용</div>
+        <code class="fml">변압기 정격전류: I = S(kVA) &times; 1000 / (&radic;3 &times; V)</code>
+        <div style="margin-top:10px;padding:10px 12px;background:var(--bg3);border-radius:8px;font-size:13px;color:var(--tx2);line-height:1.8;">
+          <div style="margin-bottom:8px;"><span style="color:var(--ac);font-weight:700;">&#9654; 주요 활용 사례</span><br>변압기 2차측 정격전류, 전동기 운전전류, 간선 차단기 용량 선정에 사용합니다.</div>
+          <div style="margin-bottom:8px;"><span style="color:var(--gold);font-weight:700;">&#9654; 변압기 2차 정격전류 예시</span><br>300kVA / 380V 변압기: I = 300,000 &divide; (&radic;3 &times; 380) &asymp; <strong style="color:var(--gold);">456 A</strong></div>
+          <div style="margin-bottom:8px;"><span style="color:var(--grn);font-weight:700;">&#9654; 전동기 예시</span><br>22kW / 380V 전동기(역률 0.88): I = 22,000 &divide; (1.732 &times; 380 &times; 0.88) &asymp; <strong style="color:var(--grn);">37.9 A</strong></div>
+          <div><span style="color:var(--red);font-weight:700;">&#9654; 안전율</span><br>전동기 회로는 <strong style="color:var(--red);">1.25배</strong>, 간선 일반 부하는 <strong style="color:var(--red);">1.1~1.25배</strong>를 곱해 차단기와 전선을 선정합니다.</div>
+        </div>
+        <div style="margin-top:10px;">
+          <div style="font-size:12px;font-weight:700;color:var(--ac);margin-bottom:6px;">주요 변압기 2차 정격전류 (380V 기준)</div>
+          <div style="overflow-x:auto;"><table class="stbl"><thead><tr><th>용량</th><th>정격전류</th><th>ACB 선정</th></tr></thead><tbody>
+            <tr><td>100 kVA</td><td>152 A</td><td>200 A</td></tr>
+            <tr><td>200 kVA</td><td>304 A</td><td>400 A</td></tr>
+            <tr><td>300 kVA</td><td>456 A</td><td>500 A</td></tr>
+            <tr><td>500 kVA</td><td>760 A</td><td>800 A</td></tr>
+            <tr><td>750 kVA</td><td>1,140 A</td><td>1,200 A</td></tr>
+            <tr><td>1,000 kVA</td><td>1,520 A</td><td>1,600 A</td></tr>
+          </tbody></table></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="cpanel" id="cp-tr">
     <div class="cgrid">
       <div class="ccard"><div class="ctitle">필요 변압기 용량</div><code class="fml">S = (P &#215; 수요율) &#247; cos&#952;  [kVA]</code><div class="cfield"><label>총 부하 P (kW)</label><input type="number" id="trkw" value="100" oninput="cTR()"></div><div class="cfield"><label>역률 cos&#952;</label><input type="number" id="trpf" value="0.9" step="0.01" min="0.01" max="1" oninput="cTR()"></div><div class="cfield"><label>수요율 (%) — 동시 사용 비율</label><input type="number" id="trdf" value="70" min="1" max="100" oninput="cTR()"></div><div class="cres"><div class="creslbl">필요 변압기 용량</div><div class="cresval" id="r-tr">77.8 kVA</div><div class="cressub" id="r-tr-std">&#8594; 표준 선정: 100 kVA</div></div></div>
@@ -1052,37 +1143,6 @@ footer{background:var(--bg3);border-top:1px solid var(--b1);padding:1.8rem 2rem;
 </section>
 
 <!-- ===== 13 퀴즈 ===== -->
-<section id="quiz">
-<div class="sw">
-  <div class="sh">
-    <span class="stag">13 / QUIZ</span>
-    <h2 class="stit">자가 <span>테스트</span></h2>
-    <p class="sdesc">학습한 내용을 퀴즈로 확인해보세요. 각 문제를 클릭해 답을 선택합니다.</p>
-  </div>
-  <div class="quiz-wrap">
-    <div class="quiz-progress" id="qpips"></div>
-    <div class="quiz-card" id="qcard">
-      <div class="quiz-num" id="qnum">문제 1 / 20</div>
-      <div class="quiz-q" id="qq"></div>
-      <div class="quiz-opts" id="qopts"></div>
-      <div class="quiz-feedback" id="qfb"></div>
-      <div class="quiz-nav">
-        <span id="qscore-live" style="font-size:13px;color:var(--tx3);">맞은 개수: 0</span>
-        <button class="bo" id="qnext" onclick="nextQ()" style="display:none;padding:8px 18px;font-size:13px;">다음 문제 &#8594;</button>
-      </div>
-    </div>
-    <div class="quiz-score" id="qscore">
-      <div style="font-size:14px;color:var(--tx2);margin-bottom:8px;">최종 점수</div>
-      <div class="score-num" id="qfinal">0</div>
-      <div style="font-size:14px;color:var(--tx2);margin-top:4px;">/ 20 문제</div>
-      <div id="qgrade" style="font-size:18px;font-weight:700;margin-top:12px;"></div>
-      <button class="bp" onclick="restartQ()" style="margin-top:20px;">다시 풀기</button>
-    </div>
-  </div>
-</div>
-</section>
-
-<!-- ===== 14 스마트 그리드 ===== -->
 <section id="smart">
 <div class="sw">
   <div class="sh">
@@ -1436,6 +1496,37 @@ footer{background:var(--bg3);border-top:1px solid var(--b1);padding:1.8rem 2rem;
 </div>
 </section>
 
+<!-- ===== 14 스마트 그리드 ===== -->
+<section id="quiz">
+<div class="sw">
+  <div class="sh">
+    <span class="stag">13 / QUIZ</span>
+    <h2 class="stit">자가 <span>테스트</span></h2>
+    <p class="sdesc">학습한 내용을 퀴즈로 확인해보세요. 각 문제를 클릭해 답을 선택합니다.</p>
+  </div>
+  <div class="quiz-wrap">
+    <div class="quiz-progress" id="qpips"></div>
+    <div class="quiz-card" id="qcard">
+      <div class="quiz-num" id="qnum">문제 1 / 20</div>
+      <div class="quiz-q" id="qq"></div>
+      <div class="quiz-opts" id="qopts"></div>
+      <div class="quiz-feedback" id="qfb"></div>
+      <div class="quiz-nav">
+        <span id="qscore-live" style="font-size:13px;color:var(--tx3);">맞은 개수: 0</span>
+        <button class="bo" id="qnext" onclick="nextQ()" style="display:none;padding:8px 18px;font-size:13px;">다음 문제 &#8594;</button>
+      </div>
+    </div>
+    <div class="quiz-score" id="qscore">
+      <div style="font-size:14px;color:var(--tx2);margin-bottom:8px;">최종 점수</div>
+      <div class="score-num" id="qfinal">0</div>
+      <div style="font-size:14px;color:var(--tx2);margin-top:4px;">/ 20 문제</div>
+      <div id="qgrade" style="font-size:18px;font-weight:700;margin-top:12px;"></div>
+      <button class="bp" onclick="restartQ()" style="margin-top:20px;">다시 풀기</button>
+    </div>
+  </div>
+</div>
+</section>
+
 <footer>
   <div class="flogo">수변전설비 학습 포털</div>
   <div>본 사이트는 학습 목적으로 제작되었습니다. 실제 작업 시 반드시 전문가와 상담하세요.</div>
@@ -1537,15 +1628,15 @@ const QS=[
   {q:'3상 전력 공식으로 올바른 것은?',opts:['P = V × I × cosθ','P = √3 × V × I × cosθ','P = 3 × V × I × cosθ','P = V × I / cosθ'],ans:1,ex:'3상 유효전력 = √3 × 선간전압(V) × 선전류(I) × 역률(cosθ)입니다. 단상은 V × I × cosθ입니다.'},
   {q:'피뢰기(LA)의 주요 기능은?',opts:['역률을 개선한다','단락전류를 차단한다','낙뢰·서지 전압을 대지로 방전한다','전압을 강압한다'],ans:2,ex:'피뢰기(LA)는 낙뢰나 개폐 서지로 인한 이상 고전압을 대지로 방전시켜 변압기 등 기기를 보호합니다.'},
   {q:'PF-CB형 수변전설비가 CB형보다 적합한 경우는?',opts:['1,000kVA 이상 대용량','정밀 보호 협조가 필요한 경우','300kVA 이하 소용량 경제형','24시간 운전 병원 설비'],ans:2,ex:'PF-CB형은 설비비가 낮아 300kVA 이하 소용량 수변전설비에 경제적입니다. 대용량이나 정밀 보호가 필요한 경우 CB형을 사용합니다.'},
-  {q:'보호 협조(선택성)의 핵심 원칙은?',opts:['상위 차단기가 항상 먼저 동작','사고에 가장 가까운 차단기가 먼저 동작','모든 차단기가 동시에 동작','가장 큰 차단기가 먼저 동작'],ans:1,ex:'보호 협조의 핵심은 선택성입니다. 사고에 가장 가까운 보호 기기가 먼저 동작하고, 상위 기기는 하위 기기 미동작 시에만 동작합니다.'},
+  {q:'OCR(과전류 계전기)에서 탭(Tap)값의 역할로 올바른 것은?',opts:['동작 지연 시간 설정값','차단기를 트립시키는 동작 전류 기준값','보호 구간 선택 스위치','차단기 정격 전류 표시'],ans:1,ex:'탭(Tap)은 OCR이 트립 명령을 내리는 기준 전류값입니다. CT 2차측 전류 기준으로 설정하며, 일반적으로 정격전류의 1.2~1.5배로 설정합니다. 타임레버(Time Lever)는 동작 지연 시간을 설정합니다.'},
   {q:'변압기 용량 선정 시 수요율의 정의는?',opts:['평균전력 ÷ 최대전력','최대수요전력 ÷ 설비용량','유효전력 ÷ 피상전력','각 설비 최대부하 합 ÷ 합성 최대부하'],ans:1,ex:'수요율 = 최대수요전력 ÷ 설비용량. 모든 부하가 동시에 사용되지 않는 비율을 나타냅니다.'},
   {q:'전압강하 허용 기준(KEC)으로 올바른 것은?',opts:['간선 5% 이내, 분기 포함 10% 이내','간선 2% 이내, 분기 포함 3% 이내','간선 3% 이내, 분기 포함 5% 이내','간선 1% 이내, 분기 포함 2% 이내'],ans:1,ex:'KEC 기준: 저압 간선 2% 이내, 분기회로 포함 시 3% 이내로 전압강하를 유지해야 합니다.'},
-  {q:'SC(전력용 콘덴서)의 배부름(Swelling) 현상의 원인은?',opts:['과전압','과전류','고조파에 의한 과열','절연 파괴'],ans:2,ex:'고조파 전류가 콘덴서에 흘러 과열되면 케이스가 팽창하는 배부름(Swelling) 현상이 발생합니다. SR(직렬 리액터) 설치로 방지합니다.'},
+  {q:'SR(직렬 리액터)을 SC(전력용 콘덴서)와 함께 반드시 설치해야 하는 이유는?',opts:['역률을 더욱 높이기 위해','고조파 전류 유입 억제 및 콘덴서 보호','전압강하 방지','단락전류 차단 보조'],ans:1,ex:'SR(직렬 리액터)은 콘덴서와 직렬 연결하여 5고조파 등 고조파 전류가 콘덴서로 유입되는 것을 막습니다. SR 미설치 시 고조파에 의한 콘덴서 과열·배부름(Swelling)·폭발 위험이 있습니다. 일반적으로 콘덴서 용량의 6% SR을 선정합니다.'},
   {q:'절연저항 측정(메거링) 시 저압 설비의 합격 기준은?',opts:['0.01MΩ 이상','0.1MΩ 이상','1MΩ 이상','10MΩ 이상'],ans:1,ex:'KEC 기준 저압 설비 절연저항: 0.1MΩ 이상이어야 합격입니다. 측정 전 반드시 전원을 차단해야 합니다.'},
   {q:'OCR 타임레버(Time Lever)의 역할은?',opts:['동작 전류 기준값 설정','차단기 투입 시간 설정','OCR 동작 지연 시간 설정','보호 구간 선택'],ans:2,ex:'타임레버는 OCR의 동작 지연 시간을 설정합니다. 상위 차단기와 보호 협조를 위해 하위 차단기보다 지연 시간을 길게 설정합니다.'},
   {q:'다음 중 유입변압기에 반드시 설치해야 하는 것은?',opts:['방진 패드','방유제(오일 유출 방지턱)','내진 스토퍼','자동 소화기'],ans:1,ex:'유입변압기는 절연유(오일)를 사용하므로, 유출 시 화재·환경 오염을 방지하기 위해 방유제(방유턱) 설치가 법적으로 의무화되어 있습니다.'},
   {q:'전기안전관리자 선임 의무가 발생하는 용량 기준은?',opts:['10kVA 초과','75kVA 초과','100kVA 초과','300kVA 초과'],ans:1,ex:'전기안전관리법상 용량 75kVA를 초과하는 자가용 전기설비는 전기안전관리자(전기기사 또는 산업기사)를 반드시 선임해야 합니다.'},
-  {q:'LOTO(잠금·표지) 절차를 적용해야 하는 상황은?',opts:['VCB 정상 투입 시','정전 작업 전 오조작 방지','전력량계 확인 시','역률 측정 시'],ans:1,ex:'LOTO(Lock Out/Tag Out)는 정전 작업 중 다른 사람이 실수로 전원을 투입하는 오조작을 방지하기 위해 잠금장치와 표지를 부착하는 안전 절차입니다.'},
+  {q:'전기안전관리법상 자가용 전기설비(75kVA 초과)의 정기검사 주기는?',opts:['1년마다','2년마다','4년마다','10년마다'],ans:2,ex:'전기안전관리법 시행규칙에 따라 자가용 전기설비는 최초 사용 전 사용전검사를 받고, 이후 4년마다 정기검사를 받아야 합니다. 검사 기관은 한국전기안전공사입니다.'},
   {q:'3상 불평형률 허용 기준은?',opts:['1% 이내','3% 이내','5% 이내','10% 이내'],ans:1,ex:'3상 전압 불평형률은 3% 이내를 유지해야 합니다. 초과 시 전동기 과열·소손 위험이 있습니다.'},
   {q:'아몰퍼스(Amorphous) 변압기의 주요 장점은?',opts:['가격이 매우 저렴하다','무부하손(철손)을 80% 이상 절감한다','단락전류 차단 능력이 있다','소음이 없다'],ans:1,ex:'아몰퍼스(비정질) 철심 변압기는 일반 규소강판 변압기 대비 무부하손(철손)을 80% 이상 절감할 수 있는 고효율 변압기입니다.'},
   {q:'지락 사고 발생 시 동작하는 계전기는?',opts:['OCR (과전류 계전기)','OVR (과전압 계전기)','OCGR (과전류 지락 계전기)','UVR (부족전압 계전기)'],ans:2,ex:'지락(누전) 사고는 ZCT(영상변류기)로 지락전류를 검출하고, OCGR(과전류 지락 계전기)이 동작하여 VCB를 트립시킵니다.'},
@@ -1600,6 +1691,187 @@ function showScore(){
 }
 function restartQ(){initQ();}
 initQ();
+
+/* ── layout 탭 전환 ── */
+function layoutTab(id,btn){
+  document.querySelectorAll('.layout-tab').forEach(function(t){t.classList.remove('on');});
+  document.querySelectorAll('.layout-panel').forEach(function(p){p.classList.remove('on');});
+  if(btn)btn.classList.add('on');
+  var el=document.getElementById('lp-'+id);
+  if(el)el.classList.add('on');
+}
+
+/* ── 현장 점검 체크시트 JS ── */
+var CL={
+  daily:[
+    {lbl:'전류계(AS) 지시값 확인',sub:'각 상 전류 이상값 없음 (정격 ±10% 이내)'},
+    {lbl:'전압계(VS) 지시값 확인',sub:'선간전압 정상 (380V±10%, 220V±10%)'},
+    {lbl:'전력계·역률계 지시 확인',sub:'역률 90% 이상 유지 여부'},
+    {lbl:'변압기 온도계 확인',sub:'권선 온도 105°C 미만 (몰드형 경보 95°C)'},
+    {lbl:'이상 소음 확인',sub:'"웅~" 진동음 또는 "탁탁" 아크음 없음'},
+    {lbl:'이상 냄새 확인',sub:'탄 냄새, 오존 냄새, 절연유 냄새 없음'},
+    {lbl:'경보·트립 표시등 확인',sub:'모든 경보·트립 표시등 소등 상태'},
+    {lbl:'냉각팬 동작 확인',sub:'변압기 냉각팬 정상 회전'},
+    {lbl:'수변전실 환기팬 동작 확인',sub:'흡배기 팬 정상 동작, 이상 소음 없음'},
+    {lbl:'수변전실 조명 점등 확인',sub:'비상조명 포함 전 조명 정상'},
+  ],
+  monthly:[
+    {lbl:'외관 점검 (기기 오손·파손)',sub:'수배전반, 변압기, 케이블 헤드 외관'},
+    {lbl:'각 기기 접속부 과열 흔적 확인',sub:'변색, 탄화, 악취, 용융 흔적 없음'},
+    {lbl:'유입변압기 유면계 확인',sub:'정상 유면 범위 내 (상·하 한선 사이)'},
+    {lbl:'유입변압기 유온계 확인',sub:'절연유 온도 이상 상승 없음'},
+    {lbl:'역률 측정·기록',sub:'역률 90% 이상, 미달 시 콘덴서 점검'},
+    {lbl:'콘덴서 배부름(Swelling) 확인',sub:'외관 팽창·부풀어오름 없음'},
+    {lbl:'피뢰기(LA) 외관 확인',sub:'균열, 오손, 단로장치 탈락 없음'},
+    {lbl:'접지 단자 접속 상태 확인',sub:'접지선 이완·부식 없음'},
+    {lbl:'모선·부스바 상태 확인',sub:'접속부 볼트 이완, 산화 없음'},
+    {lbl:'환기구·방충망 청소',sub:'먼지·이물질 제거, 막힘 없음'},
+    {lbl:'소화기 확인',sub:'CO₂/할론 소화기 위치, 압력 정상'},
+    {lbl:'수변전실 방화문·출입문 확인',sub:'정상 잠금, 경고 표시 부착 상태'},
+  ],
+  annual:[
+    {lbl:'절연저항 측정 — 저압 회로',sub:'각 분기회로 0.1MΩ 이상 (KEC 211.1)'},
+    {lbl:'절연저항 측정 — 변압기 권선',sub:'1차↔2차↔외함 간 절연 양호'},
+    {lbl:'열화상(Thermography) 촬영',sub:'접속부·기기 이상 발열점 없음'},
+    {lbl:'접지저항 측정',sub:'특고압 10Ω↓, 저압 외함 100Ω↓'},
+    {lbl:'보호계전기(OCR/OCGR) 동작 시험',sub:'정정값(탭·레버) 확인 및 동작 전류·시간 측정'},
+    {lbl:'VCB 진공도 점검',sub:'진공도 저하 없음, 개폐 동작 확인'},
+    {lbl:'VCB 조작 기구부 점검',sub:'구리스 도포 상태, 동작 횟수 기록'},
+    {lbl:'DS 접촉부 상태 확인',sub:'접촉저항 측정, 산화·마모·과열 없음'},
+    {lbl:'CT·PT 변성비 확인',sub:'정격 변성비 정상, 오차 기준 이내'},
+    {lbl:'3상 전압·전류 불평형 측정',sub:'불평형률 3% 이내 유지'},
+    {lbl:'콘덴서 정전용량 측정',sub:'정격 ±10% 이내'},
+    {lbl:'LA(피뢰기) 누설전류 측정',sub:'기준값 초과 여부 확인'},
+    {lbl:'케이블 접속함 상태 확인',sub:'열화, 균열, 수분 침입 없음'},
+    {lbl:'접속 단자 토크 재조임',sub:'규정 토크값으로 전 단자 재조임'},
+    {lbl:'수변전실 조도 측정',sub:'200lx 이상 유지 (작업면 300lx 권장)'},
+  ],
+  outage:[
+    {lbl:'작업 허가서(작업계획서) 승인 확인',sub:'전기안전관리자 또는 책임자 서명'},
+    {lbl:'작업자 전원 안전 브리핑 완료',sub:'작업 범위, 위험 요소, 비상 연락처 공유'},
+    {lbl:'개인보호구(PPE) 착용 확인',sub:'절연장갑(7kV급↑), 안전화, 안면보호구'},
+    {lbl:'저압 분기 MCCB 전 회로 개방',sub:'분전반 내 전 MCCB 개방 확인'},
+    {lbl:'저압 주차단기(ACB) 개방 확인',sub:'ACB 위치 스위치 OFF, 표시등 확인'},
+    {lbl:'고압 차단기(VCB) 개방 확인',sub:'VCB 트립 표시등 점등, 위치 확인'},
+    {lbl:'단로기(DS/LBS) 개방 확인',sub:'육안으로 접촉부 개방 상태 직접 확인'},
+    {lbl:'검전기로 무전압 확인 (3상 전체)',sub:'고압 3상 각각 검전, 무전압 확인'},
+    {lbl:'잔류전하 방전 실시',sub:'방전봉으로 케이블·콘덴서 방전'},
+    {lbl:'접지봉 설치 완료',sub:'고압 측 3상 접지봉 설치, 접지 확인'},
+    {lbl:'작업 구역 안전 표시·통제선 설치',sub:'작업금지 표시, 통제선(적색 로프) 설치'},
+    {lbl:'비상 연락망 확인',sub:'한전(123), 소방(119), 안전관리자 연락처 확인'},
+  ]
+};
+
+function clBuild(key){
+  var items=CL[key];
+  var cont=document.getElementById('cli-'+key);
+  if(!cont)return;
+  cont.innerHTML=items.map(function(it,i){
+    return '<div class="cl-item" id="clitem-'+key+'-'+i+'" onclick="clToggle(\''+key+'\','+i+')">'
+      +'<div class="cl-cb" id="clcb-'+key+'-'+i+'"></div>'
+      +'<div style="flex:1"><div class="cl-label">'+it.lbl+'</div>'
+      +'<div class="cl-sub">'+it.sub+'</div></div>'
+      +'<input class="cl-note-inp" placeholder="특이사항" onclick="event.stopPropagation()" />'
+      +'</div>';
+  }).join('');
+  clProg(key);
+}
+function clToggle(key,i){
+  var item=document.getElementById('clitem-'+key+'-'+i);
+  var cb=document.getElementById('clcb-'+key+'-'+i);
+  if(!item)return;
+  if(item.classList.contains('checked')){
+    item.classList.remove('checked');
+    cb.innerHTML='';
+  }else{
+    item.classList.add('checked');
+    cb.innerHTML='&#10003;';
+  }
+  clProg(key);clTotal();
+}
+function clProg(key){
+  var items=document.querySelectorAll('#cli-'+key+' .cl-item');
+  var done=document.querySelectorAll('#cli-'+key+' .cl-item.checked').length;
+  var total=items.length;
+  var p=document.getElementById('clp-'+key);
+  var b=document.getElementById('clb-'+key);
+  if(p)p.textContent=done+' / '+total;
+  if(b)b.style.width=(total?Math.round(done/total*100):0)+'%';
+}
+function clTotal(){
+  var all=document.querySelectorAll('.cl-item').length;
+  var done=document.querySelectorAll('.cl-item.checked').length;
+  var t=document.getElementById('cl-total');
+  var d=document.getElementById('cl-done');
+  if(t)t.textContent=all;
+  if(d)d.textContent=done;
+}
+function clReset(){
+  document.querySelectorAll('.cl-item').forEach(function(el){
+    el.classList.remove('checked');
+    var cb=el.querySelector('.cl-cb');
+    if(cb)cb.innerHTML='';
+  });
+  document.querySelectorAll('.cl-note-inp').forEach(function(inp){inp.value='';});
+  ['daily','monthly','annual','outage'].forEach(function(k){clProg(k);});
+  clTotal();
+}
+function clCheckAll(){
+  document.querySelectorAll('.cl-item').forEach(function(el){
+    if(!el.classList.contains('checked')){
+      el.classList.add('checked');
+      var cb=el.querySelector('.cl-cb');
+      if(cb)cb.innerHTML='&#10003;';
+    }
+  });
+  ['daily','monthly','annual','outage'].forEach(function(k){clProg(k);});
+  clTotal();
+}
+['daily','monthly','annual','outage'].forEach(function(k){clBuild(k);});
+clTotal();
+var clDateEl=document.getElementById('cl-date');
+if(clDateEl)clDateEl.value=new Date().toISOString().split('T')[0];
+
+function cRated1(){
+  var mode=document.getElementById('r1mode').value;
+  var kwF=document.getElementById('r1-kw-field');
+  var kvaF=document.getElementById('r1-kva-field');
+  var pfF=document.getElementById('r1-pf-field');
+  if(mode==='apparent'){kwF.style.display='none';kvaF.style.display='';pfF.style.display='none';}
+  else{kwF.style.display='';kvaF.style.display='none';pfF.style.display='';}
+  var V=Math.max(0.001,g('r1v')),pf=Math.min(1,Math.max(0.01,g('r1pf')));
+  var I;
+  if(mode==='apparent'){
+    var kva=Math.max(0,g('r1kva'));
+    I=(kva*1000)/V;
+  }else{
+    var kw=Math.max(0,g('r1kw'));
+    I=(kw*1000)/(V*pf);
+  }
+  var I125=(I*1.25);
+  document.getElementById('r-r1i').textContent=I.toFixed(1)+' A';
+  document.getElementById('r-r1sub').textContent='안전율 1.25배 → '+I125.toFixed(1)+' A 이상 차단기 선정';
+}
+function cRated3(){
+  var mode=document.getElementById('r3mode').value;
+  var kwF=document.getElementById('r3-kw-field');
+  var kvaF=document.getElementById('r3-kva-field');
+  var pfF=document.getElementById('r3-pf-field');
+  if(mode==='apparent'){kwF.style.display='none';kvaF.style.display='';pfF.style.display='none';}
+  else{kwF.style.display='';kvaF.style.display='none';pfF.style.display='';}
+  var V=Math.max(0.001,g('r3v')),pf=Math.min(1,Math.max(0.01,g('r3pf')));
+  var I;
+  if(mode==='apparent'){
+    var kva=Math.max(0,g('r3kva'));
+    I=(kva*1000)/(Math.sqrt(3)*V);
+  }else{
+    var kw=Math.max(0,g('r3kw'));
+    I=(kw*1000)/(Math.sqrt(3)*V*pf);
+  }
+  var I125=(I*1.25);
+  document.getElementById('r-r3i').textContent=I.toFixed(1)+' A';
+  document.getElementById('r-r3sub').textContent='안전율 1.25배 → '+I125.toFixed(1)+' A 이상 차단기 선정';
+}
 
 /* 모바일 메뉴 닫기 */
 document.querySelectorAll('.nav-links a').forEach(a=>{
