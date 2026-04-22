@@ -1,0 +1,1610 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>수변전설비 학습 포털</title>
+<style>
+:root{
+  --fs:'Apple SD Gothic Neo','Malgun Gothic','맑은 고딕','나눔고딕',NanumGothic,sans-serif;
+  --fm:'Consolas','Courier New',monospace;
+  --bg:#0a0e1a;--bg2:#0f1525;--bg3:#151d35;--card:#111827;
+  --b1:rgba(56,189,248,.15);--b2:rgba(56,189,248,.32);
+  --ac:#38bdf8;--ac2:#7dd3fc;
+  --gold:#fbbf24;--grn:#34d399;--red:#f87171;
+  --vi:#a78bfa;--cy:#22d3ee;--pk:#f9a8d4;--og:#fb923c;--ind:#818cf8;
+  --tx:#e2e8f0;--tx2:#94a3b8;--tx3:#64748b;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--tx);font-family:var(--fs);font-size:15px;line-height:1.7;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(56,189,248,.03)1px,transparent 1px),linear-gradient(90deg,rgba(56,189,248,.03)1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(10,14,26,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--b1);display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;height:56px;}
+.logo{font-size:17px;font-weight:900;letter-spacing:1px;color:var(--ac);text-decoration:none;}
+.logo span{color:var(--gold);}
+.nav-links{display:flex;gap:1px;flex-wrap:wrap;}
+.nav-links a{color:var(--tx2);text-decoration:none;padding:5px 9px;border-radius:6px;font-size:12px;font-weight:500;transition:all .18s;}
+.nav-links a:hover{color:var(--ac);background:rgba(56,189,248,.08);}
+.ntog{display:none;background:none;border:1px solid var(--b2);color:var(--ac);padding:5px 10px;border-radius:6px;cursor:pointer;font-size:16px;font-family:var(--fs);}
+
+/* HERO */
+#home{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;padding:80px 2rem 2rem;text-align:center;}
+.hglow{position:absolute;top:20%;left:50%;transform:translateX(-50%);width:600px;height:300px;background:radial-gradient(ellipse,rgba(56,189,248,.1)0%,transparent 70%);pointer-events:none;}
+.htag{display:inline-block;font-family:var(--fm);font-size:11px;color:var(--ac);border:1px solid var(--b2);padding:4px 14px;border-radius:20px;margin-bottom:1.5rem;letter-spacing:2px;}
+.hero h1{font-size:clamp(40px,7vw,80px);font-weight:900;letter-spacing:2px;line-height:1.05;margin-bottom:.5rem;}
+.hero h1 span{color:var(--ac);}
+.hsub{font-size:16px;color:var(--tx2);max-width:520px;margin:1rem auto 2.5rem;font-weight:300;}
+.hbtns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+.bp{background:var(--ac);color:#0a0e1a;border:none;padding:11px 24px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-block;transition:all .2s;font-family:var(--fs);}
+.bp:hover{background:var(--ac2);transform:translateY(-2px);}
+.bo{background:transparent;color:var(--ac);border:1px solid var(--b2);padding:11px 24px;border-radius:8px;font-size:14px;font-weight:500;text-decoration:none;display:inline-block;transition:all .2s;font-family:var(--fs);}
+.bo:hover{background:rgba(56,189,248,.08);transform:translateY(-2px);}
+.hstats{display:flex;gap:2.5rem;justify-content:center;margin-top:3rem;flex-wrap:wrap;}
+.snum{font-size:32px;font-weight:900;color:var(--ac);}
+.slbl{font-size:11px;color:var(--tx3);font-family:var(--fm);letter-spacing:1px;}
+
+/* SECTION */
+section{position:relative;z-index:1;}
+.sw{max-width:1100px;margin:0 auto;padding:72px 2rem;}
+.sh{margin-bottom:2.5rem;}
+.stag{font-family:var(--fm);font-size:10px;color:var(--ac);letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;display:block;}
+.stit{font-size:clamp(26px,4vw,44px);font-weight:900;letter-spacing:1px;line-height:1.1;}
+.stit span{color:var(--ac);}
+.sdesc{color:var(--tx2);margin-top:8px;max-width:580px;font-weight:300;font-size:14px;}
+
+/* CARD */
+.card{background:var(--card);border:1px solid var(--b1);border-radius:12px;padding:1.25rem;transition:border-color .2s,transform .2s;}
+.card:hover{border-color:var(--b2);transform:translateY(-2px);}
+
+/* DIAGRAM */
+#diagram{background:var(--bg2);}
+.sldw{background:var(--card);border:1px solid var(--b1);border-radius:16px;overflow:hidden;}
+.sldtabs{display:flex;border-bottom:1px solid var(--b1);background:var(--bg3);overflow-x:auto;}
+.sldtab{padding:10px 20px;font-size:13px;font-weight:500;color:var(--tx3);cursor:pointer;border:none;border-bottom:2px solid transparent;background:none;white-space:nowrap;transition:all .18s;font-family:var(--fs);}
+.sldtab.on{color:var(--ac);border-bottom-color:var(--ac);}
+.sldbody{display:flex;gap:0;}
+.slddg{flex:1;padding:1rem;overflow:auto;min-height:500px;}
+.sldinf{width:268px;min-height:500px;border-left:1px solid var(--b1);padding:1.1rem;background:var(--bg3);flex-shrink:0;}
+.sldempty{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;min-height:300px;color:var(--tx3);font-size:13px;text-align:center;gap:10px;}
+.dtag{display:inline-block;font-family:var(--fm);font-size:11px;padding:3px 9px;border-radius:4px;margin-bottom:8px;}
+.dname{font-size:14px;font-weight:700;margin-bottom:4px;}
+.drole{font-size:12px;color:var(--ac2);margin-bottom:8px;font-weight:600;}
+.ddet{font-size:12px;color:var(--tx2);line-height:1.7;margin-bottom:8px;}
+.dtip{background:rgba(251,191,36,.07);border-left:3px solid var(--gold);padding:8px 10px;border-radius:0 6px 6px 0;font-size:12px;color:var(--gold);}
+.dtip strong{display:block;margin-bottom:3px;}
+.dev{cursor:pointer;}
+.dev rect,.dev circle,.dev path,.dev polygon{transition:filter .15s;}
+.dev:hover rect,.dev:hover polygon,.dev:hover circle,.dev:hover path{filter:brightness(1.4);}
+.tpanel{display:none;}
+.tpanel.on{display:block;}
+
+/* DEVICES */
+#devices{background:var(--bg);}
+.dgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px;}
+.dcard{background:var(--card);border:1px solid var(--b1);border-radius:12px;padding:1.1rem;transition:all .2s;}
+.dcard:hover{border-color:var(--b2);transform:translateY(-2px);}
+.dhdr{display:flex;align-items:center;gap:12px;margin-bottom:8px;}
+.dabbr{font-family:var(--fm);font-size:15px;font-weight:700;min-width:56px;border:1px solid;border-radius:8px;padding:5px 8px;text-align:center;}
+.dtitle{font-size:14px;font-weight:700;}
+.dsub{font-size:11px;color:var(--tx3);font-family:var(--fm);}
+.ddesc{font-size:13px;color:var(--tx2);margin-bottom:8px;}
+.dtips{font-size:12px;color:var(--gold);background:rgba(251,191,36,.06);border-radius:6px;padding:7px 10px;}
+.dtips::before{content:'⚙ 실무 팁: ';font-weight:700;}
+
+/* COMPARE TABLE */
+#compare{background:var(--bg2);}
+.ctbl-wrap{overflow-x:auto;}
+.ctbl{width:100%;border-collapse:collapse;font-size:13px;}
+.ctbl th{padding:10px 12px;background:var(--bg3);color:var(--ac);font-family:var(--fm);font-size:11px;letter-spacing:1px;border-bottom:1px solid var(--b1);text-align:center;}
+.ctbl th:first-child{text-align:left;}
+.ctbl td{padding:10px 12px;border-bottom:1px solid var(--b1);color:var(--tx2);text-align:center;font-size:13px;}
+.ctbl td:first-child{font-weight:700;color:var(--tx);text-align:left;}
+.ctbl tr:last-child td{border-bottom:none;}
+.ctbl tr:hover td{background:rgba(56,189,248,.04);}
+.good{color:var(--grn);}
+.bad{color:var(--red);}
+.mid{color:var(--gold);}
+
+/* PROTECTION */
+#protect{background:var(--bg);}
+.prot-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+.prot-card{background:var(--card);border:1px solid var(--b1);border-radius:12px;padding:1.25rem;}
+.prot-title{font-size:14px;font-weight:700;margin-bottom:1rem;display:flex;align-items:center;gap:8px;}
+.coord-flow{display:flex;flex-direction:column;gap:6px;}
+.coord-item{display:flex;align-items:center;gap:10px;padding:8px 10px;background:var(--bg3);border-radius:8px;font-size:13px;}
+.coord-num{min-width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;font-family:var(--fm);flex-shrink:0;background:rgba(56,189,248,.1);color:var(--ac);border:1px solid var(--b2);}
+.coord-arr{text-align:center;color:var(--tx3);font-size:12px;padding:2px 0;}
+.relay-table{width:100%;border-collapse:collapse;font-size:12px;margin-top:8px;}
+.relay-table th{padding:7px 10px;background:var(--bg3);color:var(--tx3);font-family:var(--fm);font-size:10px;border-bottom:1px solid var(--b1);}
+.relay-table td{padding:7px 10px;border-bottom:1px solid var(--b1);color:var(--tx2);}
+.relay-table td:first-child{font-family:var(--fm);color:var(--ac);font-weight:700;}
+
+/* SAFETY */
+#safety{background:var(--bg2);}
+.sgrid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+.scard{background:var(--card);border:1px solid var(--b1);border-radius:12px;padding:1.25rem;}
+.stitle{font-size:14px;font-weight:700;margin-bottom:1rem;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.badge{padding:2px 9px;border-radius:4px;font-size:11px;font-family:var(--fm);border:1px solid;}
+.br{background:rgba(248,113,113,.1);color:var(--red);border-color:rgba(248,113,113,.3);}
+.bg{background:rgba(52,211,153,.1);color:var(--grn);border-color:rgba(52,211,153,.3);}
+.by{background:rgba(251,191,36,.1);color:var(--gold);border-color:rgba(251,191,36,.3);}
+.slist{list-style:none;}
+.slist li{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--b1);font-size:13px;}
+.slist li:last-child{border-bottom:none;}
+.sn{min-width:24px;height:24px;border:1px solid;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;font-family:var(--fm);flex-shrink:0;}
+.snr{background:rgba(248,113,113,.1);color:var(--red);border-color:rgba(248,113,113,.3);}
+.sng{background:rgba(52,211,153,.1);color:var(--grn);border-color:rgba(52,211,153,.3);}
+.cklist{list-style:none;}
+.cklist li{display:flex;gap:9px;align-items:flex-start;padding:7px 0;font-size:13px;color:var(--tx2);border-bottom:1px solid var(--b1);}
+.cklist li:last-child{border-bottom:none;}
+.ck{color:var(--grn);font-size:13px;flex-shrink:0;margin-top:1px;}
+
+/* FAULT */
+#fault{background:var(--bg);}
+.fgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;}
+.fcard{background:var(--card);border:1px solid var(--b1);border-radius:12px;padding:1.1rem;}
+.fhdr{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.fico{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.ftit{font-size:14px;font-weight:700;}
+.frow{font-size:13px;color:var(--tx2);margin-bottom:5px;}
+.frow strong{color:var(--red);}
+.fact{background:rgba(56,189,248,.06);border-radius:6px;padding:7px 10px;font-size:12px;color:var(--ac2);border-left:2px solid var(--ac);margin-top:8px;}
+
+/* CASE STUDY */
+#cases{background:var(--bg2);}
+.case-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;}
+.case-card{background:var(--card);border:1px solid var(--b1);border-radius:12px;padding:1.25rem;border-top:3px solid;}
+.case-step{display:flex;flex-direction:column;gap:4px;margin-top:10px;}
+.case-row{font-size:12px;padding:6px 8px;border-radius:6px;}
+.case-row.cause{background:rgba(248,113,113,.08);color:var(--red);}
+.case-row.prog{background:rgba(251,191,36,.08);color:var(--gold);}
+.case-row.action{background:rgba(52,211,153,.08);color:var(--grn);}
+.case-row.prevent{background:rgba(56,189,248,.08);color:var(--ac2);}
+.case-label{font-size:10px;font-family:var(--fm);letter-spacing:1px;margin-bottom:2px;opacity:.7;}
+
+/* CALC */
+#calc{background:var(--bg2);}
+.ctabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1.4rem;}
+.ctab{padding:7px 15px;font-size:13px;font-weight:500;border:1px solid var(--b1);border-radius:8px;background:transparent;color:var(--tx3);cursor:pointer;transition:all .18s;font-family:var(--fs);}
+.ctab.on{background:rgba(56,189,248,.1);color:var(--ac);border-color:var(--b2);}
+.cpanel{display:none;}
+.cpanel.on{display:block;}
+.cgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.ccard{background:var(--card);border:1px solid var(--b1);border-radius:12px;padding:1.1rem;}
+.ctitle{font-size:14px;font-weight:700;margin-bottom:4px;}
+.fml{font-family:var(--fm);font-size:12px;color:var(--ac);background:rgba(56,189,248,.06);padding:6px 10px;border-radius:6px;margin-bottom:.8rem;display:block;}
+.cfield{margin-bottom:8px;}
+.cfield label{display:block;font-size:12px;color:var(--tx3);margin-bottom:3px;font-family:var(--fm);}
+.cfield input,.cfield select{width:100%;padding:7px 10px;background:var(--bg3);border:1px solid var(--b1);border-radius:6px;color:var(--tx);font-size:14px;font-family:var(--fm);outline:none;transition:border-color .18s;}
+.cfield input:focus,.cfield select:focus{border-color:var(--b2);}
+.cfield select{font-family:var(--fs);}
+.cres{background:rgba(56,189,248,.08);border:1px solid var(--b2);border-radius:8px;padding:10px 12px;margin-top:8px;}
+.creslbl{font-size:11px;color:var(--tx3);font-family:var(--fm);margin-bottom:2px;}
+.cresval{font-family:var(--fm);font-size:19px;font-weight:700;color:var(--ac);}
+.cressub{font-size:12px;color:var(--tx3);margin-top:2px;}
+.stdg{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:6px;}
+.stdi{padding:5px 8px;background:var(--bg3);border-radius:6px;font-family:var(--fm);font-size:13px;color:var(--ac);}
+
+/* SYMBOL TABLE */
+.stbl{width:100%;border-collapse:collapse;font-size:13px;}
+.stbl th{text-align:left;padding:8px 10px;background:var(--bg3);color:var(--tx3);font-family:var(--fm);font-size:10px;letter-spacing:1px;border-bottom:1px solid var(--b1);}
+.stbl td{padding:8px 10px;border-bottom:1px solid var(--b1);color:var(--tx2);}
+.stbl tr:last-child td{border-bottom:none;}
+.stbl td:first-child{font-family:var(--fm);color:var(--ac);font-weight:700;}
+
+/* TARIFF */
+#tariff{background:var(--bg);}
+.tariff-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;}
+.tariff-card{background:var(--card);border:1px solid var(--b1);border-radius:12px;padding:1.25rem;}
+.tariff-title{font-size:14px;font-weight:700;margin-bottom:6px;color:var(--ac);}
+.tariff-sub{font-size:12px;color:var(--tx3);margin-bottom:10px;}
+.tariff-list{list-style:none;}
+.tariff-list li{font-size:13px;color:var(--tx2);padding:5px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;}
+.tariff-list li:last-child{border-bottom:none;}
+.tariff-list li::before{content:'▸';color:var(--ac);flex-shrink:0;}
+.pf-box{background:var(--bg3);border-radius:8px;padding:12px;margin-top:10px;}
+.pf-row{display:flex;justify-content:space-between;align-items:center;font-size:13px;padding:4px 0;border-bottom:1px solid var(--b1);}
+.pf-row:last-child{border-bottom:none;}
+
+/* CAPACITY GUIDE */
+#capacity{background:var(--bg2);}
+.cap-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;}
+.cap-card{background:var(--card);border:1px solid var(--b1);border-radius:12px;padding:1.1rem;text-align:center;}
+.cap-ico{font-size:28px;margin-bottom:8px;}
+.cap-title{font-size:14px;font-weight:700;margin-bottom:8px;}
+.cap-density{font-family:var(--fm);font-size:20px;font-weight:700;color:var(--ac);margin-bottom:4px;}
+.cap-unit{font-size:11px;color:var(--tx3);}
+.cap-info{font-size:12px;color:var(--tx2);margin-top:8px;}
+
+/* GLOSSARY */
+#glossary{background:var(--bg);}
+.gloss-search{width:100%;padding:10px 14px;background:var(--card);border:1px solid var(--b1);border-radius:10px;color:var(--tx);font-size:14px;font-family:var(--fs);outline:none;margin-bottom:1.2rem;transition:border-color .18s;}
+.gloss-search:focus{border-color:var(--b2);}
+.gloss-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px;}
+.gloss-item{background:var(--card);border:1px solid var(--b1);border-radius:10px;padding:.9rem 1rem;transition:border-color .2s;}
+.gloss-item:hover{border-color:var(--b2);}
+.gloss-abbr{font-family:var(--fm);font-size:14px;font-weight:700;color:var(--ac);margin-bottom:3px;}
+.gloss-ko{font-size:13px;font-weight:600;color:var(--tx);margin-bottom:3px;}
+.gloss-en{font-size:11px;color:var(--tx3);margin-bottom:5px;font-family:var(--fm);}
+.gloss-desc{font-size:12px;color:var(--tx2);}
+
+/* REGULATION */
+#regulation{background:var(--bg2);}
+.reg-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px;}
+.reg-card{background:var(--card);border:1px solid var(--b1);border-radius:12px;padding:1.25rem;border-left:3px solid var(--ac);}
+.reg-title{font-size:14px;font-weight:700;margin-bottom:6px;}
+.reg-law{font-size:11px;font-family:var(--fm);color:var(--ac);margin-bottom:8px;}
+.reg-list{list-style:none;}
+.reg-list li{font-size:13px;color:var(--tx2);padding:5px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:flex-start;}
+.reg-list li:last-child{border-bottom:none;}
+.reg-list li::before{content:'§';color:var(--gold);flex-shrink:0;font-weight:700;}
+
+/* QUIZ */
+#quiz{background:var(--bg);}
+.quiz-wrap{max-width:720px;margin:0 auto;}
+.quiz-progress{display:flex;gap:6px;margin-bottom:1.5rem;flex-wrap:wrap;}
+.qpip{width:28px;height:6px;border-radius:3px;background:var(--bg3);transition:background .3s;}
+.qpip.done{background:var(--grn);}
+.qpip.curr{background:var(--ac);}
+.qpip.wrong{background:var(--red);}
+.quiz-card{background:var(--card);border:1px solid var(--b1);border-radius:16px;padding:1.8rem;}
+.quiz-num{font-family:var(--fm);font-size:11px;color:var(--tx3);margin-bottom:8px;}
+.quiz-q{font-size:16px;font-weight:600;margin-bottom:1.2rem;line-height:1.6;}
+.quiz-opts{display:flex;flex-direction:column;gap:8px;}
+.qopt{padding:10px 14px;background:var(--bg3);border:1px solid var(--b1);border-radius:8px;cursor:pointer;font-size:14px;text-align:left;color:var(--tx);font-family:var(--fs);transition:all .18s;}
+.qopt:hover:not(:disabled){background:rgba(56,189,248,.08);border-color:var(--b2);}
+.qopt.correct{background:rgba(52,211,153,.12);border-color:rgba(52,211,153,.4);color:var(--grn);}
+.qopt.wrong{background:rgba(248,113,113,.12);border-color:rgba(248,113,113,.4);color:var(--red);}
+.quiz-feedback{margin-top:1rem;padding:10px 12px;border-radius:8px;font-size:13px;display:none;}
+.quiz-feedback.show{display:block;}
+.quiz-feedback.ok{background:rgba(52,211,153,.1);color:var(--grn);border:1px solid rgba(52,211,153,.3);}
+.quiz-feedback.fail{background:rgba(248,113,113,.1);color:var(--red);border:1px solid rgba(248,113,113,.3);}
+.quiz-nav{display:flex;justify-content:space-between;align-items:center;margin-top:1.2rem;}
+.quiz-score{background:var(--card);border:1px solid var(--b1);border-radius:16px;padding:2rem;text-align:center;display:none;}
+.quiz-score.show{display:block;}
+.score-num{font-size:48px;font-weight:900;color:var(--ac);font-family:var(--fm);}
+
+/* SMART */
+#smart{background:var(--bg2);}
+.smgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px;}
+.smcard{background:var(--card);border:1px solid var(--b1);border-radius:12px;padding:1.4rem;position:relative;overflow:hidden;}
+.smcard::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
+.smcard.bl::before{background:var(--ac);}
+.smcard.gd::before{background:var(--gold);}
+.smcard.gn::before{background:var(--grn);}
+.smico{font-size:26px;margin-bottom:10px;}
+.smtit{font-size:14px;font-weight:700;margin-bottom:6px;}
+.smdesc{font-size:13px;color:var(--tx2);}
+
+
+/* FOOTER */
+footer{background:var(--bg3);border-top:1px solid var(--b1);padding:1.8rem 2rem;text-align:center;font-size:13px;color:var(--tx3);}
+.flogo{font-size:17px;font-weight:900;color:var(--ac);letter-spacing:1px;margin-bottom:6px;}
+
+
+/* ─── 현장 점검 체크시트 ─── */
+#checklist{background:var(--bg);}
+.cl-toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:1.2rem;}
+.cl-btn{padding:7px 16px;font-size:13px;font-weight:500;border:1px solid var(--b1);border-radius:8px;background:transparent;color:var(--tx3);cursor:pointer;transition:all .18s;font-family:var(--fs);}
+.cl-btn:hover{border-color:var(--b2);color:var(--ac);}
+.cl-btn.primary{background:var(--ac);color:#0a0e1a;border-color:var(--ac);}
+.cl-btn.primary:hover{background:var(--ac2);}
+.cl-meta{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:1.2rem;}
+.cl-meta-field{display:flex;flex-direction:column;gap:4px;}
+.cl-meta-field label{font-size:11px;color:var(--tx3);font-family:var(--fm);}
+.cl-meta-field input{padding:7px 10px;background:var(--card);border:1px solid var(--b1);border-radius:6px;color:var(--tx);font-size:13px;font-family:var(--fs);outline:none;transition:border-color .15s;}
+.cl-meta-field input:focus{border-color:var(--b2);}
+.cl-section{background:var(--card);border:1px solid var(--b1);border-radius:12px;margin-bottom:12px;overflow:hidden;}
+.cl-section-hdr{padding:10px 14px;background:var(--bg3);display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--b1);}
+.cl-section-title{font-size:14px;font-weight:700;flex:1;}
+.cl-section-prog{font-size:12px;font-family:var(--fm);color:var(--tx3);}
+.cl-items{padding:4px 0;}
+.cl-item{display:flex;align-items:flex-start;gap:12px;padding:9px 14px;border-bottom:1px solid var(--b1);cursor:pointer;transition:background .15s;}
+.cl-item:last-child{border-bottom:none;}
+.cl-item:hover{background:rgba(56,189,248,.04);}
+.cl-item.checked{background:rgba(52,211,153,.04);}
+.cl-cb{width:18px;height:18px;border:1.5px solid var(--b2);border-radius:4px;flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;transition:all .15s;font-size:12px;}
+.cl-item.checked .cl-cb{background:var(--grn);border-color:var(--grn);color:#0a0e1a;}
+.cl-item.ng .cl-cb{background:var(--red);border-color:var(--red);color:#fff;}
+.cl-label{font-size:13px;flex:1;line-height:1.5;}
+.cl-item.checked .cl-label{color:var(--tx3);text-decoration:line-through;}
+.cl-sub{font-size:11px;color:var(--tx3);margin-top:2px;}
+.cl-note-inp{padding:5px 8px;background:var(--bg3);border:1px solid var(--b1);border-radius:5px;color:var(--tx);font-size:12px;font-family:var(--fs);outline:none;width:140px;margin-left:auto;flex-shrink:0;}
+.cl-note-inp:focus{border-color:var(--b2);}
+.cl-prog-bar{height:3px;background:var(--bg3);}
+.cl-prog-fill{height:100%;background:var(--grn);transition:width .3s;border-radius:0 2px 2px 0;}
+@media print{
+  nav,footer,.cl-toolbar,.hglow,body::before{display:none!important;}
+  section:not(#checklist){display:none!important;}
+  #checklist{display:block!important;}
+  .sw{padding:0!important;max-width:100%!important;}
+  .cl-section{break-inside:avoid;border:1px solid #ccc!important;}
+  .cl-section-hdr{background:#f0f0f0!important;}
+  .cl-item{border-bottom:1px solid #eee!important;}
+  body{background:#fff!important;color:#000!important;}
+  .cl-meta-field input{border:1px solid #ccc!important;background:#fff!important;color:#000!important;}
+  .cl-label{color:#000!important;}
+  .cl-sub{color:#555!important;}
+  .cl-cb{border-color:#888!important;}
+  .cl-item.checked .cl-cb{background:#22c55e!important;border-color:#22c55e!important;}
+  .cl-item.ng .cl-cb{background:#ef4444!important;border-color:#ef4444!important;}
+}
+
+/* ─── 수변전실 배치 기준 ─── */
+#layout{background:var(--bg2);}
+.layout-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1.2rem;}
+.layout-tab{padding:7px 15px;font-size:13px;font-weight:500;border:1px solid var(--b1);border-radius:8px;background:transparent;color:var(--tx3);cursor:pointer;transition:all .18s;font-family:var(--fs);}
+.layout-tab.on{background:rgba(56,189,248,.1);color:var(--ac);border-color:var(--b2);}
+.layout-panel{display:none;}
+.layout-panel.on{display:block;}
+.layout-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:1rem;}
+.layout-card{background:var(--card);border:1px solid var(--b1);border-radius:10px;padding:1.1rem;}
+.layout-card-title{font-size:13px;font-weight:700;color:var(--ac);margin-bottom:8px;}
+.layout-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--b1);font-size:13px;}
+.layout-row:last-child{border-bottom:none;}
+.layout-row span:first-child{color:var(--tx2);font-size:12px;}
+.layout-row span:last-child{font-family:var(--fm);color:var(--ac);font-weight:700;}
+.layout-warn{background:rgba(248,113,113,.07);border:1px solid rgba(248,113,113,.2);border-radius:8px;padding:9px 12px;font-size:12px;color:var(--red);margin-top:10px;}
+.layout-warn::before{content:'⚠ ';font-weight:700;}
+.layout-tip{background:rgba(52,211,153,.07);border:1px solid rgba(52,211,153,.2);border-radius:8px;padding:9px 12px;font-size:12px;color:var(--grn);margin-top:8px;}
+.layout-tip::before{content:'✓ ';font-weight:700;}
+
+/* RESPONSIVE */
+@media(max-width:860px){
+  .sgrid,.cgrid,.prot-grid{grid-template-columns:1fr;}
+  .sldbody{flex-direction:column;}
+  .sldinf{width:100%;border-left:none;border-top:1px solid var(--b1);}
+  .nav-links{display:none;}
+  .nav-links.open{display:flex;flex-direction:column;position:absolute;top:56px;left:0;right:0;background:rgba(10,14,26,.98);border-bottom:1px solid var(--b1);padding:12px;z-index:199;}
+  .ntog{display:block;}
+}
+@keyframes fu{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
+.fu{animation:fu .55s ease both;}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#home" class="logo">수변전<span>설비</span></a>
+  <button class="ntog" onclick="document.querySelector('.nav-links').classList.toggle('open')">&#9776;</button>
+  <div class="nav-links">
+    <a href="#diagram">계통도</a>
+    <a href="#devices">기기</a>
+    <a href="#compare">비교</a>
+    <a href="#protect">보호협조</a>
+    <a href="#safety">안전</a>
+    <a href="#fault">고장</a>
+    <a href="#cases">사례</a>
+    <a href="#calc">계산기</a>
+    <a href="#tariff">요금</a>
+    <a href="#capacity">용량선정</a>
+    <a href="#glossary">용어집</a>
+    <a href="#regulation">법규</a>
+    <a href="#quiz">퀴즈</a>
+    <a href="#smart">스마트</a>
+    <a href="#checklist">점검표</a>
+    <a href="#layout">배치기준</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="home">
+<div class="hglow"></div>
+<div class="fu hero">
+  <div class="htag">SUBSTATION LEARNING PORTAL</div>
+  <h1>수변전<span>설비</span><br>학습 포털</h1>
+  <p class="hsub">계통도 &#183; 기기 &#183; 보호협조 &#183; 안전 &#183; 계산기 &#183; 법규 &#183; 퀴즈<br>수변전설비의 모든 것을 한 곳에서.</p>
+  <div class="hbtns">
+    <a href="#diagram" class="bp">계통도 학습 시작</a>
+    <a href="#quiz" class="bo">퀴즈 풀기</a>
+  </div>
+  <div class="hstats">
+    <div><div class="snum">15+</div><div class="slbl">학습 섹션</div></div>
+    <div><div class="snum">9+</div><div class="slbl">핵심 장치</div></div>
+    <div><div class="snum">20+</div><div class="slbl">퀴즈 문제</div></div>
+    <div><div class="snum">5</div><div class="slbl">계산 공식</div></div>
+  </div>
+</div>
+</section>
+
+<!-- ===== 01 계통도 ===== -->
+<section id="diagram">
+<div class="sw">
+  <div class="sh">
+    <span class="stag">01 / SINGLE LINE DIAGRAM</span>
+    <h2 class="stit">계통도 <span>마스터</span></h2>
+    <p class="sdesc">장치를 클릭하면 우측에 상세 설명이 표시됩니다. 도면은 세로 방향(전력 흐름 위&#8594;아래)으로 표시됩니다.</p>
+  </div>
+  <div class="sldw">
+    <div class="sldtabs">
+      <button class="sldtab on" onclick="sldTab('cb',this)">CB형 (대용량)</button>
+      <button class="sldtab" onclick="sldTab('pfcb',this)">PF-CB형 (경제형)</button>
+      <button class="sldtab" onclick="sldTab('sym',this)">심벌 일람표</button>
+    </div>
+
+    <!-- CB형 세로 도면 -->
+    <div id="sld-cb" class="tpanel on">
+      <div class="sldbody">
+        <div class="slddg">
+          <svg width="100%" viewBox="0 0 340 820" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <marker id="adwn" viewBox="0 0 10 10" refX="5" refY="8" markerWidth="6" markerHeight="6" orient="auto">
+                <path d="M2 2L5 8L8 2" fill="none" stroke="#38bdf8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </marker>
+              <marker id="adwng" viewBox="0 0 10 10" refX="5" refY="8" markerWidth="6" markerHeight="6" orient="auto">
+                <path d="M2 2L5 8L8 2" fill="none" stroke="#34d399" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </marker>
+            </defs>
+
+            <!-- 좌측 메인 버스 라인 (세로) -->
+            <line x1="170" y1="30" x2="170" y2="790" stroke="#38bdf8" stroke-width="2.5"/>
+
+            <!-- ① 한전 인입 -->
+            <text x="170" y="18" text-anchor="middle" font-size="10" fill="#64748b" font-family="Consolas,monospace">22.9kV 한전 인입</text>
+            <g class="dev" onclick="showDev('hanjeun')">
+              <rect x="110" y="28" width="120" height="44" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="1.2"/>
+              <text x="170" y="47" text-anchor="middle" font-size="12" fill="#38bdf8" font-weight="700" font-family="Consolas,monospace">한전</text>
+              <text x="170" y="63" text-anchor="middle" font-size="10" fill="#4a90b8" font-family="Consolas,monospace">22.9kV IN</text>
+            </g>
+
+            <!-- ② LBS -->
+            <line x1="170" y1="72" x2="170" y2="100" stroke="#38bdf8" stroke-width="2" marker-end="url(#adwn)"/>
+            <g class="dev" onclick="showDev('ass')">
+              <rect x="110" y="100" width="120" height="44" rx="6" fill="#1e293b" stroke="#fbbf24" stroke-width="1.2"/>
+              <text x="170" y="119" text-anchor="middle" font-size="13" fill="#fbbf24" font-weight="700" font-family="Consolas,monospace">LBS</text>
+              <text x="170" y="135" text-anchor="middle" font-size="10" fill="#92400e" font-family="Consolas,monospace">부하개폐기</text>
+            </g>
+
+            <!-- ③ MOF (계량) -->
+            <line x1="170" y1="144" x2="170" y2="172" stroke="#38bdf8" stroke-width="2" marker-end="url(#adwn)"/>
+            <g class="dev" onclick="showDev('mof')">
+              <rect x="110" y="172" width="120" height="44" rx="6" fill="#1e293b" stroke="#94a3b8" stroke-width="1"/>
+              <text x="170" y="191" text-anchor="middle" font-size="13" fill="#94a3b8" font-weight="700" font-family="Consolas,monospace">MOF</text>
+              <text x="170" y="207" text-anchor="middle" font-size="10" fill="#475569" font-family="Consolas,monospace">계기변압변류기</text>
+            </g>
+
+            <!-- ④ DS -->
+            <line x1="170" y1="216" x2="170" y2="244" stroke="#38bdf8" stroke-width="2" marker-end="url(#adwn)"/>
+            <g class="dev" onclick="showDev('ds')">
+              <rect x="110" y="244" width="120" height="44" rx="6" fill="#1e293b" stroke="#fb923c" stroke-width="1.2"/>
+              <text x="170" y="263" text-anchor="middle" font-size="13" fill="#fb923c" font-weight="700" font-family="Consolas,monospace">DS</text>
+              <text x="170" y="279" text-anchor="middle" font-size="10" fill="#9a3412" font-family="Consolas,monospace">단로기</text>
+            </g>
+
+            <!-- ⑤ LA 분기 (우측) -->
+            <line x1="230" y1="300" x2="270" y2="300" stroke="#fbbf24" stroke-width="1" stroke-dasharray="3 3"/>
+            <g class="dev" onclick="showDev('la')">
+              <rect x="270" y="282" width="58" height="36" rx="6" fill="#1e293b" stroke="#a78bfa" stroke-width="1"/>
+              <text x="299" y="299" text-anchor="middle" font-size="12" fill="#a78bfa" font-weight="700" font-family="Consolas,monospace">LA</text>
+              <text x="299" y="313" text-anchor="middle" font-size="10" fill="#5b21b6" font-family="Consolas,monospace">피뢰기</text>
+            </g>
+            <line x1="299" y1="318" x2="299" y2="348" stroke="#fbbf24" stroke-width="1" stroke-dasharray="2 2"/>
+            <line x1="289" y1="352" x2="309" y2="352" stroke="#fbbf24" stroke-width="2"/>
+            <line x1="292" y1="357" x2="306" y2="357" stroke="#fbbf24" stroke-width="1.5"/>
+            <line x1="295" y1="362" x2="303" y2="362" stroke="#fbbf24" stroke-width="1"/>
+            <text x="320" y="356" font-size="10" fill="#fbbf24" font-family="Consolas,monospace">GND</text>
+
+            <!-- ⑥ VCB -->
+            <line x1="170" y1="288" x2="170" y2="316" stroke="#38bdf8" stroke-width="2" marker-end="url(#adwn)"/>
+            <g class="dev" onclick="showDev('vcb')">
+              <rect x="106" y="316" width="128" height="52" rx="8" fill="#1e293b" stroke="#f87171" stroke-width="1.5"/>
+              <text x="170" y="338" text-anchor="middle" font-size="13" fill="#f87171" font-weight="700" font-family="Consolas,monospace">VCB</text>
+              <text x="170" y="353" text-anchor="middle" font-size="10" fill="#991b1b" font-family="Consolas,monospace">진공차단기</text>
+              <circle cx="170" cy="362" r="4" fill="none" stroke="#f87171" stroke-width="1"/>
+            </g>
+
+            <!-- CT 분기 (좌측) -->
+            <line x1="110" y1="393" x2="72" y2="393" stroke="#64748b" stroke-width="1" stroke-dasharray="4 3"/>
+            <g class="dev" onclick="showDev('ct')">
+              <rect x="18" y="375" width="54" height="36" rx="6" fill="#1e293b" stroke="#22d3ee" stroke-width="1"/>
+              <text x="45" y="391" text-anchor="middle" font-size="12" fill="#22d3ee" font-weight="700" font-family="Consolas,monospace">CT</text>
+              <text x="45" y="405" text-anchor="middle" font-size="10" fill="#155e75" font-family="Consolas,monospace">변류기</text>
+            </g>
+
+            <!-- PT 분기 (우측) -->
+            <line x1="230" y1="393" x2="268" y2="393" stroke="#64748b" stroke-width="1" stroke-dasharray="4 3"/>
+            <g class="dev" onclick="showDev('pt')">
+              <rect x="268" y="375" width="54" height="36" rx="6" fill="#1e293b" stroke="#f9a8d4" stroke-width="1"/>
+              <text x="295" y="391" text-anchor="middle" font-size="12" fill="#f9a8d4" font-weight="700" font-family="Consolas,monospace">PT</text>
+              <text x="295" y="405" text-anchor="middle" font-size="10" fill="#9d174d" font-family="Consolas,monospace">계기변압기</text>
+            </g>
+
+            <!-- OCR 표시 (좌측) -->
+            <text x="45" y="428" text-anchor="middle" font-size="10" fill="#64748b" font-family="Consolas,monospace">OCR</text>
+            <text x="45" y="440" text-anchor="middle" font-size="9" fill="#475569" font-family="Consolas,monospace">과전류계전기</text>
+
+            <!-- AS/VS 표시 (우측) -->
+            <text x="295" y="428" text-anchor="middle" font-size="10" fill="#64748b" font-family="Consolas,monospace">AS / VS</text>
+            <text x="295" y="440" text-anchor="middle" font-size="9" fill="#475569" font-family="Consolas,monospace">전류·전압계</text>
+
+            <!-- ⑦ TR -->
+            <line x1="170" y1="368" x2="170" y2="396" stroke="#38bdf8" stroke-width="2" marker-end="url(#adwn)"/>
+            <g class="dev" onclick="showDev('tr')">
+              <rect x="106" y="454" width="128" height="56" rx="8" fill="#1e293b" stroke="#34d399" stroke-width="1.5"/>
+              <text x="170" y="475" text-anchor="middle" font-size="13" fill="#34d399" font-weight="700" font-family="Consolas,monospace">TR</text>
+              <text x="170" y="491" text-anchor="middle" font-size="10" fill="#065f46" font-family="Consolas,monospace">변압기</text>
+              <text x="170" y="504" text-anchor="middle" font-size="10" fill="#059669" font-family="Consolas,monospace">22.9kV&#8594;380V</text>
+            </g>
+            <line x1="170" y1="396" x2="170" y2="454" stroke="#38bdf8" stroke-width="2"/>
+
+            <!-- 변압기 아래: 저압 색상으로 변경 -->
+            <line x1="170" y1="510" x2="170" y2="538" stroke="#34d399" stroke-width="2" marker-end="url(#adwng)"/>
+
+            <!-- ⑧ ACB (저압 주차단기) -->
+            <g class="dev" onclick="showDev('acb')">
+              <rect x="106" y="538" width="128" height="44" rx="6" fill="#1e293b" stroke="#34d399" stroke-width="1.2"/>
+              <text x="170" y="557" text-anchor="middle" font-size="13" fill="#34d399" font-weight="700" font-family="Consolas,monospace">ACB</text>
+              <text x="170" y="573" text-anchor="middle" font-size="10" fill="#065f46" font-family="Consolas,monospace">기중차단기(주)</text>
+            </g>
+
+            <!-- SC 분기 (우측) -->
+            <line x1="234" y1="590" x2="268" y2="590" stroke="#34d399" stroke-width="1" stroke-dasharray="3 3"/>
+            <g class="dev" onclick="showDev('sc')">
+              <rect x="268" y="572" width="54" height="36" rx="6" fill="#1e293b" stroke="#818cf8" stroke-width="1"/>
+              <text x="295" y="589" text-anchor="middle" font-size="12" fill="#818cf8" font-weight="700" font-family="Consolas,monospace">SC</text>
+              <text x="295" y="603" text-anchor="middle" font-size="10" fill="#3730a3" font-family="Consolas,monospace">콘덴서</text>
+            </g>
+            <text x="295" y="622" text-anchor="middle" font-size="9" fill="#475569" font-family="Consolas,monospace">역률개선</text>
+
+            <!-- ⑨ 분전반 MCCB들 -->
+            <line x1="170" y1="582" x2="170" y2="610" stroke="#34d399" stroke-width="2" marker-end="url(#adwng)"/>
+            <text x="170" y="628" text-anchor="middle" font-size="10" fill="#64748b" font-family="Consolas,monospace">저압 분전반 (380V/220V)</text>
+
+            <!-- 분기 3줄 -->
+            <line x1="90" y1="636" x2="250" y2="636" stroke="#34d399" stroke-width="1.5"/>
+            <line x1="110" y1="636" x2="110" y2="660" stroke="#34d399" stroke-width="1.5" marker-end="url(#adwng)"/>
+            <line x1="170" y1="636" x2="170" y2="660" stroke="#34d399" stroke-width="1.5" marker-end="url(#adwng)"/>
+            <line x1="230" y1="636" x2="230" y2="660" stroke="#34d399" stroke-width="1.5" marker-end="url(#adwng)"/>
+
+            <g class="dev" onclick="showDev('mccb')">
+              <rect x="72" y="660" width="76" height="38" rx="6" fill="#1e293b" stroke="#34d399" stroke-width="1"/>
+              <text x="110" y="677" text-anchor="middle" font-size="11" fill="#34d399" font-weight="700" font-family="Consolas,monospace">MCCB</text>
+              <text x="110" y="691" text-anchor="middle" font-size="9" fill="#065f46" font-family="Consolas,monospace">조명 분기</text>
+            </g>
+            <g class="dev" onclick="showDev('mccb')">
+              <rect x="132" y="660" width="76" height="38" rx="6" fill="#1e293b" stroke="#34d399" stroke-width="1"/>
+              <text x="170" y="677" text-anchor="middle" font-size="11" fill="#34d399" font-weight="700" font-family="Consolas,monospace">MCCB</text>
+              <text x="170" y="691" text-anchor="middle" font-size="9" fill="#065f46" font-family="Consolas,monospace">동력 분기</text>
+            </g>
+            <g class="dev" onclick="showDev('mccb')">
+              <rect x="192" y="660" width="76" height="38" rx="6" fill="#1e293b" stroke="#34d399" stroke-width="1"/>
+              <text x="230" y="677" text-anchor="middle" font-size="11" fill="#34d399" font-weight="700" font-family="Consolas,monospace">MCCB</text>
+              <text x="230" y="691" text-anchor="middle" font-size="9" fill="#065f46" font-family="Consolas,monospace">콘센트 분기</text>
+            </g>
+
+            <!-- 부하 표시 -->
+            <line x1="110" y1="698" x2="110" y2="720" stroke="#34d399" stroke-width="1.5"/>
+            <line x1="170" y1="698" x2="170" y2="720" stroke="#34d399" stroke-width="1.5"/>
+            <line x1="230" y1="698" x2="230" y2="720" stroke="#34d399" stroke-width="1.5"/>
+            <text x="110" y="735" text-anchor="middle" font-size="10" fill="#475569" font-family="Consolas,monospace">조명부하</text>
+            <text x="170" y="735" text-anchor="middle" font-size="10" fill="#475569" font-family="Consolas,monospace">동력부하</text>
+            <text x="230" y="735" text-anchor="middle" font-size="10" fill="#475569" font-family="Consolas,monospace">전열부하</text>
+
+            <!-- 범례 -->
+            <rect x="10" y="752" width="320" height="58" rx="6" fill="#0f172a" stroke="#1e293b"/>
+            <text x="22" y="770" font-size="10" fill="#64748b" font-family="Consolas,monospace">범례</text>
+            <line x1="22" y1="782" x2="60" y2="782" stroke="#38bdf8" stroke-width="2"/>
+            <text x="64" y="786" font-size="10" fill="#64748b" font-family="Consolas,monospace">특고압(22.9kV)</text>
+            <line x1="160" y1="782" x2="198" y2="782" stroke="#34d399" stroke-width="2"/>
+            <text x="202" y="786" font-size="10" fill="#64748b" font-family="Consolas,monospace">저압(380V)</text>
+            <line x1="22" y1="800" x2="60" y2="800" stroke="#64748b" stroke-width="1" stroke-dasharray="4 3"/>
+            <text x="64" y="804" font-size="10" fill="#64748b" font-family="Consolas,monospace">계측신호</text>
+            <line x1="160" y1="800" x2="198" y2="800" stroke="#fbbf24" stroke-width="1" stroke-dasharray="3 3"/>
+            <text x="202" y="804" font-size="10" fill="#64748b" font-family="Consolas,monospace">접지</text>
+          </svg>
+        </div>
+        <div class="sldinf">
+          <div class="sldempty" id="sld-empty"><div style="font-size:30px;opacity:.25;">&#9889;</div><div>장치를 클릭하면<br>설명이 표시됩니다</div></div>
+          <div id="sld-detail" style="display:none;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PF-CB형 세로 도면 -->
+    <div id="sld-pfcb" class="tpanel">
+      <div style="padding:1rem;">
+        <p style="font-size:13px;color:var(--tx2);margin-bottom:1rem;">PF-CB형은 전력퓨즈(PF)와 차단기(CB)를 조합한 경제적인 구성입니다. 300kVA 이하 소용량에 적합합니다.</p>
+        <div style="display:flex;gap:1rem;flex-wrap:wrap;">
+          <svg width="280" viewBox="0 0 280 560" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <marker id="adwn2" viewBox="0 0 10 10" refX="5" refY="8" markerWidth="6" markerHeight="6" orient="auto">
+                <path d="M2 2L5 8L8 2" fill="none" stroke="#38bdf8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </marker>
+              <marker id="adwng2" viewBox="0 0 10 10" refX="5" refY="8" markerWidth="6" markerHeight="6" orient="auto">
+                <path d="M2 2L5 8L8 2" fill="none" stroke="#34d399" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </marker>
+            </defs>
+            <line x1="140" y1="20" x2="140" y2="530" stroke="#38bdf8" stroke-width="2"/>
+            <text x="140" y="14" text-anchor="middle" font-size="10" fill="#64748b" font-family="Consolas,monospace">22.9kV 인입</text>
+            <g class="dev" onclick="showDev('ass')"><rect x="80" y="22" width="120" height="40" rx="6" fill="#1e293b" stroke="#fbbf24" stroke-width="1.2"/><text x="140" y="39" text-anchor="middle" font-size="12" fill="#fbbf24" font-weight="700" font-family="Consolas,monospace">ASS</text><text x="140" y="55" text-anchor="middle" font-size="10" fill="#92400e" font-family="Consolas,monospace">자동구분개폐기</text></g>
+            <line x1="140" y1="62" x2="140" y2="90" stroke="#38bdf8" stroke-width="2" marker-end="url(#adwn2)"/>
+            <g class="dev" onclick="showDev('pf')"><rect x="80" y="90" width="120" height="40" rx="6" fill="#1e293b" stroke="#fb923c" stroke-width="1.2"/><text x="140" y="107" text-anchor="middle" font-size="13" fill="#fb923c" font-weight="700" font-family="Consolas,monospace">PF</text><text x="140" y="123" text-anchor="middle" font-size="10" fill="#9a3412" font-family="Consolas,monospace">전력퓨즈</text></g>
+            <line x1="140" y1="130" x2="140" y2="158" stroke="#38bdf8" stroke-width="2" marker-end="url(#adwn2)"/>
+            <g class="dev" onclick="showDev('vcb')"><rect x="76" y="158" width="128" height="48" rx="8" fill="#1e293b" stroke="#f87171" stroke-width="1.5"/><text x="140" y="178" text-anchor="middle" font-size="13" fill="#f87171" font-weight="700" font-family="Consolas,monospace">CB</text><text x="140" y="194" text-anchor="middle" font-size="10" fill="#991b1b" font-family="Consolas,monospace">차단기(MOF내장)</text></g>
+            <line x1="140" y1="206" x2="140" y2="234" stroke="#38bdf8" stroke-width="2" marker-end="url(#adwn2)"/>
+            <g class="dev" onclick="showDev('tr')"><rect x="76" y="234" width="128" height="52" rx="8" fill="#1e293b" stroke="#34d399" stroke-width="1.5"/><text x="140" y="254" text-anchor="middle" font-size="13" fill="#34d399" font-weight="700" font-family="Consolas,monospace">TR</text><text x="140" y="270" text-anchor="middle" font-size="10" fill="#065f46" font-family="Consolas,monospace">변압기 &#8594;380V</text></g>
+            <line x1="140" y1="286" x2="140" y2="314" stroke="#34d399" stroke-width="2" marker-end="url(#adwng2)"/>
+            <g class="dev" onclick="showDev('mccb')"><rect x="76" y="314" width="128" height="40" rx="6" fill="#1e293b" stroke="#34d399" stroke-width="1"/><text x="140" y="331" text-anchor="middle" font-size="12" fill="#34d399" font-weight="700" font-family="Consolas,monospace">MCCB</text><text x="140" y="347" text-anchor="middle" font-size="10" fill="#065f46" font-family="Consolas,monospace">저압 분전반</text></g>
+            <line x1="140" y1="354" x2="140" y2="380" stroke="#34d399" stroke-width="2" marker-end="url(#adwng2)"/>
+            <text x="140" y="398" text-anchor="middle" font-size="11" fill="#475569" font-family="Consolas,monospace">부하</text>
+          </svg>
+          <div style="flex:1;min-width:200px;">
+            <div style="background:var(--bg3);border-radius:10px;padding:1rem;margin-bottom:10px;">
+              <div style="font-size:13px;font-weight:700;color:var(--ac);margin-bottom:6px;">CB형 vs PF-CB형</div>
+              <table style="width:100%;font-size:12px;border-collapse:collapse;">
+                <tr><th style="text-align:left;color:var(--tx3);padding:4px 6px;border-bottom:1px solid var(--b1);">항목</th><th style="color:var(--ac);padding:4px 6px;border-bottom:1px solid var(--b1);">CB형</th><th style="color:var(--gold);padding:4px 6px;border-bottom:1px solid var(--b1);">PF-CB형</th></tr>
+                <tr><td style="color:var(--tx2);padding:4px 6px;border-bottom:1px solid var(--b1);">적용 용량</td><td style="color:var(--tx2);padding:4px 6px;border-bottom:1px solid var(--b1);text-align:center;">500kVA 이상</td><td style="color:var(--tx2);padding:4px 6px;border-bottom:1px solid var(--b1);text-align:center;">300kVA 이하</td></tr>
+                <tr><td style="color:var(--tx2);padding:4px 6px;border-bottom:1px solid var(--b1);">설비비</td><td style="color:var(--tx2);padding:4px 6px;border-bottom:1px solid var(--b1);text-align:center;">높음</td><td style="color:var(--tx2);padding:4px 6px;border-bottom:1px solid var(--b1);text-align:center;">낮음</td></tr>
+                <tr><td style="color:var(--tx2);padding:4px 6px;border-bottom:1px solid var(--b1);">보호 정밀도</td><td style="color:var(--tx2);padding:4px 6px;border-bottom:1px solid var(--b1);text-align:center;">높음</td><td style="color:var(--tx2);padding:4px 6px;border-bottom:1px solid var(--b1);text-align:center;">보통</td></tr>
+                <tr><td style="color:var(--tx2);padding:4px 6px;">재투입</td><td style="color:var(--tx2);padding:4px 6px;text-align:center;">가능</td><td style="color:var(--tx2);padding:4px 6px;text-align:center;">PF 교체 후</td></tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 심벌 일람표 -->
+    <div id="sld-sym" class="tpanel">
+      <div style="overflow-x:auto;padding:.5rem 0;">
+      <table class="stbl">
+        <thead><tr><th>약호</th><th>명칭</th><th>역할</th><th>비고</th></tr></thead>
+        <tbody>
+          <tr><td>AS</td><td>전류계 전환 스위치</td><td>각 상(R,S,T) 전류 선택 측정</td><td>판넬 정면</td></tr>
+          <tr><td>VS</td><td>전압계 전환 스위치</td><td>선간 전압 선택 측정</td><td>PT 2차측</td></tr>
+          <tr><td>OCR</td><td>과전류 계전기</td><td>설정값 초과 전류 시 CB 트립</td><td>단락·과부하 보호</td></tr>
+          <tr><td>OCGR</td><td>과전류 지락 계전기</td><td>지락(누전) 발생 시 CB 트립</td><td>ZCT와 조합</td></tr>
+          <tr><td>OVR</td><td>과전압 계전기</td><td>이상 과전압 발생 시 동작</td><td>계통 이상 검출</td></tr>
+          <tr><td>UVR</td><td>부족전압 계전기</td><td>전압 저하 시 동작</td><td>전동기 보호</td></tr>
+          <tr><td>ZCT</td><td>영상변류기</td><td>지락 전류 검출</td><td>OCGR과 세트</td></tr>
+          <tr><td>MOF</td><td>계기용 변압변류기</td><td>전력량 계량용 CT+PT 일체형</td><td>한전 요금 계량</td></tr>
+          <tr><td>LA</td><td>피뢰기</td><td>낙뢰·개폐 서지 방전</td><td>기기 보호</td></tr>
+          <tr><td>SC</td><td>전력용 콘덴서</td><td>역률 개선</td><td>진상 전류 공급</td></tr>
+          <tr><td>SR</td><td>직렬 리액터</td><td>SC와 직렬, 고조파 억제</td><td>5고조파 대책</td></tr>
+          <tr><td>ACB</td><td>기중 차단기</td><td>저압 주차단기</td><td>분전반 인입측</td></tr>
+          <tr><td>EMS</td><td>에너지 관리 시스템</td><td>원격 전력 감시·제어</td><td>스마트그리드</td></tr>
+          <tr><td>GIS</td><td>가스절연개폐장치</td><td>SF6 가스 절연 고압 개폐</td><td>옥내 설치용</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ===== 02 기기 가이드 ===== -->
+<section id="devices">
+<div class="sw">
+  <div class="sh">
+    <span class="stag">02 / DEVICE GUIDE</span>
+    <h2 class="stit">기기별 <span>상세 가이드</span></h2>
+    <p class="sdesc">각 장치의 기술적 특징과 현장 실무 관리 포인트를 정리했습니다.</p>
+  </div>
+  <div class="dgrid">
+    <div class="dcard"><div class="dhdr"><div class="dabbr" style="color:#34d399;border-color:rgba(52,211,153,.3);background:rgba(52,211,153,.07);">TR</div><div><div class="dtitle">변압기</div><div class="dsub">Transformer</div></div></div><div class="ddesc">22.9kV&#8594;380V/220V 강압. 몰드형(건식)과 유입형(오일냉각)으로 구분. 용량은 kVA 단위 선정.</div><div class="dtips">몰드형: 먼지 트래킹 방지 청소. 유입형: 유면계·유온계 주기 확인</div></div>
+    <div class="dcard"><div class="dhdr"><div class="dabbr" style="color:var(--red);border-color:rgba(248,113,113,.3);background:rgba(248,113,113,.07);">VCB</div><div><div class="dtitle">진공차단기</div><div class="dsub">Vacuum Circuit Breaker</div></div></div><div class="ddesc">진공 중 아크 소호. OCR/OCGR 신호로 자동 트립. 단락전류 포함 모든 전류 차단 가능한 핵심 보호 기기.</div><div class="dtips">진공도 정기 확인, 조작 기구부 구리스 도포, 트립 코일 저항 측정</div></div>
+    <div class="dcard"><div class="dhdr"><div class="dabbr" style="color:var(--og);border-color:rgba(251,146,60,.3);background:rgba(251,146,60,.07);">DS</div><div><div class="dtitle">단로기</div><div class="dsub">Disconnecting Switch</div></div></div><div class="ddesc">무부하 상태에서만 조작 가능. 반드시 VCB 개방 후 조작. 부하 상태 조작 시 아크 사고 발생.</div><div class="dtips">조작 전 VCB 개방 필수 확인! 접촉부 산화·과열 흔적 정기 점검</div></div>
+    <div class="dcard"><div class="dhdr"><div class="dabbr" style="color:var(--gold);border-color:rgba(251,191,36,.3);background:rgba(251,191,36,.07);">LBS</div><div><div class="dtitle">부하개폐기</div><div class="dsub">Load Break Switch</div></div></div><div class="ddesc">부하전류 개폐 가능한 고압 개폐기. PF와 조합해 첫 관문 역할. 단락전류 차단 불가.</div><div class="dtips">PF 용단·탈락 확인, 절연유 상태 점검(유입형)</div></div>
+    <div class="dcard"><div class="dhdr"><div class="dabbr" style="color:var(--vi);border-color:rgba(167,139,250,.3);background:rgba(167,139,250,.07);">LA</div><div><div class="dtitle">피뢰기</div><div class="dsub">Lightning Arrester</div></div></div><div class="ddesc">낙뢰·개폐 서지로 인한 이상 전압을 대지로 방전. ZnO 비선형 소자 사용. 변압기 등 기기 보호.</div><div class="dtips">단로장치 탈락 여부, 누설전류 측정, 외관 균열·오손 점검</div></div>
+    <div class="dcard"><div class="dhdr"><div class="dabbr" style="color:var(--cy);border-color:rgba(34,211,238,.3);background:rgba(34,211,238,.07);">CT</div><div><div class="dtitle">변류기</div><div class="dsub">Current Transformer</div></div></div><div class="ddesc">대전류&#8594;5A 변환. OCR·전력량계 등 계측기기에 연결. 변류비 예: 200/5A.</div><div class="dtips">2차측 개방 절대 금지(수천V 발생 위험!), 절연저항 정기 측정</div></div>
+    <div class="dcard"><div class="dhdr"><div class="dabbr" style="color:var(--pk);border-color:rgba(249,168,212,.3);background:rgba(249,168,212,.07);">PT</div><div><div class="dtitle">계기용 변압기</div><div class="dsub">Potential Transformer</div></div></div><div class="ddesc">고전압&#8594;110V 변환. 전압계·OVR·UVR 계전기에 연결. 변압비 예: 22,900/110V.</div><div class="dtips">2차측 단락 절대 금지(대전류 발생!), 변압비 및 절연저항 확인</div></div>
+    <div class="dcard"><div class="dhdr"><div class="dabbr" style="color:var(--ind);border-color:rgba(129,140,248,.3);background:rgba(129,140,248,.07);">SC</div><div><div class="dtitle">전력용 콘덴서</div><div class="dsub">Static Capacitor</div></div></div><div class="ddesc">진상 전류 공급으로 역률 개선. SR(직렬리액터)과 함께 설치해 고조파 억제. 역률 90% 미만 시 할증.</div><div class="dtips">고조파에 의한 배부름(Swelling) 유무 체크, 방전 코일 동작 확인</div></div>
+    <div class="dcard"><div class="dhdr"><div class="dabbr" style="color:var(--grn);border-color:rgba(52,211,153,.3);background:rgba(52,211,153,.07);">MCCB</div><div><div class="dtitle">배선차단기</div><div class="dsub">Molded Case CB</div></div></div><div class="ddesc">저압 분기 회로 보호. 과전류·단락 발생 시 자동 차단. 조명·동력·콘센트 용도별 설치.</div><div class="dtips">정격전류·차단용량 선정 확인, 과열 흔적(변색, 냄새) 점검</div></div>
+  </div>
+</div>
+</section>
+
+<!-- ===== 03 설비 비교표 ===== -->
+<section id="compare">
+<div class="sw">
+  <div class="sh">
+    <span class="stag">03 / COMPARISON</span>
+    <h2 class="stit">설비 <span>비교표</span></h2>
+    <p class="sdesc">주요 기기를 항목별로 한눈에 비교합니다.</p>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:24px;">
+    <div>
+      <div style="font-size:14px;font-weight:700;color:var(--ac);margin-bottom:10px;">변압기 종류 비교</div>
+      <div class="ctbl-wrap"><table class="ctbl">
+        <thead><tr><th>항목</th><th>몰드형(건식)</th><th>유입형(오일)</th></tr></thead>
+        <tbody>
+          <tr><td>냉각 방식</td><td>공기 자냉</td><td>절연유 자냉/강제</td></tr>
+          <tr><td>설치 장소</td><td class="good">실내(방재 우수)</td><td>실내·외 가능</td></tr>
+          <tr><td>화재 위험</td><td class="good">없음</td><td class="mid">절연유 인화 주의</td></tr>
+          <tr><td>가격</td><td class="bad">높음</td><td class="good">낮음</td></tr>
+          <tr><td>유지보수</td><td class="good">간단</td><td class="mid">오일 관리 필요</td></tr>
+          <tr><td>과부하 내량</td><td class="mid">보통</td><td class="good">우수</td></tr>
+          <tr><td>소음</td><td class="bad">다소 큼</td><td class="good">낮음</td></tr>
+          <tr><td>적용 용량</td><td>~3,000kVA</td><td>~수만kVA</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div>
+      <div style="font-size:14px;font-weight:700;color:var(--ac);margin-bottom:10px;">차단기 종류 비교</div>
+      <div class="ctbl-wrap"><table class="ctbl">
+        <thead><tr><th>항목</th><th>VCB(진공)</th><th>ACB(기중)</th><th>MCCB(배선)</th></tr></thead>
+        <tbody>
+          <tr><td>사용 전압</td><td>고압(3.3~36kV)</td><td>저압(380V)</td><td>저압(220/380V)</td></tr>
+          <tr><td>아크 소호</td><td class="good">진공</td><td>공기</td><td>소호판</td></tr>
+          <tr><td>차단 용량</td><td class="good">매우 큼</td><td class="mid">큼</td><td>보통</td></tr>
+          <tr><td>재투입</td><td class="good">가능</td><td class="good">가능</td><td class="good">가능</td></tr>
+          <tr><td>주 용도</td><td>고압 주차단</td><td>저압 주차단</td><td>저압 분기 보호</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ===== 04 보호 협조 ===== -->
+<section id="protect">
+<div class="sw">
+  <div class="sh">
+    <span class="stag">04 / PROTECTION COORDINATION</span>
+    <h2 class="stit">보호 협조 <span>시스템</span></h2>
+    <p class="sdesc">사고 발생 시 어느 차단기가 먼저 동작해야 하는지 순서(선택성)와 계전기 정정값을 학습합니다.</p>
+  </div>
+  <div class="prot-grid">
+    <div class="prot-card">
+      <div class="prot-title">단락 사고 시 보호 동작 순서</div>
+      <div class="coord-flow">
+        <div class="coord-item"><div class="coord-num">1</div><div><strong>분기 MCCB</strong> — 최우선 차단 (가장 먼저 동작해야 정상)</div></div>
+        <div class="coord-arr">&#8595; 미동작 시</div>
+        <div class="coord-item"><div class="coord-num">2</div><div><strong>저압 ACB</strong> — 분기 MCCB 미동작 시 백업 차단</div></div>
+        <div class="coord-arr">&#8595; 미동작 시</div>
+        <div class="coord-item"><div class="coord-num">3</div><div><strong>고압 VCB (OCR)</strong> — 최종 보호. 타임레버로 지연 시간 설정</div></div>
+        <div class="coord-arr">&#8595; 미동작 시</div>
+        <div class="coord-item"><div class="coord-num">4</div><div><strong>한전 측 재폐로</strong> — 수용가 전체 정전. 한전에 연락 필요</div></div>
+      </div>
+      <div style="margin-top:14px;padding:10px;background:rgba(56,189,248,.06);border-radius:8px;font-size:12px;color:var(--ac2);">
+        &#9432; 핵심 원칙: 사고에 가장 가까운 보호 기기가 먼저 동작하고, 상위 기기는 하위 기기가 동작하지 않을 때만 동작해야 합니다. 이를 <strong>선택성(Selectivity)</strong>이라 합니다.
+      </div>
+    </div>
+    <div class="prot-card">
+      <div class="prot-title">OCR 정정값 설정 기준</div>
+      <table class="relay-table">
+        <thead><tr><th>항목</th><th>설명</th><th>일반 설정값</th></tr></thead>
+        <tbody>
+          <tr><td>탭(TAP)</td><td>동작 전류 기준값</td><td>CT 정격의 100~150%</td></tr>
+          <tr><td>타임레버(TL)</td><td>동작 지연 시간</td><td>고압측: 0.4~0.6초</td></tr>
+          <tr><td>순시(Inst.)</td><td>단락 즉시 차단 배수</td><td>정격의 10~20배</td></tr>
+        </tbody>
+      </table>
+      <div class="prot-title" style="margin-top:1rem;">지락 보호 (OCGR) 정정</div>
+      <table class="relay-table">
+        <thead><tr><th>항목</th><th>설명</th><th>일반 설정값</th></tr></thead>
+        <tbody>
+          <tr><td>지락전류</td><td>ZCT 검출 지락전류</td><td>0.2~0.4A (2차측)</td></tr>
+          <tr><td>동작시간</td><td>지락 지속 시 동작</td><td>0.5~1.0초</td></tr>
+        </tbody>
+      </table>
+      <div style="margin-top:12px;padding:10px;background:rgba(251,191,36,.07);border-radius:8px;font-size:12px;color:var(--gold);">
+        &#9888; OCR 탭·타임레버 설정값은 부하 특성과 한전 협조에 따라 반드시 전문가가 산정해야 합니다.
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ===== 05 안전 관리 ===== -->
+<section id="safety">
+<div class="sw">
+  <div class="sh">
+    <span class="stag">05 / SAFETY &amp; OPERATION</span>
+    <h2 class="stit">안전 관리 및 <span>점검 실무</span></h2>
+    <p class="sdesc">정전·복전 작업 순서와 법정 점검 항목. 순서를 반드시 지켜야 합니다.</p>
+  </div>
+  <div class="sgrid">
+    <div class="scard">
+      <div class="stitle">정전 작업 순서 <span class="badge br">정전</span></div>
+      <ul class="slist">
+        <li><div class="sn snr">1</div><div><strong>저압 부하 차단</strong><br><span style="color:var(--tx2);font-size:12px;">분전반 MCCB 순차 개방, 부하 측 확인</span></div></li>
+        <li><div class="sn snr">2</div><div><strong>저압 주차단기(ACB) 개방</strong><br><span style="color:var(--tx2);font-size:12px;">변압기 2차 측 ACB 개방</span></div></li>
+        <li><div class="sn snr">3</div><div><strong>고압 차단기(VCB) 개방</strong><br><span style="color:var(--tx2);font-size:12px;">조작반에서 VCB 트립 버튼 조작</span></div></li>
+        <li><div class="sn snr">4</div><div><strong>단로기(DS/LBS) 개방</strong><br><span style="color:var(--tx2);font-size:12px;">VCB 개방 확인 후 DS 수동 개방</span></div></li>
+        <li><div class="sn snr">5</div><div><strong>검전 및 접지 실시</strong><br><span style="color:var(--tx2);font-size:12px;">검전기로 무전압 확인 &#8594; 방전 &#8594; 접지봉 설치</span></div></li>
+      </ul>
+    </div>
+    <div class="scard">
+      <div class="stitle">복전 작업 순서 <span class="badge bg">복전 (역순)</span></div>
+      <ul class="slist">
+        <li><div class="sn sng">1</div><div><strong>접지 제거</strong><br><span style="color:var(--tx2);font-size:12px;">작업 인원 철수 확인 &#8594; 접지봉 제거</span></div></li>
+        <li><div class="sn sng">2</div><div><strong>LBS/DS 투입</strong><br><span style="color:var(--tx2);font-size:12px;">단로기 수동 투입 후 접촉 상태 확인</span></div></li>
+        <li><div class="sn sng">3</div><div><strong>VCB 투입</strong><br><span style="color:var(--tx2);font-size:12px;">고압 차단기 투입 &#8594; 전압계 지시 확인</span></div></li>
+        <li><div class="sn sng">4</div><div><strong>저압 주차단기(ACB) 투입</strong><br><span style="color:var(--tx2);font-size:12px;">변압기 2차 전압 확인 후 ACB 투입</span></div></li>
+        <li><div class="sn sng">5</div><div><strong>부하 순차 투입</strong><br><span style="color:var(--tx2);font-size:12px;">MCCB 순차 투입 &#8594; 전류계 지시 확인</span></div></li>
+      </ul>
+    </div>
+    <div class="scard" style="grid-column:1/-1;">
+      <div class="stitle">법정 점검 필수 항목 <span class="badge by">정기점검</span></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:.5rem;">
+        <div><div style="font-size:11px;color:var(--tx3);font-family:var(--fm);margin-bottom:8px;">일상 점검 (매일)</div><ul class="cklist"><li><span class="ck">&#10003;</span>전류·전압계 지시값 확인</li><li><span class="ck">&#10003;</span>이상 소음·냄새 확인</li><li><span class="ck">&#10003;</span>변압기 온도계 확인</li><li><span class="ck">&#10003;</span>경보 표시등 확인</li></ul></div>
+        <div><div style="font-size:11px;color:var(--tx3);font-family:var(--fm);margin-bottom:8px;">월간 점검</div><ul class="cklist"><li><span class="ck">&#10003;</span>외관 점검 (오손, 파손)</li><li><span class="ck">&#10003;</span>접속부 과열 확인</li><li><span class="ck">&#10003;</span>유입변압기 유면 확인</li><li><span class="ck">&#10003;</span>역률 측정 및 기록</li></ul></div>
+        <div><div style="font-size:11px;color:var(--tx3);font-family:var(--fm);margin-bottom:8px;">연간 정기점검</div><ul class="cklist"><li><span class="ck">&#10003;</span>절연저항 측정 (메거링)</li><li><span class="ck">&#10003;</span>열화상 카메라 촬영</li><li><span class="ck">&#10003;</span>접지저항 측정</li><li><span class="ck">&#10003;</span>보호계전기 동작 시험</li></ul></div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ===== 06 고장 진단 ===== -->
+<section id="fault">
+<div class="sw">
+  <div class="sh">
+    <span class="stag">06 / FAULT DIAGNOSIS</span>
+    <h2 class="stit">고장 진단 및 <span>트러블슈팅</span></h2>
+    <p class="sdesc">실제 사고 발생 시 원인 분석과 대처 가이드입니다.</p>
+  </div>
+  <div class="fgrid">
+    <div class="fcard"><div class="fhdr"><div class="fico" style="background:rgba(248,113,113,.1);">&#9889;</div><div class="ftit">OCR 동작 — 차단기 트립</div></div><div class="frow"><strong>원인</strong>: 부하 과다 또는 선로 단락 사고</div><div class="frow" style="font-size:12px;color:var(--tx3);">과부하 &#8594; OCR 시한 동작 &#8594; VCB 트립</div><div class="fact">사고 지점 분리 &#8594; 절연저항 측정 &#8594; 이상 없으면 투입</div></div>
+    <div class="fcard"><div class="fhdr"><div class="fico" style="background:rgba(251,191,36,.1);">&#128269;</div><div class="ftit">OCGR 동작 — 지락 트립</div></div><div class="frow"><strong>원인</strong>: 누전(지락) 발생</div><div class="frow" style="font-size:12px;color:var(--tx3);">절연 불량 &#8594; ZCT 감지 &#8594; OCGR 동작 &#8594; VCB 트립</div><div class="fact">절연 불량 구간 탐색 &#8594; 메거로 측정 &#8594; 불량 기기 교체</div></div>
+    <div class="fcard"><div class="fhdr"><div class="fico" style="background:rgba(52,211,153,.1);">&#128266;</div><div class="ftit">변압기 이상 소음</div></div><div class="frow"><strong>'웅~' 진동음</strong>: 고조파 유입 또는 볼트 이완</div><div class="frow"><strong>'탁탁' 소리</strong>: 절연 파괴(아크) 전조 증상</div><div class="fact">'탁탁' 소음 발생 시 즉시 정전 조치 후 절연 점검 필수</div></div>
+    <div class="fcard"><div class="fhdr"><div class="fico" style="background:rgba(129,140,248,.1);">&#128202;</div><div class="ftit">역률 저하</div></div><div class="frow"><strong>원인</strong>: 콘덴서 고장 또는 부하 급증</div><div class="frow">역률 <strong>90% 미만</strong> 시 전기요금 할증 발생</div><div class="fact">콘덴서(SC) 이상 확인 &#8594; 필요 시 용량 증설</div></div>
+    <div class="fcard"><div class="fhdr"><div class="fico" style="background:rgba(251,146,60,.1);">&#127777;</div><div class="ftit">변압기 과열</div></div><div class="frow"><strong>원인</strong>: 과부하, 냉각 불량, 고조파</div><div class="frow">온도 <strong>105&#176;C 초과</strong> 시 수명 급감</div><div class="fact">부하 분산, 환기구 막힘 확인, 열화상으로 핫스팟 확인</div></div>
+    <div class="fcard"><div class="fhdr"><div class="fico" style="background:rgba(34,211,238,.1);">&#9878;</div><div class="ftit">전압 불평형</div></div><div class="frow"><strong>원인</strong>: 단상 부하 편중, 결상(1상 단선)</div><div class="frow">불평형률 <strong>3% 초과</strong> 시 전동기 과열·소손</div><div class="fact">각 상 전류 측정 &#8594; 부하 재분배 &#8594; 결상 계전기 확인</div></div>
+  </div>
+</div>
+</section>
+
+<!-- ===== 07 사고 사례 ===== -->
+<section id="cases">
+<div class="sw">
+  <div class="sh">
+    <span class="stag">07 / CASE STUDY</span>
+    <h2 class="stit">사고 사례 <span>분석</span></h2>
+    <p class="sdesc">실제 수변전설비 사고 유형을 원인&#8594;경과&#8594;조치&#8594;예방 구조로 학습합니다.</p>
+  </div>
+  <div class="case-grid">
+    <div class="case-card" style="border-top-color:var(--red);">
+      <div style="font-size:14px;font-weight:700;margin-bottom:10px;">&#9881; 변압기 절연 파괴로 인한 화재</div>
+      <div class="case-step">
+        <div class="case-row cause"><div class="case-label">&#9650; 원인</div>유입변압기 절연유 열화 + 고조파 과열</div>
+        <div class="case-row prog"><div class="case-label">&#8594; 경과</div>절연 파괴 &#8594; 내부 아크 발생 &#8594; 압력 상승 &#8594; 부흐홀츠 계전기 동작 &#8594; 화재</div>
+        <div class="case-row action"><div class="case-label">&#10003; 조치</div>VCB 차단 &#8594; 소화 &#8594; 절연유 교체 후 재투입 검토</div>
+        <div class="case-row prevent"><div class="case-label">&#9673; 예방</div>연 1회 절연유 시험(내전압·산가), 열화상 촬영, 부흐홀츠 계전기 정기 점검</div>
+      </div>
+    </div>
+    <div class="case-card" style="border-top-color:var(--gold);">
+      <div style="font-size:14px;font-weight:700;margin-bottom:10px;">&#9889; VCB 오동작으로 인한 순간정전</div>
+      <div class="case-step">
+        <div class="case-row cause"><div class="case-label">&#9650; 원인</div>낙뢰 서지에 의한 OCR 오동작(CT 회로 노이즈)</div>
+        <div class="case-row prog"><div class="case-label">&#8594; 경과</div>서지 유입 &#8594; OCR 오동작 &#8594; VCB 트립 &#8594; 전체 정전</div>
+        <div class="case-row action"><div class="case-label">&#10003; 조치</div>OCR 설정값 재검토, 계전기 시험, 재투입</div>
+        <div class="case-row prevent"><div class="case-label">&#9673; 예방</div>LA 상태 점검, 계전기 EMC 대책, 순간정전 대책(UPS) 검토</div>
+      </div>
+    </div>
+    <div class="case-card" style="border-top-color:var(--grn);">
+      <div style="font-size:14px;font-weight:700;margin-bottom:10px;">&#9650; 역률 미달로 인한 요금 할증</div>
+      <div class="case-step">
+        <div class="case-row cause"><div class="case-label">&#9650; 원인</div>콘덴서 고장 방치 + 인버터 부하 증가</div>
+        <div class="case-row prog"><div class="case-label">&#8594; 경과</div>역률 82%로 하락 &#8594; 3개월 연속 전기요금 할증 발생</div>
+        <div class="case-row action"><div class="case-label">&#10003; 조치</div>콘덴서 교체(Swelling 확인), 자동역률조정기(APFR) 설치</div>
+        <div class="case-row prevent"><div class="case-label">&#9673; 예방</div>월 1회 역률 측정 기록, 콘덴서 정기 점검, SR 설치 여부 확인</div>
+      </div>
+    </div>
+    <div class="case-card" style="border-top-color:var(--vi);">
+      <div style="font-size:14px;font-weight:700;margin-bottom:10px;">&#128293; 부스바 접속부 과열 사고</div>
+      <div class="case-step">
+        <div class="case-row cause"><div class="case-label">&#9650; 원인</div>볼트 조임 불량으로 접촉저항 증가</div>
+        <div class="case-row prog"><div class="case-label">&#8594; 경과</div>접속부 과열 &#8594; 절연물 탄화 &#8594; 아크 &#8594; 모선 단락</div>
+        <div class="case-row action"><div class="case-label">&#10003; 조치</div>정전 후 볼트 재조임, 탄화 부위 청소·교체</div>
+        <div class="case-row prevent"><div class="case-label">&#9673; 예방</div>연 1회 열화상 촬영으로 핫스팟 검출, 주요 접속부 토크렌치 점검</div>
+      </div>
+    </div>
+    <div class="case-card" style="border-top-color:var(--cy);">
+      <div style="font-size:14px;font-weight:700;margin-bottom:10px;">&#9876; DS 오조작 아크 사고</div>
+      <div class="case-step">
+        <div class="case-row cause"><div class="case-label">&#9650; 원인</div>VCB 미개방 상태에서 DS 수동 조작</div>
+        <div class="case-row prog"><div class="case-label">&#8594; 경과</div>부하전류 상태 DS 개방 &#8594; 대형 아크 발생 &#8594; 전기화상 사고</div>
+        <div class="case-row action"><div class="case-label">&#10003; 조치</div>즉시 인터록 설비 추가 설치, DS 교체</div>
+        <div class="case-row prevent"><div class="case-label">&#9673; 예방</div>작업 전 반드시 잠금표시(LOTO), 인터록 설치 의무화, 작업자 교육</div>
+      </div>
+    </div>
+    <div class="case-card" style="border-top-color:var(--og);">
+      <div style="font-size:14px;font-weight:700;margin-bottom:10px;">&#9878; 3상 불평형에 의한 전동기 소손</div>
+      <div class="case-step">
+        <div class="case-row cause"><div class="case-label">&#9650; 원인</div>단상 대용량 부하 증설 후 위상 편중</div>
+        <div class="case-row prog"><div class="case-label">&#8594; 경과</div>전압 불평형 5% &#8594; 전동기 과전류 &#8594; 과열 소손</div>
+        <div class="case-row action"><div class="case-label">&#10003; 조치</div>3상 부하 재분배, 소손 전동기 교체</div>
+        <div class="case-row prevent"><div class="case-label">&#9673; 예방</div>부하 증설 시 3상 균형 검토, 불평형 계전기(UPVR) 설치</div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ===== 08 계산기 ===== -->
+<section id="calc">
+<div class="sw">
+  <div class="sh">
+    <span class="stag">08 / CALCULATOR</span>
+    <h2 class="stit">전기 <span>계산기</span></h2>
+    <p class="sdesc">숫자를 입력하면 자동으로 계산됩니다.</p>
+  </div>
+  <div class="ctabs">
+    <button class="ctab on" onclick="cTab('p1',this)">단상 전력</button>
+    <button class="ctab" onclick="cTab('p3',this)">3상 전력</button>
+    <button class="ctab" onclick="cTab('tr',this)">변압기 용량</button>
+    <button class="ctab" onclick="cTab('vd',this)">전압강하</button>
+    <button class="ctab" onclick="cTab('wire',this)">전선 굵기</button>
+  </div>
+  <div class="cpanel on" id="cp-p1">
+    <div class="cgrid">
+      <div class="ccard"><div class="ctitle">단상 유효전력</div><code class="fml">P = V &#215; I &#215; cos&#952;  [W]</code><div class="cfield"><label>전압 V (V)</label><input type="number" id="p1v" value="220" oninput="cP1()"></div><div class="cfield"><label>전류 I (A)</label><input type="number" id="p1i" value="10" oninput="cP1()"></div><div class="cfield"><label>역률 cos&#952; (0~1)</label><input type="number" id="p1pf" value="0.9" step="0.01" min="0" max="1" oninput="cP1()"></div><div class="cres"><div class="creslbl">유효전력 P</div><div class="cresval" id="r-p1w">1,980 W</div><div class="cressub" id="r-p1kw">= 1.98 kW</div></div></div>
+      <div class="ccard"><div class="ctitle">피상전력 / 무효전력</div><code class="fml">S = V &#215; I  [VA]  /  Q = S &#215; sin&#952;  [VAR]</code><div class="cres" style="margin-bottom:10px;"><div class="creslbl">피상전력 S</div><div class="cresval" id="r-p1s">2,200 VA</div></div><div class="cres"><div class="creslbl">무효전력 Q</div><div class="cresval" id="r-p1q">958 VAR</div></div><div style="margin-top:10px;padding:9px 11px;background:rgba(56,189,248,.05);border-radius:6px;font-size:12px;color:var(--tx3);">역률 = 유효전력 &#247; 피상전력<br>역률 90% 이상 유지 권장</div></div>
+    </div>
+  </div>
+  <div class="cpanel" id="cp-p3">
+    <div class="cgrid">
+      <div class="ccard"><div class="ctitle">3상 유효전력</div><code class="fml">P = &#8730;3 &#215; V &#215; I &#215; cos&#952;  [W]</code><div class="cfield"><label>선간전압 VL (V)</label><input type="number" id="p3v" value="380" oninput="cP3()"></div><div class="cfield"><label>선전류 IL (A)</label><input type="number" id="p3i" value="50" oninput="cP3()"></div><div class="cfield"><label>역률 cos&#952;</label><input type="number" id="p3pf" value="0.9" step="0.01" min="0" max="1" oninput="cP3()"></div><div class="cres"><div class="creslbl">3상 유효전력 P</div><div class="cresval" id="r-p3w">29,648 W</div><div class="cressub" id="r-p3kw">= 29.6 kW</div></div></div>
+      <div class="ccard"><div class="ctitle">3상 피상전력</div><code class="fml">S = &#8730;3 &#215; V &#215; I  [VA]</code><div class="cres" style="margin-bottom:10px;"><div class="creslbl">피상전력 S</div><div class="cresval" id="r-p3s">32,942 VA</div><div class="cressub" id="r-p3skva">= 32.9 kVA</div></div><div style="margin-top:10px;padding:9px 11px;background:rgba(56,189,248,.05);border-radius:6px;font-size:12px;color:var(--tx3);">3상 4선식 Y결선: 상전압 = 선간전압 &#247; &#8730;3<br>380V 계통 &#8594; 상전압 &#8776; 220V</div></div>
+    </div>
+  </div>
+  <div class="cpanel" id="cp-tr">
+    <div class="cgrid">
+      <div class="ccard"><div class="ctitle">필요 변압기 용량</div><code class="fml">S = (P &#215; 수요율) &#247; cos&#952;  [kVA]</code><div class="cfield"><label>총 부하 P (kW)</label><input type="number" id="trkw" value="100" oninput="cTR()"></div><div class="cfield"><label>역률 cos&#952;</label><input type="number" id="trpf" value="0.9" step="0.01" min="0.01" max="1" oninput="cTR()"></div><div class="cfield"><label>수요율 (%) — 동시 사용 비율</label><input type="number" id="trdf" value="70" min="1" max="100" oninput="cTR()"></div><div class="cres"><div class="creslbl">필요 변압기 용량</div><div class="cresval" id="r-tr">77.8 kVA</div><div class="cressub" id="r-tr-std">&#8594; 표준 선정: 100 kVA</div></div></div>
+      <div class="ccard"><div class="ctitle">표준 변압기 용량 (kVA)</div><code class="fml">KS C IEC 규격 표준 용량</code><div class="stdg"><div class="stdi">50</div><div class="stdi">75</div><div class="stdi">100</div><div class="stdi">150</div><div class="stdi">200</div><div class="stdi">300</div><div class="stdi">500</div><div class="stdi">750</div><div class="stdi">1000</div><div class="stdi">1500</div></div><div style="margin-top:10px;font-size:12px;color:var(--tx3);">계산값보다 큰 표준 용량으로 선정. 여유율 10~20% 반영 권장.</div></div>
+    </div>
+  </div>
+  <div class="cpanel" id="cp-vd">
+    <div class="cgrid">
+      <div class="ccard"><div class="ctitle">단상 2선식 전압강하</div><code class="fml">e = (35.6 &#215; L &#215; I) / (1000 &#215; A)  [V]</code><div class="cfield"><label>거리 L (m) — 편도</label><input type="number" id="vdl" value="50" oninput="cVD()"></div><div class="cfield"><label>전류 I (A)</label><input type="number" id="vdi" value="30" oninput="cVD()"></div><div class="cfield"><label>전선 단면적 A (mm&#178;)</label><input type="number" id="vda" value="10" oninput="cVD()"></div><div class="cres"><div class="creslbl">전압강하 e</div><div class="cresval" id="r-vdv">5.34 V</div><div class="cressub" id="r-vdp">220V 기준 2.43% 강하</div></div></div>
+      <div class="ccard"><div class="ctitle">3상 3선식 전압강하</div><code class="fml">e = (30.8 &#215; L &#215; I) / (1000 &#215; A)  [V]</code><div class="cfield"><label>거리 L (m)</label><input type="number" id="vdl3" value="50" oninput="cVD3()"></div><div class="cfield"><label>전류 I (A)</label><input type="number" id="vdi3" value="30" oninput="cVD3()"></div><div class="cfield"><label>전선 단면적 A (mm&#178;)</label><input type="number" id="vda3" value="10" oninput="cVD3()"></div><div class="cres"><div class="creslbl">전압강하 e</div><div class="cresval" id="r-vd3v">4.62 V</div><div class="cressub" id="r-vd3p">380V 기준 1.22% 강하</div></div><div style="margin-top:10px;font-size:12px;color:var(--tx3);">KEC: 저압 간선 2% 이내, 분기 포함 3% 이내</div></div>
+    </div>
+  </div>
+  <div class="cpanel" id="cp-wire">
+    <div class="cgrid">
+      <div class="ccard"><div class="ctitle">전압강하 기준 전선 굵기</div><code class="fml">A = (K &#215; L &#215; I) / (1000 &#215; e)  [mm&#178;]</code><div class="cfield"><label>배선 방식</label><select id="wtype" onchange="cWire()"><option value="35.6">단상 2선식 (K=35.6)</option><option value="30.8">3상 3선식 (K=30.8)</option><option value="17.8">단상 3선식 / 3상 4선식 (K=17.8)</option></select></div><div class="cfield"><label>거리 L (m)</label><input type="number" id="wl" value="50" oninput="cWire()"></div><div class="cfield"><label>전류 I (A)</label><input type="number" id="wi" value="30" oninput="cWire()"></div><div class="cfield"><label>허용 전압강하 e (V)</label><input type="number" id="we" value="4.4" step="0.1" oninput="cWire()"></div><div class="cres"><div class="creslbl">필요 최소 단면적</div><div class="cresval" id="r-wire">12.1 mm&#178;</div><div class="cressub" id="r-wire-std">&#8594; 표준 규격: 16 mm&#178; 선정</div></div></div>
+      <div class="ccard"><div class="ctitle">전선 굵기별 허용전류 (KEC)</div><code class="fml">600V CV 케이블 공중 포설 기준</code><div style="overflow-x:auto;"><table class="stbl"><thead><tr><th>단면적(mm&#178;)</th><th>허용전류(A)</th><th>용도</th></tr></thead><tbody><tr><td>2.5</td><td>26</td><td>콘센트·조명</td></tr><tr><td>4</td><td>34</td><td>소형 에어컨</td></tr><tr><td>6</td><td>43</td><td>중형 전열기</td></tr><tr><td>10</td><td>57</td><td>소형 전동기</td></tr><tr><td>16</td><td>76</td><td>중형 전동기</td></tr><tr><td>25</td><td>101</td><td>간선</td></tr><tr><td>35</td><td>125</td><td>대용량 간선</td></tr><tr><td>50</td><td>151</td><td>주간선</td></tr><tr><td>70</td><td>192</td><td>변압기 인출</td></tr><tr><td>95</td><td>232</td><td>대전류 간선</td></tr></tbody></table></div></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ===== 09 전기 요금 ===== -->
+<section id="tariff">
+<div class="sw">
+  <div class="sh">
+    <span class="stag">09 / ELECTRICITY TARIFF</span>
+    <h2 class="stit">수전 계약 및 <span>전기 요금</span></h2>
+    <p class="sdesc">한전 전기 요금 계약 종류와 역률 할증·할인 구조를 학습합니다.</p>
+  </div>
+  <div class="tariff-grid">
+    <div class="tariff-card"><div class="tariff-title">일반용 전력 (갑)</div><div class="tariff-sub">계약전력 300kW 미만</div><ul class="tariff-list"><li>소규모 빌딩, 학교, 소형 공장</li><li>계시별 요금제 적용 가능</li><li>최대수요전력계 필요</li><li>기본요금 + 전력량 요금</li></ul></div>
+    <div class="tariff-card"><div class="tariff-title">일반용 전력 (을)</div><div class="tariff-sub">계약전력 300kW 이상</div><ul class="tariff-list"><li>대형 빌딩, 백화점, 병원</li><li>계시별 요금제 의무 적용</li><li>경부하·중간부하·최대부하 구분</li><li>수변전설비 필수 설치</li></ul></div>
+    <div class="tariff-card"><div class="tariff-title">산업용 전력 (갑·을)</div><div class="tariff-sub">공장, 제조업 등</div><ul class="tariff-list"><li>산업용 부하율 우대 요금</li><li>심야 전력 할인 적용 가능</li><li>ESS 연계 시 추가 혜택</li><li>부하율 관리로 요금 절감</li></ul></div>
+    <div class="tariff-card"><div class="tariff-title">교육용 전력</div><div class="tariff-sub">학교, 교육 기관</div><ul class="tariff-list"><li>일반용보다 낮은 단가 적용</li><li>방학 중 부하 감소 고려</li><li>수요율 비교적 낮음(50~60%)</li><li>친환경 설비 보조금 혜택</li></ul></div>
+  </div>
+  <div style="margin-top:20px;background:var(--card);border:1px solid var(--b1);border-radius:12px;padding:1.25rem;">
+    <div style="font-size:14px;font-weight:700;margin-bottom:12px;">역률 할증·할인 요금 구조</div>
+    <div class="pf-box">
+      <div class="pf-row"><span>역률 95% 이상</span><span class="good" style="font-weight:700;">&#8595; 요금 할인 (최대 5%)</span></div>
+      <div class="pf-row"><span>역률 90% (기준)</span><span style="color:var(--tx3);">기준 요금 (할증·할인 없음)</span></div>
+      <div class="pf-row"><span>역률 89%</span><span class="bad">&#8593; 기본요금 1% 할증</span></div>
+      <div class="pf-row"><span>역률 80%</span><span class="bad">&#8593; 기본요금 10% 할증</span></div>
+      <div class="pf-row"><span>역률 60% 이하</span><span class="bad">&#8593; 기본요금 최대 30% 할증</span></div>
+    </div>
+    <div style="margin-top:10px;font-size:12px;color:var(--tx3);">&#9432; 역률은 매월 전력량계로 측정되며, 콘덴서(SC) 설치·관리로 90% 이상 유지해야 전기요금 절감이 가능합니다.</div>
+  </div>
+</div>
+</section>
+
+<!-- ===== 10 용량 선정 가이드 ===== -->
+<section id="capacity">
+<div class="sw">
+  <div class="sh">
+    <span class="stag">10 / CAPACITY GUIDE</span>
+    <h2 class="stit">건물별 <span>용량 선정 가이드</span></h2>
+    <p class="sdesc">건물 종류별 부하 밀도 기준값과 수요율·부하율 참고 기준입니다. 실제 설계 시 전문가 검토가 필요합니다.</p>
+  </div>
+  <div class="cap-grid">
+    <div class="cap-card"><div class="cap-ico">&#127970;</div><div class="cap-title">오피스 빌딩</div><div class="cap-density">50~80</div><div class="cap-unit">VA/m&#178; (부하 밀도)</div><div class="cap-info">수요율 65~75%<br>역률 85~90%<br>최대부하: 주간</div></div>
+    <div class="cap-card"><div class="cap-ico">&#127973;</div><div class="cap-title">병원</div><div class="cap-density">80~120</div><div class="cap-unit">VA/m&#178;</div><div class="cap-info">수요율 70~85%<br>비상 전원 필수<br>24시간 운전</div></div>
+    <div class="cap-card"><div class="cap-ico">&#127967;</div><div class="cap-title">백화점·쇼핑몰</div><div class="cap-density">100~150</div><div class="cap-unit">VA/m&#178;</div><div class="cap-info">수요율 75~85%<br>냉방 부하 큼<br>조명 부하 높음</div></div>
+    <div class="cap-card"><div class="cap-ico">&#127981;</div><div class="cap-title">공장 (일반)</div><div class="cap-density">30~100</div><div class="cap-unit">VA/m&#178; (업종별 편차 큼)</div><div class="cap-info">수요율 60~80%<br>동력 부하 주력<br>역률 개선 중요</div></div>
+    <div class="cap-card"><div class="cap-ico">&#127979;</div><div class="cap-title">학교</div><div class="cap-density">20~40</div><div class="cap-unit">VA/m&#178;</div><div class="cap-info">수요율 50~60%<br>방학 중 부하 급감<br>냉방 부하 계절성</div></div>
+    <div class="cap-card"><div class="cap-ico">&#127968;</div><div class="cap-title">공동주택</div><div class="cap-density">3~5</div><div class="cap-unit">kVA/세대</div><div class="cap-info">수요율 40~55%<br>세대별 계약 전력<br>전기차 충전 고려</div></div>
+  </div>
+  <div style="margin-top:20px;background:var(--card);border:1px solid var(--b1);border-radius:12px;padding:1.25rem;">
+    <div style="font-size:14px;font-weight:700;margin-bottom:10px;">주요 용어 정의</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;">
+      <div style="background:var(--bg3);border-radius:8px;padding:10px 12px;"><div style="font-size:12px;color:var(--ac);font-weight:700;margin-bottom:3px;">수요율 (Demand Factor)</div><div style="font-size:12px;color:var(--tx2);">최대수요전력 &#247; 설비용량. 동시에 사용하는 비율.</div></div>
+      <div style="background:var(--bg3);border-radius:8px;padding:10px 12px;"><div style="font-size:12px;color:var(--gold);font-weight:700;margin-bottom:3px;">부하율 (Load Factor)</div><div style="font-size:12px;color:var(--tx2);">평균전력 &#247; 최대전력. 부하의 균일성. 높을수록 유리.</div></div>
+      <div style="background:var(--bg3);border-radius:8px;padding:10px 12px;"><div style="font-size:12px;color:var(--grn);font-weight:700;margin-bottom:3px;">부등률 (Diversity Factor)</div><div style="font-size:12px;color:var(--tx2);">각 설비 최대부하 합 &#247; 합성 최대부하. 항상 1 이상.</div></div>
+      <div style="background:var(--bg3);border-radius:8px;padding:10px 12px;"><div style="font-size:12px;color:var(--red);font-weight:700;margin-bottom:3px;">역률 (Power Factor)</div><div style="font-size:12px;color:var(--tx2);">유효전력 &#247; 피상전력. 전기를 얼마나 효율적으로 쓰는지.</div></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ===== 11 용어집 ===== -->
+<section id="glossary">
+<div class="sw">
+  <div class="sh">
+    <span class="stag">11 / GLOSSARY</span>
+    <h2 class="stit">용어집 <span>/ 영문 약어 사전</span></h2>
+    <p class="sdesc">검색창에 약어나 한글을 입력하면 즉시 필터링됩니다.</p>
+  </div>
+  <input class="gloss-search" type="text" id="gsearch" placeholder="약어 또는 한글 검색 (예: OCR, 피뢰기...)" oninput="filterGloss()">
+  <div class="gloss-grid" id="gloss-grid"></div>
+</div>
+</section>
+
+<!-- ===== 12 법규 ===== -->
+<section id="regulation">
+<div class="sw">
+  <div class="sh">
+    <span class="stag">12 / REGULATION</span>
+    <h2 class="stit">법규 및 <span>기준 요약</span></h2>
+    <p class="sdesc">수변전설비에 직접 관련된 법규·기준 핵심 조항을 요약했습니다.</p>
+  </div>
+  <div class="reg-grid">
+    <div class="reg-card"><div class="reg-title">전기안전관리법</div><div class="reg-law">전기안전관리법 시행규칙</div><ul class="reg-list"><li>용량 75kVA 초과 자가용 전기설비는 전기안전관리자 선임 의무</li><li>전기안전관리자: 전기기사 또는 산업기사 자격 보유자</li><li>정기검사: 연 1회 이상(한국전기안전공사)</li><li>임시검사: 설치·변경 시 사용 전 검사 필수</li></ul></div>
+    <div class="reg-card"><div class="reg-title">한국전기설비규정 (KEC)</div><div class="reg-law">KEC 200 ~ 800계열</div><ul class="reg-list"><li>KEC 110: 저압의 정의 &#8212; 교류 1,000V 이하</li><li>KEC 212: 보호 접지 계통(TN/TT/IT) 선정 기준</li><li>KEC 232: 과전류 차단기 선정 및 차단 용량</li><li>KEC 520: 전압강하 기준 (간선 2%, 분기 포함 3%)</li></ul></div>
+    <div class="reg-card"><div class="reg-title">전기설비기술기준</div><div class="reg-law">산업통상자원부 고시</div><ul class="reg-list"><li>특고압 수전설비 구내 인입선 시설 기준</li><li>변압기 과열 방지를 위한 온도 상승 한도</li><li>절연저항값 기준: 저압 0.1M&#937; 이상</li><li>접지저항값: 제1종 10&#937; 이하, 제3종 100&#937; 이하</li></ul></div>
+    <div class="reg-card"><div class="reg-title">내진 설계 기준</div><div class="reg-law">건축물 내진설계기준 (KDS 41 17 00)</div><ul class="reg-list"><li>3층 이상 또는 연면적 500m&#178; 이상 건물: 내진 설계 의무</li><li>수변전설비: 고정 앵커볼트 시공 기준 준수</li><li>내진 패드·스토퍼 설치 요구</li><li>지진 후 이상 점검 절차 수립 필요</li></ul></div>
+    <div class="reg-card"><div class="reg-title">에너지 절약 설계 기준</div><div class="reg-law">건축물 에너지절약설계기준</div><ul class="reg-list"><li>업무용·판매용 건물: 고효율 변압기 사용 권장</li><li>수변전설비에 자동역률조정기(APFR) 설치 권장</li><li>에너지 관리 시스템(EMS) 연계 우대</li><li>최대수요전력 관리를 위한 피크 컷 시스템 권장</li></ul></div>
+    <div class="reg-card"><div class="reg-title">화재 예방 기준</div><div class="reg-law">소방시설 설치 및 관리에 관한 법률</div><ul class="reg-list"><li>변전실: 자동 소화 설비(할론 대체제) 설치 대상</li><li>유입변압기: 방유제(오일 유출 방지턱) 설치 의무</li><li>전기실 출입문: 갑종 방화문 설치</li><li>케이블 관통부: 방화 충전재 시공 필수</li></ul></div>
+  </div>
+</div>
+</section>
+
+<!-- ===== 13 퀴즈 ===== -->
+<section id="quiz">
+<div class="sw">
+  <div class="sh">
+    <span class="stag">13 / QUIZ</span>
+    <h2 class="stit">자가 <span>테스트</span></h2>
+    <p class="sdesc">학습한 내용을 퀴즈로 확인해보세요. 각 문제를 클릭해 답을 선택합니다.</p>
+  </div>
+  <div class="quiz-wrap">
+    <div class="quiz-progress" id="qpips"></div>
+    <div class="quiz-card" id="qcard">
+      <div class="quiz-num" id="qnum">문제 1 / 20</div>
+      <div class="quiz-q" id="qq"></div>
+      <div class="quiz-opts" id="qopts"></div>
+      <div class="quiz-feedback" id="qfb"></div>
+      <div class="quiz-nav">
+        <span id="qscore-live" style="font-size:13px;color:var(--tx3);">맞은 개수: 0</span>
+        <button class="bo" id="qnext" onclick="nextQ()" style="display:none;padding:8px 18px;font-size:13px;">다음 문제 &#8594;</button>
+      </div>
+    </div>
+    <div class="quiz-score" id="qscore">
+      <div style="font-size:14px;color:var(--tx2);margin-bottom:8px;">최종 점수</div>
+      <div class="score-num" id="qfinal">0</div>
+      <div style="font-size:14px;color:var(--tx2);margin-top:4px;">/ 20 문제</div>
+      <div id="qgrade" style="font-size:18px;font-weight:700;margin-top:12px;"></div>
+      <button class="bp" onclick="restartQ()" style="margin-top:20px;">다시 풀기</button>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ===== 14 스마트 그리드 ===== -->
+<section id="smart">
+<div class="sw">
+  <div class="sh">
+    <span class="stag">14 / SMART GRID</span>
+    <h2 class="stit">신기술 및 <span>에너지 트렌드</span></h2>
+    <p class="sdesc">미래형 수변전설비의 변화와 스마트 그리드 기술을 알아보세요.</p>
+  </div>
+  <div class="smgrid">
+    <div class="smcard bl"><div class="smico">&#128161;</div><div class="smtit">디지털 보호 계전기</div><div class="smdesc">사고 발생 시 Event Log 자동 기록. 사고 전류, 시각, 동작 횟수를 디지털로 저장해 원인 분석 용이.</div></div>
+    <div class="smcard gd"><div class="smico">&#128241;</div><div class="smtit">원격 감시 시스템 (EMS)</div><div class="smdesc">스마트폰·PC로 변압기 온도, 전력 사용량, 역률 원격 감시. 이상 발생 시 자동 알람 발송.</div></div>
+    <div class="smcard gn"><div class="smico">&#127959;</div><div class="smtit">내진 설비</div><div class="smdesc">앵커볼트 고정, 방진 패드, 내진 스토퍼 적용. 지진 발생 시 설비 전도·이탈 방지.</div></div>
+    <div class="smcard bl"><div class="smico">&#9889;</div><div class="smtit">고효율 변압기 (아몰퍼스)</div><div class="smdesc">비정질 철심으로 무부하손 80% 이상 절감. 초고효율 등급 인증, 에너지 절약 의무 건물 확대 적용.</div></div>
+    <div class="smcard gd"><div class="smico">&#128267;</div><div class="smtit">ESS 연계 수변전</div><div class="smdesc">심야 전력 충전, 피크 시간 방전. 전기요금 절감과 비상 전원 확보 동시 달성.</div></div>
+    <div class="smcard gn"><div class="smico">&#128202;</div><div class="smtit">전력 품질 분석 (PQ)</div><div class="smdesc">고조파, Sag, 순간정전, 불평형 실시간 감시. PQ 분석기로 정밀 데이터 수집·원인 파악.</div></div>
+  </div>
+</div>
+</section>
+
+
+<!-- ═══════════════════════════════════════
+     현장 점검 체크시트 (인쇄 가능)
+════════════════════════════════════════ -->
+<section id="checklist">
+<div class="sw">
+  <div class="sh">
+    <span class="stag">16 / FIELD CHECKLIST</span>
+    <h2 class="stit">현장 점검 <span>체크시트</span></h2>
+    <p class="sdesc">항목을 클릭하여 체크하고, 인쇄 버튼으로 점검 기록을 출력하세요. 완전히 오프라인으로 동작합니다.</p>
+  </div>
+
+  <div class="cl-toolbar">
+    <button class="cl-btn primary" onclick="window.print()">&#128438; 인쇄 / PDF 저장</button>
+    <button class="cl-btn" onclick="clReset()">&#8635; 초기화</button>
+    <button class="cl-btn" onclick="clCheckAll()">&#10003; 전체 양호</button>
+    <span style="font-size:13px;color:var(--tx3);margin-left:auto;">총 <span id="cl-total">0</span>항목 중 <span id="cl-done" style="color:var(--grn);font-weight:700;">0</span>개 완료</span>
+  </div>
+
+  <div class="cl-meta">
+    <div class="cl-meta-field"><label>점검 일자</label><input type="date" id="cl-date"></div>
+    <div class="cl-meta-field"><label>점검자 성명</label><input type="text" id="cl-name" placeholder="홍길동"></div>
+    <div class="cl-meta-field"><label>설비 명칭 / 위치</label><input type="text" id="cl-loc" placeholder="예) B1 수변전실"></div>
+  </div>
+
+  <!-- 일상 점검 -->
+  <div class="cl-section" id="cls-daily">
+    <div class="cl-section-hdr">
+      <div class="cl-section-title">&#9201; 일상 점검 (매일)</div>
+      <div class="cl-section-prog" id="clp-daily">0 / 0</div>
+    </div>
+    <div class="cl-prog-bar"><div class="cl-prog-fill" id="clb-daily" style="width:0%"></div></div>
+    <div class="cl-items" id="cli-daily"></div>
+  </div>
+
+  <!-- 월간 점검 -->
+  <div class="cl-section" id="cls-monthly">
+    <div class="cl-section-hdr">
+      <div class="cl-section-title">&#128197; 월간 점검</div>
+      <div class="cl-section-prog" id="clp-monthly">0 / 0</div>
+    </div>
+    <div class="cl-prog-bar"><div class="cl-prog-fill" id="clb-monthly" style="width:0%"></div></div>
+    <div class="cl-items" id="cli-monthly"></div>
+  </div>
+
+  <!-- 연간 정기점검 -->
+  <div class="cl-section" id="cls-annual">
+    <div class="cl-section-hdr">
+      <div class="cl-section-title">&#128203; 연간 정기점검</div>
+      <div class="cl-section-prog" id="clp-annual">0 / 0</div>
+    </div>
+    <div class="cl-prog-bar"><div class="cl-prog-fill" id="clb-annual" style="width:0%"></div></div>
+    <div class="cl-items" id="cli-annual"></div>
+  </div>
+
+  <!-- 정전작업 전 확인 -->
+  <div class="cl-section" id="cls-outage">
+    <div class="cl-section-hdr">
+      <div class="cl-section-title" style="color:var(--red);">&#9888; 정전작업 전 안전 확인</div>
+      <div class="cl-section-prog" id="clp-outage">0 / 0</div>
+    </div>
+    <div class="cl-prog-bar"><div class="cl-prog-fill" id="clb-outage" style="width:0%;background:var(--red)"></div></div>
+    <div class="cl-items" id="cli-outage"></div>
+  </div>
+
+  <div style="margin-top:12px;padding:10px 14px;background:var(--card);border:1px solid var(--b1);border-radius:10px;font-size:12px;color:var(--tx3);">
+    &#9432; 이 체크시트는 인쇄 버튼을 누르면 체크 상태가 그대로 출력됩니다. 브라우저 인쇄 → PDF 저장으로 기록을 보관하세요.
+  </div>
+</div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     수변전실 배치 기준 & 이격거리 도면
+════════════════════════════════════════ -->
+<section id="layout">
+<div class="sw">
+  <div class="sh">
+    <span class="stag">17 / INSTALLATION STANDARDS</span>
+    <h2 class="stit">수변전실 배치 기준 <span>&amp; 이격거리</span></h2>
+    <p class="sdesc">KEC 및 전기설비기술기준에 따른 법정 기준치. 현장 설치·검사 시 직접 확인하세요.</p>
+  </div>
+
+  <div class="layout-tabs">
+    <button class="layout-tab on" onclick="layoutTab('diagram',this)">배치 도면</button>
+    <button class="layout-tab" onclick="layoutTab('space',this)">이격거리 기준</button>
+    <button class="layout-tab" onclick="layoutTab('env',this)">환경·설비 기준</button>
+    <button class="layout-tab" onclick="layoutTab('grounding',this)">접지 기준</button>
+  </div>
+
+  <!-- 배치 도면 탭 -->
+  <div class="layout-panel on" id="lp-diagram">
+    <p style="font-size:13px;color:var(--tx2);margin-bottom:1rem;">수변전실 표준 평면 배치 예시 (단선결선 CB형 기준). 숫자는 최소 법정 기준입니다.</p>
+    <div style="overflow-x:auto;">
+    <svg width="100%" viewBox="0 0 700 480" xmlns="http://www.w3.org/2000/svg">
+      <!-- 수변전실 외곽 -->
+      <rect x="30" y="30" width="640" height="420" rx="4" fill="none" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="8 4"/>
+      <text x="350" y="22" text-anchor="middle" font-size="13" fill="#38bdf8" font-weight="700" font-family="Consolas,monospace">수변전실 평면도 (최소 규격 예시)</text>
+
+      <!-- 출입문 -->
+      <rect x="30" y="185" width="1" height="80" fill="#38bdf8"/>
+      <rect x="30" y="185" width="50" height="80" rx="2" fill="none" stroke="#fbbf24" stroke-width="1.5"/>
+      <path d="M30 185 Q55 225 30 265" fill="none" stroke="#fbbf24" stroke-width="1" stroke-dasharray="3 2"/>
+      <text x="55" y="232" text-anchor="middle" font-size="10" fill="#fbbf24" font-family="Consolas,monospace">출입문</text>
+      <text x="55" y="244" text-anchor="middle" font-size="10" fill="#92400e" font-family="Consolas,monospace">W900</text>
+
+      <!-- 통로 표시 -->
+      <rect x="80" y="30" width="1" height="420" fill="none" stroke="#64748b" stroke-width="0.5" stroke-dasharray="4 4"/>
+      <text x="195" y="470" text-anchor="middle" font-size="10" fill="#64748b" font-family="Consolas,monospace">전면 통로 (최소 1,000mm)</text>
+      <line x1="82" y1="460" x2="308" y2="460" stroke="#64748b" stroke-width="1" marker-end="url(#arrow-layout)"/>
+      <line x1="82" y1="460" x2="82" y2="460" stroke="#64748b" stroke-width="1"/>
+
+      <!-- 치수 화살표 정의 -->
+      <defs>
+        <marker id="arrow-layout" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M2 2L8 5L2 8" fill="none" stroke="#64748b" stroke-width="1.5"/>
+        </marker>
+        <marker id="arrow-layout-r" viewBox="0 0 10 10" refX="2" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M8 2L2 5L8 8" fill="none" stroke="#64748b" stroke-width="1.5"/>
+        </marker>
+        <marker id="red-arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+          <path d="M2 2L8 5L2 8" fill="none" stroke="#f87171" stroke-width="1.5"/>
+        </marker>
+        <marker id="red-arr-r" viewBox="0 0 10 10" refX="2" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+          <path d="M8 2L2 5L8 8" fill="none" stroke="#f87171" stroke-width="1.5"/>
+        </marker>
+        <marker id="grn-arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+          <path d="M2 2L8 5L2 8" fill="none" stroke="#34d399" stroke-width="1.5"/>
+        </marker>
+      </defs>
+
+      <!-- 수배전반 (좌측 열) -->
+      <rect x="310" y="50" width="100" height="360" rx="4" fill="#1e293b" stroke="#38bdf8" stroke-width="1.5"/>
+      <text x="360" y="225" text-anchor="middle" font-size="12" fill="#38bdf8" font-weight="700" font-family="Consolas,monospace" transform="rotate(-90,360,225)">수배전반 (고압반)</text>
+      <text x="360" y="242" text-anchor="middle" font-size="10" fill="#4a90b8" font-family="Consolas,monospace" transform="rotate(-90,360,242)">22.9kV</text>
+
+      <!-- 변압기 -->
+      <rect x="440" y="80" width="120" height="100" rx="6" fill="#1e293b" stroke="#34d399" stroke-width="1.5"/>
+      <text x="500" y="124" text-anchor="middle" font-size="12" fill="#34d399" font-weight="700" font-family="Consolas,monospace">TR</text>
+      <text x="500" y="140" text-anchor="middle" font-size="10" fill="#065f46" font-family="Consolas,monospace">변압기</text>
+      <text x="500" y="155" text-anchor="middle" font-size="10" fill="#059669" font-family="Consolas,monospace">22.9kV/380V</text>
+
+      <!-- 저압 분전반 -->
+      <rect x="440" y="220" width="120" height="180" rx="4" fill="#1e293b" stroke="#34d399" stroke-width="1"/>
+      <text x="500" y="307" text-anchor="middle" font-size="12" fill="#34d399" font-weight="700" font-family="Consolas,monospace" transform="rotate(-90,500,307)">저압반 (MDB)</text>
+
+      <!-- 후면 벽 -->
+      <rect x="590" y="30" width="80" height="420" rx="0" fill="rgba(56,189,248,.03)" stroke="none"/>
+      <text x="630" y="240" text-anchor="middle" font-size="10" fill="#475569" font-family="Consolas,monospace" transform="rotate(-90,630,240)">외벽 / 후면</text>
+
+      <!-- 이격거리 치수선 ① 전면 통로 -->
+      <line x1="82" y1="455" x2="308" y2="455" stroke="#f87171" stroke-width="1" marker-start="url(#red-arr-r)" marker-end="url(#red-arr)"/>
+      <rect x="148" y="445" width="72" height="16" rx="3" fill="#1e293b"/>
+      <text x="184" y="457" text-anchor="middle" font-size="11" fill="#f87171" font-family="Consolas,monospace">&#8805; 1,000mm</text>
+
+      <!-- 이격거리 치수선 ② 후면 통로 -->
+      <line x1="412" y1="455" x2="588" y2="455" stroke="#f87171" stroke-width="1" marker-start="url(#red-arr-r)" marker-end="url(#red-arr)"/>
+      <rect x="453" y="445" width="64" height="16" rx="3" fill="#1e293b"/>
+      <text x="485" y="457" text-anchor="middle" font-size="11" fill="#f87171" font-family="Consolas,monospace">&#8805; 600mm</text>
+
+      <!-- 이격거리 치수선 ③ 변압기 ↔ 벽 -->
+      <line x1="562" y1="130" x2="588" y2="130" stroke="#fbbf24" stroke-width="1" marker-end="url(#red-arr)"/>
+      <text x="575" y="122" text-anchor="middle" font-size="10" fill="#fbbf24" font-family="Consolas,monospace">&#8805;600</text>
+
+      <!-- 레이블: 전면통로 표시 -->
+      <rect x="82" y="30" width="226" height="420" rx="0" fill="rgba(56,189,248,.03)" stroke="none"/>
+      <text x="195" y="248" text-anchor="middle" font-size="11" fill="#38bdf8" font-family="Consolas,monospace" opacity="0.6">전 면 통 로</text>
+      <text x="195" y="262" text-anchor="middle" font-size="10" fill="#38bdf8" font-family="Consolas,monospace" opacity="0.4">조작·점검 공간</text>
+
+      <!-- 범례 박스 -->
+      <rect x="32" y="32" width="44" height="420" rx="0" fill="rgba(251,191,36,.03)" stroke="none"/>
+      <text x="54" y="246" text-anchor="middle" font-size="9" fill="#fbbf24" opacity="0.5" font-family="Consolas,monospace" transform="rotate(-90,54,246)">인입케이블 경로</text>
+
+      <!-- 치수 설명 텍스트 -->
+      <text x="360" y="20" text-anchor="middle" font-size="0" fill="none"/>
+    </svg>
+    </div>
+
+    <div class="layout-grid">
+      <div class="layout-card">
+        <div class="layout-card-title">&#128207; 주요 통로 폭 기준</div>
+        <div class="layout-row"><span>고압반 전면 조작·점검 통로</span><span style="color:var(--red);">&#8805; 1,000mm</span></div>
+        <div class="layout-row"><span>저압반 전면 조작·점검 통로</span><span style="color:var(--red);">&#8805; 1,000mm</span></div>
+        <div class="layout-row"><span>변압기·기기 후면 통로</span><span style="color:var(--gold);">&#8805; 600mm</span></div>
+        <div class="layout-row"><span>수변전실 출입문 유효폭</span><span style="color:var(--grn);">&#8805; 900mm</span></div>
+        <div class="layout-row"><span>수변전실 천장 높이</span><span style="color:var(--grn);">&#8805; 2,600mm</span></div>
+        <div class="layout-warn">전면 통로 1,000mm 미만 시 KEC 위반. 점검·조작 불가능으로 안전사고 위험.</div>
+      </div>
+      <div class="layout-card">
+        <div class="layout-card-title">&#127968; 수변전실 구조 기준</div>
+        <div class="layout-row"><span>바닥 하중 (변압기 설치부)</span><span>&#8805; 5 kN/m²</span></div>
+        <div class="layout-row"><span>방화구획 설치</span><span style="color:var(--red);">필수 (별도 구획)</span></div>
+        <div class="layout-row"><span>출입문 방화 등급</span><span>방화문 (갑종)</span></div>
+        <div class="layout-row"><span>조도 기준</span><span>&#8805; 200 lx</span></div>
+        <div class="layout-row"><span>환기 방식</span><span>기계 환기 (강제)</span></div>
+        <div class="layout-row"><span>유입변압기 방유턱</span><span style="color:var(--red);">필수</span></div>
+        <div class="layout-tip">수변전실은 외부에서 잠금 가능한 구조이어야 하며, 관계자 외 출입금지 표시를 부착합니다.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 이격거리 기준 탭 -->
+  <div class="layout-panel" id="lp-space">
+    <div class="layout-grid">
+      <div class="layout-card">
+        <div class="layout-card-title">&#9889; 충전부 이격거리 (22.9kV 기준)</div>
+        <div class="layout-row"><span>충전부 ↔ 구조물 (지지물)</span><span style="color:var(--red);">&#8805; 150mm</span></div>
+        <div class="layout-row"><span>충전부 ↔ 충전부 (상간)</span><span style="color:var(--red);">&#8805; 150mm</span></div>
+        <div class="layout-row"><span>충전부 ↔ 바닥면</span><span style="color:var(--red);">&#8805; 2,300mm</span></div>
+        <div class="layout-row"><span>충전부 ↔ 조작자 신체 (작업 한계)</span><span style="color:var(--gold);">&#8805; 1,200mm</span></div>
+        <div class="layout-row"><span>노출 충전부 ↔ 접지된 금속체</span><span style="color:var(--red);">&#8805; 300mm</span></div>
+        <div class="layout-warn">이격거리 미달 시 섬락(아크 방전) 사고 위험. 반드시 충전부를 커버 또는 절연 처리.</div>
+      </div>
+      <div class="layout-card">
+        <div class="layout-card-title">&#128207; 기기 간 이격거리</div>
+        <div class="layout-row"><span>변압기 ↔ 가연성 벽</span><span style="color:var(--red);">&#8805; 1,000mm</span></div>
+        <div class="layout-row"><span>변압기 ↔ 변압기 (병렬 설치)</span><span style="color:var(--gold);">&#8805; 600mm</span></div>
+        <div class="layout-row"><span>유입변압기 방유턱 높이</span><span>&#8805; 100mm</span></div>
+        <div class="layout-row"><span>유입변압기 방유 용량</span><span>절연유량 이상</span></div>
+        <div class="layout-row"><span>고압반 ↔ 저압반 간격</span><span>&#8805; 300mm (권장)</span></div>
+        <div class="layout-row"><span>수배전반 앵커 볼트 시공</span><span style="color:var(--red);">내진 고려 필수</span></div>
+        <div class="layout-tip">내진 설계 대상 건물은 앵커볼트 규격과 시공 방법을 내진 기준에 맞게 적용해야 합니다.</div>
+      </div>
+      <div class="layout-card">
+        <div class="layout-card-title">&#127810; 케이블 배선 기준</div>
+        <div class="layout-row"><span>고압 케이블 종류</span><span>CV 또는 CNCV</span></div>
+        <div class="layout-row"><span>저압 케이블 종류</span><span>CV, FR-CV</span></div>
+        <div class="layout-row"><span>고·저압 케이블 교차 시</span><span style="color:var(--gold);">분리 배관 권장</span></div>
+        <div class="layout-row"><span>케이블 트레이 이격</span><span>고압↔저압 150mm↑</span></div>
+        <div class="layout-row"><span>관통부 방화 처리</span><span style="color:var(--red);">내화 충전재 필수</span></div>
+        <div class="layout-tip">고압 케이블은 반드시 금속관 또는 케이블 트레이에 수납하고 식별 테이프로 표시합니다.</div>
+      </div>
+      <div class="layout-card">
+        <div class="layout-card-title">&#128274; 안전 표시 및 잠금</div>
+        <div class="layout-row"><span>출입문 경고 표시</span><span style="color:var(--red);">필수 부착</span></div>
+        <div class="layout-row"><span>고압 위험 표시</span><span style="color:var(--red);">기기별 부착</span></div>
+        <div class="layout-row"><span>단로기·차단기 명판</span><span>회로 식별 표시</span></div>
+        <div class="layout-row"><span>잠금 장치</span><span>외부 시건 가능</span></div>
+        <div class="layout-row"><span>비상 연락처 게시</span><span>한전·안전관리자</span></div>
+        <div class="layout-row"><span>소화기 배치</span><span style="color:var(--red);">CO₂·할론 비치</span></div>
+        <div class="layout-warn">관계자 외 출입금지 표시 없이 운영 시 전기안전관리법 위반.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 환경·설비 기준 탭 -->
+  <div class="layout-panel" id="lp-env">
+    <div class="layout-grid">
+      <div class="layout-card">
+        <div class="layout-card-title">&#127777; 온도·습도 관리 기준</div>
+        <div class="layout-row"><span>수변전실 권장 온도</span><span>5°C ~ 40°C</span></div>
+        <div class="layout-row"><span>변압기 최고 허용온도</span><span style="color:var(--red);">105°C (권선)</span></div>
+        <div class="layout-row"><span>몰드변압기 경보 온도</span><span style="color:var(--gold);">95°C (권선)</span></div>
+        <div class="layout-row"><span>GIS·VCB 허용 온도</span><span>-5°C ~ 40°C</span></div>
+        <div class="layout-row"><span>상대 습도</span><span>&#8804; 85% (비결로)</span></div>
+        <div class="layout-row"><span>해발고도 (표준 적용)</span><span>&#8804; 1,000m</span></div>
+        <div class="layout-tip">여름철 수변전실 온도가 40°C 초과 시 냉방 또는 강제 환기 설비를 보강해야 합니다.</div>
+      </div>
+      <div class="layout-card">
+        <div class="layout-card-title">&#128168; 환기 설비 기준</div>
+        <div class="layout-row"><span>환기 방식</span><span>강제 환기 (기계식)</span></div>
+        <div class="layout-row"><span>환기량 (변압기 손실 기준)</span><span>손실 1kW당 6 m³/min</span></div>
+        <div class="layout-row"><span>환기구 위치</span><span>하부 흡기 / 상부 배기</span></div>
+        <div class="layout-row"><span>방충망 설치</span><span>흡기구 필수 설치</span></div>
+        <div class="layout-row"><span>환기팬 예비</span><span>1대 예비 권장</span></div>
+        <div class="layout-tip">환기구는 빗물·이물질 유입을 막는 루버를 설치하고, 방충망은 주기적으로 청소합니다.</div>
+      </div>
+      <div class="layout-card">
+        <div class="layout-card-title">&#128161; 조명 기준</div>
+        <div class="layout-row"><span>수변전실 기본 조도</span><span style="color:var(--red);">&#8805; 200 lx</span></div>
+        <div class="layout-row"><span>조작·점검 위치 조도</span><span>&#8805; 300 lx 권장</span></div>
+        <div class="layout-row"><span>비상 조명 설치</span><span style="color:var(--red);">필수</span></div>
+        <div class="layout-row"><span>비상 조명 유지 시간</span><span>&#8805; 20분</span></div>
+        <div class="layout-row"><span>조명 스위치 위치</span><span>출입문 인접부</span></div>
+        <div class="layout-tip">정전 시에도 안전한 작업을 위해 비상조명(충전식 LED 조명)을 수변전실 내 최소 1개 이상 설치합니다.</div>
+      </div>
+      <div class="layout-card">
+        <div class="layout-card-title">&#127987; 소화·방재 설비</div>
+        <div class="layout-row"><span>소화기 종류</span><span style="color:var(--red);">CO₂ 또는 할론</span></div>
+        <div class="layout-row"><span>소화기 수량</span><span>&#8805; 2개 (용량별)</span></div>
+        <div class="layout-row"><span>자동 소화 설비</span><span>대용량 권장</span></div>
+        <div class="layout-row"><span>연기 감지기</span><span>필수 설치</span></div>
+        <div class="layout-row"><span>열 감지기</span><span>필수 설치</span></div>
+        <div class="layout-warn">물이나 포 소화기 절대 금지 — 감전 위험. 반드시 전기 화재용 소화기를 사용하세요.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 접지 기준 탭 -->
+  <div class="layout-panel" id="lp-grounding">
+    <p style="font-size:13px;color:var(--tx2);margin-bottom:1rem;">KEC 140조 기준 접지 시스템. 접지 불량은 감전 사고 및 기기 손상의 주요 원인입니다.</p>
+    <div class="layout-grid">
+      <div class="layout-card">
+        <div class="layout-card-title">&#9889; 접지 저항 기준값</div>
+        <div class="layout-row"><span>특고압 계통 접지 (제1종)</span><span style="color:var(--red);">&#8804; 10 &#8486;</span></div>
+        <div class="layout-row"><span>고압·특고압 혼촉 방지 (제2종)</span><span style="color:var(--red);">&#8804; 5 &#8486; (150/Ig)</span></div>
+        <div class="layout-row"><span>저압 기기 외함 접지 (제3종)</span><span style="color:var(--gold);">&#8804; 100 &#8486;</span></div>
+        <div class="layout-row"><span>특별 저압 (ELV) 접지</span><span>&#8804; 10 &#8486;</span></div>
+        <div class="layout-row"><span>피뢰기(LA) 전용 접지</span><span style="color:var(--red);">&#8804; 10 &#8486;</span></div>
+        <div class="layout-row"><span>통합 접지 시스템 사용 시</span><span>&#8804; 1 &#8486;</span></div>
+        <div class="layout-warn">접지저항 측정은 연 1회 이상 실시. 기준값 초과 시 접지봉 추가 타입 또는 심타식 접지 시공.</div>
+      </div>
+      <div class="layout-card">
+        <div class="layout-card-title">&#128295; 접지 시공 기준</div>
+        <div class="layout-row"><span>접지봉 재질</span><span>동봉 또는 동피복봉</span></div>
+        <div class="layout-row"><span>접지봉 직경</span><span>&#8805; 14mm</span></div>
+        <div class="layout-row"><span>접지봉 타설 깊이</span><span>&#8805; 750mm</span></div>
+        <div class="layout-row"><span>접지 전선 단면적 (고압)</span><span>&#8805; 16mm²</span></div>
+        <div class="layout-row"><span>접지 전선 단면적 (저압)</span><span>&#8805; 6mm²</span></div>
+        <div class="layout-row"><span>접지 전선 색상</span><span>녹색 또는 녹/황</span></div>
+        <div class="layout-tip">접지 전선은 절연 피복이 손상되지 않도록 배관 보호하고, 접지 단자함 내에서 점검할 수 있도록 시공합니다.</div>
+      </div>
+      <div class="layout-card">
+        <div class="layout-card-title">&#128203; 접지 측정 방법</div>
+        <div class="layout-row"><span>측정 장비</span><span>접지저항계 (Earth Tester)</span></div>
+        <div class="layout-row"><span>측정 방법</span><span>3극 전위강하법</span></div>
+        <div class="layout-row"><span>보조 전극 간격</span><span>접지극에서 10m씩</span></div>
+        <div class="layout-row"><span>측정 시기</span><span>연 1회 이상 (건기)</span></div>
+        <div class="layout-row"><span>측정 기록 보관</span><span>3년 이상 보관</span></div>
+        <div class="layout-tip">접지저항 측정 시 접지선을 분리하고 측정합니다. 단, 작업 전 검전 필수.</div>
+      </div>
+      <div class="layout-card">
+        <div class="layout-card-title">&#128279; 등전위 본딩</div>
+        <div class="layout-row"><span>등전위 본딩 목적</span><span>전위차 제거 감전 방지</span></div>
+        <div class="layout-row"><span>대상 금속체</span><span>배관, 덕트, 구조체</span></div>
+        <div class="layout-row"><span>본딩 도체 단면적</span><span>&#8805; 6mm² (Cu)</span></div>
+        <div class="layout-row"><span>접속 방법</span><span>압착 또는 용접</span></div>
+        <div class="layout-row"><span>수변전실 내 적용</span><span style="color:var(--red);">전금속체 본딩 필수</span></div>
+        <div class="layout-warn">금속 배관·덕트·구조체가 접지되지 않으면 고압 혼촉 시 감전 사고 발생 위험.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</section>
+
+<footer>
+  <div class="flogo">수변전설비 학습 포털</div>
+  <div>본 사이트는 학습 목적으로 제작되었습니다. 실제 작업 시 반드시 전문가와 상담하세요.</div>
+  <div style="margin-top:6px;">KEC(한국전기설비규정) &#183; 전기설비기술기준 &#183; 전기안전관리법 기반</div>
+</footer>
+
+<script>
+/* ── 장치 정보 ── */
+const DEV={
+  hanjeun:{tag:'전원',tc:'#38bdf8',tb:'rgba(56,189,248,.1)',name:'한전 인입 전원',role:'특별고압 22.9kV 3상 교류 공급',detail:'한국전력공사(KEPCO)에서 22.9kV 3상 교류를 공급합니다. 지중 케이블 또는 가공 인입선으로 구내에 인입됩니다.',tip:'정전 시 한전 인입 계통을 먼저 확인. 한전 측 문제는 직접 해결 불가.'},
+  ass:{tag:'ASS/LBS',tc:'#fbbf24',tb:'rgba(251,191,36,.1)',name:'ASS / LBS — 부하개폐기',role:'인입선로 첫 관문 — 선로 사고 구분 및 부하 개폐',detail:'ASS는 선로 고장 시 자동으로 해당 구간을 분리해 사고 범위를 최소화합니다. LBS는 부하전류 개폐 가능하나 단락전류 차단 불가 — PF와 조합합니다.',tip:'PF 용단·탈락 여부 정기 확인. 절연유 유입형은 유면 점검 필요.'},
+  mof:{tag:'MOF',tc:'#94a3b8',tb:'rgba(148,163,184,.1)',name:'MOF — 계기용 변압변류기',role:'한전 전력량 계량용 CT+PT 일체형 기기',detail:'전력량 계량을 위해 CT(변류기)와 PT(계기용 변압기)를 일체화한 기기입니다. 한전 전기 요금 산정의 기준이 되며, 계량기 봉인 상태를 반드시 유지해야 합니다.',tip:'봉인 훼손 절대 금지. 오결선 시 요금 과오납 또는 부족 납부 문제 발생.'},
+  ds:{tag:'DS',tc:'#fb923c',tb:'rgba(251,146,60,.1)',name:'DS — 단로기 (Disconnecting Switch)',role:'무부하 상태에서 회로 분리 — 점검·수리 시 사용',detail:'전류가 흐르지 않는 무부하 상태에서만 조작 가능합니다. 반드시 VCB 개방 후에만 조작해야 하며, 부하 상태에서 조작하면 아크 사고가 발생합니다.',tip:'조작 전 반드시 VCB 개방 확인! 접촉부 산화·과열 흔적 정기 점검.'},
+  vcb:{tag:'VCB',tc:'#f87171',tb:'rgba(248,113,113,.1)',name:'VCB — 진공차단기 (Vacuum Circuit Breaker)',role:'정상·사고 전류 모두 차단 — 수변전설비 핵심 보호 기기',detail:'진공 인터럽터 내부에서 아크를 소호하는 고압 차단기. OCR 또는 OCGR 신호를 받아 자동 트립됩니다. 단락전류 차단 능력이 있어 사고 전류도 차단 가능합니다.',tip:'진공도 정기 확인, 조작 기구부 구리스 도포, 트립 코일 저항값 측정.'},
+  la:{tag:'LA',tc:'#a78bfa',tb:'rgba(167,139,250,.1)',name:'LA — 피뢰기 (Lightning Arrester)',role:'낙뢰·개폐 서지 방전 — 변압기 등 기기 보호',detail:'낙뢰나 개폐 조작 시 발생하는 이상 고전압(서지)을 대지로 방전시켜 기기를 보호합니다. ZnO 비선형 소자를 사용해 정상 전압에서는 절연, 이상 전압에서는 도통합니다.',tip:'단로장치 탈락 여부 확인, 누설전류 측정, 외관 균열·오손 점검.'},
+  ct:{tag:'CT',tc:'#22d3ee',tb:'rgba(34,211,238,.1)',name:'CT — 변류기 (Current Transformer)',role:'대전류 → 5A 변환 — 계측·보호계전기용',detail:'수천 암페어의 대전류를 계측기나 보호계전기가 읽을 수 있는 5A 이하로 변환합니다. 전력량계, 전류계(AS), OCR, OCGR 계전기에 연결됩니다. 변류비 예: 200/5A.',tip:'주의: CT 2차측 개방 절대 금지 — 수천V 고전압 발생 위험! 절연저항 정기 측정.'},
+  pt:{tag:'PT',tc:'#f9a8d4',tb:'rgba(249,168,212,.1)',name:'PT — 계기용 변압기 (Potential Transformer)',role:'고전압 → 110V 변환 — 전압 계측·계전기용',detail:'22.9kV 고전압을 110V로 낮춰 전압계(VS), 전력계, OVR, UVR 계전기에 안전하게 연결합니다. 변압비 예: 22,900/110V.',tip:'주의: PT 2차측 단락 절대 금지 — 대전류 발생 위험! 변압비 및 절연저항 정기 확인.'},
+  tr:{tag:'TR',tc:'#34d399',tb:'rgba(52,211,153,.1)',name:'TR — 변압기 (Transformer)',role:'22.9kV → 380V/220V 강압 변환',detail:'전자기 유도 원리를 이용해 특고압을 저압으로 변환하는 수변전설비의 핵심 기기. 용량은 kVA 단위로 표시하며 건물 부하에 맞게 선정합니다. 몰드형(건식)과 유입형으로 구분됩니다.',tip:'몰드형: 먼지 제거(트래킹 방지). 유입형: 유면계·온도계 주기 확인.'},
+  acb:{tag:'ACB',tc:'#34d399',tb:'rgba(52,211,153,.1)',name:'ACB — 기중 차단기 (Air Circuit Breaker)',role:'저압 주차단기 — 변압기 2차 측 보호',detail:'공기 중에서 아크를 소호하는 저압 주차단기. 변압기 2차 측에 설치되어 저압 분전반을 총괄 보호합니다. OCR 기능 내장 가능하며, 선택 트립 기능으로 선택성 확보.',tip:'접속부 과열 점검, 트립 장치 동작 시험, 아크 슈트 오염 확인.'},
+  sc:{tag:'SC',tc:'#818cf8',tb:'rgba(129,140,248,.1)',name:'SC — 전력용 콘덴서 (Static Capacitor)',role:'역률 개선 — 전기요금 절감',detail:'진상 전류를 공급해 역률을 개선하는 기기. 역률 90% 이상 유지 시 전기요금 할인, 미달 시 할증. 직렬 리액터(SR)와 함께 설치해 고조파로 인한 콘덴서 손상을 방지합니다.',tip:'고조파에 의한 배부름(Swelling) 현상 유무 체크, 방전 코일 동작 확인.'},
+  mccb:{tag:'MCCB',tc:'#34d399',tb:'rgba(52,211,153,.1)',name:'MCCB — 배선차단기 (Molded Case Circuit Breaker)',role:'저압 분기 회로 보호 — 과전류·단락 차단',detail:'변압기 2차 측 저압 분전반에 설치되어 분기 회로를 보호합니다. 과전류 및 단락 발생 시 자동 차단하며, 용도별(조명, 동력, 콘센트)로 별도 설치합니다.',tip:'정격전류·차단용량 적정 선정, 과열 흔적(변색, 냄새) 점검, 동작 특성 시험.'},
+  pf:{tag:'PF',tc:'#fb923c',tb:'rgba(251,146,60,.1)',name:'PF — 전력퓨즈 (Power Fuse)',role:'단락전류 차단 — LBS의 보호 협조',detail:'LBS가 차단하지 못하는 단락전류를 차단합니다. 한 번 용단되면 교체해야 하는 소모품. PF-CB형 수변전설비에서 CB 앞단에 설치됩니다.',tip:'PF 용단 시 반드시 3상 동시 교체 권장. 동일 사양(규격) 교체 필수.'}
+};
+
+function showDev(id){
+  const d=DEV[id];if(!d)return;
+  document.getElementById('sld-empty').style.display='none';
+  const el=document.getElementById('sld-detail');
+  el.style.display='block';
+  el.innerHTML='<span class="dtag" style="color:'+d.tc+';background:'+d.tb+';border:1px solid '+d.tc+'40;">'+d.tag+'</span><div class="dname">'+d.name+'</div><div class="drole">'+d.role+'</div><div class="ddet">'+d.detail+'</div><div class="dtip"><strong>실무 팁</strong>'+d.tip+'</div>';
+}
+function sldTab(id,btn){
+  document.querySelectorAll('.sldtab').forEach(t=>t.classList.remove('on'));
+  document.querySelectorAll('.tpanel').forEach(p=>p.classList.remove('on'));
+  btn.classList.add('on');
+  document.getElementById('sld-'+id).classList.add('on');
+}
+function cTab(id,btn){
+  document.querySelectorAll('.ctab').forEach(t=>t.classList.remove('on'));
+  document.querySelectorAll('.cpanel').forEach(p=>p.classList.remove('on'));
+  btn.classList.add('on');
+  document.getElementById('cp-'+id).classList.add('on');
+}
+function g(id){return+document.getElementById(id).value||0;}
+function cP1(){const v=g('p1v'),i=g('p1i'),pf=Math.min(1,Math.max(0,g('p1pf')));const P=v*i*pf,S=v*i,Q=S*Math.sqrt(Math.max(0,1-pf*pf));document.getElementById('r-p1w').textContent=P.toLocaleString('ko-KR',{maximumFractionDigits:0})+' W';document.getElementById('r-p1kw').textContent='= '+(P/1000).toFixed(2)+' kW';document.getElementById('r-p1s').textContent=S.toLocaleString('ko-KR',{maximumFractionDigits:0})+' VA';document.getElementById('r-p1q').textContent=Q.toFixed(0)+' VAR';}
+function cP3(){const v=g('p3v'),i=g('p3i'),pf=Math.min(1,Math.max(0,g('p3pf')));const P=Math.sqrt(3)*v*i*pf,S=Math.sqrt(3)*v*i;document.getElementById('r-p3w').textContent=P.toLocaleString('ko-KR',{maximumFractionDigits:0})+' W';document.getElementById('r-p3kw').textContent='= '+(P/1000).toFixed(1)+' kW';document.getElementById('r-p3s').textContent=S.toLocaleString('ko-KR',{maximumFractionDigits:0})+' VA';document.getElementById('r-p3skva').textContent='= '+(S/1000).toFixed(1)+' kVA';}
+function cTR(){const kw=g('trkw'),pf=Math.max(0.01,g('trpf')),df=Math.max(1,Math.min(100,g('trdf')))/100;const need=(kw*df)/pf;const stds=[50,75,100,150,200,300,500,750,1000,1500,2000];const std=stds.find(s=>s>=need)||stds[stds.length-1];document.getElementById('r-tr').textContent=need.toFixed(1)+' kVA';document.getElementById('r-tr-std').textContent='→ 표준 선정: '+std+' kVA';}
+function cVD(){const l=g('vdl'),i=g('vdi'),a=Math.max(0.001,g('vda'));const e=(35.6*l*i)/(1000*a);document.getElementById('r-vdv').textContent=e.toFixed(2)+' V';document.getElementById('r-vdp').textContent='220V 기준 '+(e/220*100).toFixed(2)+'% 강하';}
+function cVD3(){const l=g('vdl3'),i=g('vdi3'),a=Math.max(0.001,g('vda3'));const e=(30.8*l*i)/(1000*a);document.getElementById('r-vd3v').textContent=e.toFixed(2)+' V';document.getElementById('r-vd3p').textContent='380V 기준 '+(e/380*100).toFixed(2)+'% 강하';}
+function cWire(){const k=+document.getElementById('wtype').value||35.6;const l=g('wl'),i=g('wi'),e=Math.max(0.001,g('we'));const aCalc=(k*l*i)/(1000*e);const stds=[1.5,2.5,4,6,10,16,25,35,50,70,95,120,150,185,240];const std=stds.find(s=>s>=aCalc)||stds[stds.length-1];document.getElementById('r-wire').textContent=aCalc.toFixed(1)+' mm²';document.getElementById('r-wire-std').textContent='→ 표준 규격: '+std+' mm² 선정';}
+
+/* ── 용어집 ── */
+const GLOSS=[
+  {a:'VCB',k:'진공차단기',e:'Vacuum Circuit Breaker',d:'진공 중 아크 소호. 고압 단락전류 차단. 수변전설비 핵심 보호 기기.'},
+  {a:'DS',k:'단로기',e:'Disconnecting Switch',d:'무부하 상태에서만 조작 가능. 회로 분리용. VCB 개방 후 조작.'},
+  {a:'LBS',k:'부하개폐기',e:'Load Break Switch',d:'부하전류 개폐 가능. 단락전류 차단 불가. PF와 조합 사용.'},
+  {a:'ASS',k:'자동고장구분개폐기',e:'Auto Sectionalizing Switch',d:'선로 고장 시 자동으로 해당 구간 분리.'},
+  {a:'TR',k:'변압기',e:'Transformer',d:'22.9kV를 380V/220V로 강압. 몰드형/유입형 구분.'},
+  {a:'CT',k:'변류기',e:'Current Transformer',d:'대전류를 5A로 변환. 2차측 개방 절대 금지.'},
+  {a:'PT',k:'계기용 변압기',e:'Potential Transformer',d:'고전압을 110V로 변환. 2차측 단락 절대 금지.'},
+  {a:'MOF',k:'계기용 변압변류기',e:'Metering Out Fit',d:'CT+PT 일체형. 한전 전력량 계량 기준.'},
+  {a:'LA',k:'피뢰기',e:'Lightning Arrester',d:'낙뢰·서지 방전. ZnO 소자 사용.'},
+  {a:'SC',k:'전력용 콘덴서',e:'Static Capacitor',d:'진상 전류 공급으로 역률 개선.'},
+  {a:'SR',k:'직렬 리액터',e:'Series Reactor',d:'SC와 직렬로 설치. 고조파 억제.'},
+  {a:'OCR',k:'과전류 계전기',e:'Over Current Relay',d:'설정값 초과 전류 시 CB 트립. 단락·과부하 보호.'},
+  {a:'OCGR',k:'과전류 지락 계전기',e:'Over Current Ground Relay',d:'지락(누전) 발생 시 CB 트립. ZCT와 조합.'},
+  {a:'OVR',k:'과전압 계전기',e:'Over Voltage Relay',d:'이상 과전압 발생 시 동작. 계통 이상 검출.'},
+  {a:'UVR',k:'부족전압 계전기',e:'Under Voltage Relay',d:'전압 저하 시 동작. 전동기 보호.'},
+  {a:'ZCT',k:'영상변류기',e:'Zero phase Current Transformer',d:'지락 전류 검출. OCGR과 세트 사용.'},
+  {a:'MCCB',k:'배선차단기',e:'Molded Case Circuit Breaker',d:'저압 분기 보호. 과전류·단락 자동 차단.'},
+  {a:'ACB',k:'기중 차단기',e:'Air Circuit Breaker',d:'저압 주차단기. 공기 중 아크 소호.'},
+  {a:'EMS',k:'에너지 관리 시스템',e:'Energy Management System',d:'원격 전력 감시·제어. 스마트그리드 핵심.'},
+  {a:'GIS',k:'가스절연개폐장치',e:'Gas Insulated Switchgear',d:'SF6 가스 절연. 소형화·고신뢰성.'},
+  {a:'PF',k:'전력퓨즈',e:'Power Fuse',d:'단락전류 차단. 용단 후 교체 필요.'},
+  {a:'AS',k:'전류계 전환 스위치',e:'Ammeter Switch',d:'각 상 전류 선택 측정. 판넬 정면 설치.'},
+  {a:'VS',k:'전압계 전환 스위치',e:'Voltmeter Switch',d:'선간 전압 선택 측정. PT 2차측 연결.'},
+  {a:'APFR',k:'자동역률조정기',e:'Auto Power Factor Regulator',d:'역률 자동 제어. 콘덴서 자동 투입·개방.'},
+  {a:'ESS',k:'에너지 저장장치',e:'Energy Storage System',d:'심야 전력 저장, 피크 방전으로 전기요금 절감.'},
+  {a:'UPS',k:'무정전전원장치',e:'Uninterruptible Power Supply',d:'순간 정전 시 전력 공급 유지. 병원·데이터센터 필수.'},
+  {a:'PQ',k:'전력 품질',e:'Power Quality',d:'고조파·Sag·불평형 등 전력 품질 관련 지표.'},
+  {a:'LOTO',k:'잠금·표지 시스템',e:'Lock Out / Tag Out',d:'정전 작업 시 오조작 방지를 위한 잠금·표찰 절차.'},
+];
+function renderGloss(list){
+  document.getElementById('gloss-grid').innerHTML=list.map(g=>`<div class="gloss-item"><div class="gloss-abbr">${g.a}</div><div class="gloss-ko">${g.k}</div><div class="gloss-en">${g.e}</div><div class="gloss-desc">${g.d}</div></div>`).join('');
+}
+function filterGloss(){
+  const q=document.getElementById('gsearch').value.toLowerCase();
+  renderGloss(q?GLOSS.filter(g=>g.a.toLowerCase().includes(q)||g.k.includes(q)||g.e.toLowerCase().includes(q)||g.d.includes(q)):GLOSS);
+}
+renderGloss(GLOSS);
+
+/* ── 퀴즈 ── */
+const QS=[
+  {q:'수변전설비에서 무부하 상태에서만 조작 가능한 기기는?',opts:['VCB(진공차단기)','DS(단로기)','MCCB(배선차단기)','LA(피뢰기)'],ans:1,ex:'DS(단로기)는 전류가 흐르지 않는 무부하 상태에서만 조작 가능합니다. 부하 상태에서 조작 시 아크 사고가 발생합니다.'},
+  {q:'CT(변류기) 2차측을 개방하면 어떤 현상이 발생하는가?',opts:['전류가 흐르지 않는다','수천V 이상의 고전압이 발생한다','퓨즈가 용단된다','차단기가 트립된다'],ans:1,ex:'CT 2차측 개방 시 자속이 포화되어 2차 측에 수천V의 위험한 고전압이 발생합니다. 반드시 단락 상태를 유지해야 합니다.'},
+  {q:'역률이 90% 미만일 때 전기 요금은 어떻게 되는가?',opts:['할인된다','변화 없다','할증된다','면제된다'],ans:2,ex:'역률 90%가 기준이며, 미달 시 기본요금이 할증됩니다. 95% 이상이면 오히려 할인을 받을 수 있습니다.'},
+  {q:'변압기에서 \'탁탁\' 소리가 날 때 의미하는 것은?',opts:['냉각팬 고장','절연 파괴(아크) 전조 증상','오일 부족','볼트 이완'],ans:1,ex:'\'탁탁\' 소리는 내부 절연 파괴 또는 아크 발생의 전조 증상입니다. 즉시 정전 조치 후 점검이 필요합니다.'},
+  {q:'수전 설비에서 정전 작업 시 단로기(DS)는 언제 개방해야 하는가?',opts:['VCB 투입 후','VCB 개방 확인 후','부하 투입 전 아무 때나','한전 연락 후'],ans:1,ex:'정전 작업 순서: MCCB → ACB → VCB → DS 순으로 개방합니다. DS는 반드시 VCB 개방을 확인한 후 조작해야 합니다.'},
+  {q:'3상 전력 공식으로 올바른 것은?',opts:['P = V × I × cosθ','P = √3 × V × I × cosθ','P = 3 × V × I × cosθ','P = V × I / cosθ'],ans:1,ex:'3상 유효전력 = √3 × 선간전압(V) × 선전류(I) × 역률(cosθ)입니다. 단상은 V × I × cosθ입니다.'},
+  {q:'피뢰기(LA)의 주요 기능은?',opts:['역률을 개선한다','단락전류를 차단한다','낙뢰·서지 전압을 대지로 방전한다','전압을 강압한다'],ans:2,ex:'피뢰기(LA)는 낙뢰나 개폐 서지로 인한 이상 고전압을 대지로 방전시켜 변압기 등 기기를 보호합니다.'},
+  {q:'PF-CB형 수변전설비가 CB형보다 적합한 경우는?',opts:['1,000kVA 이상 대용량','정밀 보호 협조가 필요한 경우','300kVA 이하 소용량 경제형','24시간 운전 병원 설비'],ans:2,ex:'PF-CB형은 설비비가 낮아 300kVA 이하 소용량 수변전설비에 경제적입니다. 대용량이나 정밀 보호가 필요한 경우 CB형을 사용합니다.'},
+  {q:'보호 협조(선택성)의 핵심 원칙은?',opts:['상위 차단기가 항상 먼저 동작','사고에 가장 가까운 차단기가 먼저 동작','모든 차단기가 동시에 동작','가장 큰 차단기가 먼저 동작'],ans:1,ex:'보호 협조의 핵심은 선택성입니다. 사고에 가장 가까운 보호 기기가 먼저 동작하고, 상위 기기는 하위 기기 미동작 시에만 동작합니다.'},
+  {q:'변압기 용량 선정 시 수요율의 정의는?',opts:['평균전력 ÷ 최대전력','최대수요전력 ÷ 설비용량','유효전력 ÷ 피상전력','각 설비 최대부하 합 ÷ 합성 최대부하'],ans:1,ex:'수요율 = 최대수요전력 ÷ 설비용량. 모든 부하가 동시에 사용되지 않는 비율을 나타냅니다.'},
+  {q:'전압강하 허용 기준(KEC)으로 올바른 것은?',opts:['간선 5% 이내, 분기 포함 10% 이내','간선 2% 이내, 분기 포함 3% 이내','간선 3% 이내, 분기 포함 5% 이내','간선 1% 이내, 분기 포함 2% 이내'],ans:1,ex:'KEC 기준: 저압 간선 2% 이내, 분기회로 포함 시 3% 이내로 전압강하를 유지해야 합니다.'},
+  {q:'SC(전력용 콘덴서)의 배부름(Swelling) 현상의 원인은?',opts:['과전압','과전류','고조파에 의한 과열','절연 파괴'],ans:2,ex:'고조파 전류가 콘덴서에 흘러 과열되면 케이스가 팽창하는 배부름(Swelling) 현상이 발생합니다. SR(직렬 리액터) 설치로 방지합니다.'},
+  {q:'절연저항 측정(메거링) 시 저압 설비의 합격 기준은?',opts:['0.01MΩ 이상','0.1MΩ 이상','1MΩ 이상','10MΩ 이상'],ans:1,ex:'KEC 기준 저압 설비 절연저항: 0.1MΩ 이상이어야 합격입니다. 측정 전 반드시 전원을 차단해야 합니다.'},
+  {q:'OCR 타임레버(Time Lever)의 역할은?',opts:['동작 전류 기준값 설정','차단기 투입 시간 설정','OCR 동작 지연 시간 설정','보호 구간 선택'],ans:2,ex:'타임레버는 OCR의 동작 지연 시간을 설정합니다. 상위 차단기와 보호 협조를 위해 하위 차단기보다 지연 시간을 길게 설정합니다.'},
+  {q:'다음 중 유입변압기에 반드시 설치해야 하는 것은?',opts:['방진 패드','방유제(오일 유출 방지턱)','내진 스토퍼','자동 소화기'],ans:1,ex:'유입변압기는 절연유(오일)를 사용하므로, 유출 시 화재·환경 오염을 방지하기 위해 방유제(방유턱) 설치가 법적으로 의무화되어 있습니다.'},
+  {q:'전기안전관리자 선임 의무가 발생하는 용량 기준은?',opts:['10kVA 초과','75kVA 초과','100kVA 초과','300kVA 초과'],ans:1,ex:'전기안전관리법상 용량 75kVA를 초과하는 자가용 전기설비는 전기안전관리자(전기기사 또는 산업기사)를 반드시 선임해야 합니다.'},
+  {q:'LOTO(잠금·표지) 절차를 적용해야 하는 상황은?',opts:['VCB 정상 투입 시','정전 작업 전 오조작 방지','전력량계 확인 시','역률 측정 시'],ans:1,ex:'LOTO(Lock Out/Tag Out)는 정전 작업 중 다른 사람이 실수로 전원을 투입하는 오조작을 방지하기 위해 잠금장치와 표지를 부착하는 안전 절차입니다.'},
+  {q:'3상 불평형률 허용 기준은?',opts:['1% 이내','3% 이내','5% 이내','10% 이내'],ans:1,ex:'3상 전압 불평형률은 3% 이내를 유지해야 합니다. 초과 시 전동기 과열·소손 위험이 있습니다.'},
+  {q:'아몰퍼스(Amorphous) 변압기의 주요 장점은?',opts:['가격이 매우 저렴하다','무부하손(철손)을 80% 이상 절감한다','단락전류 차단 능력이 있다','소음이 없다'],ans:1,ex:'아몰퍼스(비정질) 철심 변압기는 일반 규소강판 변압기 대비 무부하손(철손)을 80% 이상 절감할 수 있는 고효율 변압기입니다.'},
+  {q:'지락 사고 발생 시 동작하는 계전기는?',opts:['OCR (과전류 계전기)','OVR (과전압 계전기)','OCGR (과전류 지락 계전기)','UVR (부족전압 계전기)'],ans:2,ex:'지락(누전) 사고는 ZCT(영상변류기)로 지락전류를 검출하고, OCGR(과전류 지락 계전기)이 동작하여 VCB를 트립시킵니다.'},
+];
+
+let qIdx=0,qScore=0,qAnswered=false;
+
+function initQ(){
+  qIdx=0;qScore=0;qAnswered=false;
+  document.getElementById('qcard').style.display='block';
+  document.getElementById('qscore').classList.remove('show');
+  renderPips();renderQ();
+}
+function renderPips(){
+  document.getElementById('qpips').innerHTML=QS.map((_,i)=>`<div class="qpip ${i<qIdx?'done':i===qIdx?'curr':''}" id="pip${i}"></div>`).join('');
+}
+function renderQ(){
+  const q=QS[qIdx];
+  document.getElementById('qnum').textContent=`문제 ${qIdx+1} / ${QS.length}`;
+  document.getElementById('qq').textContent=q.q;
+  document.getElementById('qopts').innerHTML=q.opts.map((o,i)=>`<button class="qopt" onclick="answer(${i})">${i+1}. ${o}</button>`).join('');
+  const fb=document.getElementById('qfb');fb.className='quiz-feedback';fb.textContent='';
+  document.getElementById('qnext').style.display='none';
+  document.getElementById('qscore-live').textContent=`맞은 개수: ${qScore}`;
+  qAnswered=false;
+}
+function answer(i){
+  if(qAnswered)return;qAnswered=true;
+  const q=QS[qIdx];const opts=document.querySelectorAll('.qopt');
+  opts.forEach((o,j)=>{o.disabled=true;if(j===q.ans)o.classList.add('correct');else if(j===i&&i!==q.ans)o.classList.add('wrong');});
+  const fb=document.getElementById('qfb');
+  if(i===q.ans){qScore++;fb.className='quiz-feedback show ok';fb.textContent='✓ 정답입니다! '+q.ex;}
+  else{const pip=document.getElementById('pip'+qIdx);if(pip)pip.classList.add('wrong');fb.className='quiz-feedback show fail';fb.textContent='✗ 오답입니다. '+q.ex;}
+  document.getElementById('qnext').style.display='block';
+  document.getElementById('qscore-live').textContent=`맞은 개수: ${qScore}`;
+  const cp=document.getElementById('pip'+qIdx);if(cp){cp.classList.remove('curr');if(i===q.ans)cp.classList.add('done');}
+}
+function nextQ(){
+  qIdx++;
+  if(qIdx>=QS.length){showScore();return;}
+  renderPips();renderQ();
+}
+function showScore(){
+  document.getElementById('qcard').style.display='none';
+  const sc=document.getElementById('qscore');sc.classList.add('show');
+  document.getElementById('qfinal').textContent=qScore;
+  const pct=Math.round(qScore/QS.length*100);
+  const g=document.getElementById('qgrade');
+  if(pct>=90)g.innerHTML='<span style="color:var(--grn)">🎉 우수 — 수변전설비 전문가 수준!</span>';
+  else if(pct>=70)g.innerHTML='<span style="color:var(--gold)">👍 양호 — 핵심 개념을 잘 이해하고 있습니다.</span>';
+  else g.innerHTML='<span style="color:var(--red)">📚 노력 필요 — 기기 가이드와 안전 섹션을 다시 복습하세요.</span>';
+}
+function restartQ(){initQ();}
+initQ();
+
+/* 모바일 메뉴 닫기 */
+document.querySelectorAll('.nav-links a').forEach(a=>{
+  a.addEventListener('click',()=>document.querySelector('.nav-links').classList.remove('open'));
+});
+</script>
+</body>
+</html>
