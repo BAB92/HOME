@@ -18,6 +18,8 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
 body{background:var(--bg);color:var(--tx);font-family:var(--fs);font-size:15px;line-height:1.7;overflow-x:hidden;}
+
+#bg-canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;}
 body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(56,189,248,.03)1px,transparent 1px),linear-gradient(90deg,rgba(56,189,248,.03)1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0;}
 
 /* NAV */
@@ -366,6 +368,7 @@ footer{background:var(--bg3);border-top:1px solid var(--b1);padding:1.8rem 2rem;
 </head>
 <body>
 
+<canvas id="bg-canvas"></canvas>
 <nav>
   <a href="#home" class="logo">수변전<span>설비</span></a>
   <button class="ntog" onclick="document.querySelector('.nav-links').classList.toggle('open')">&#9776;</button>
@@ -1872,6 +1875,130 @@ function cRated3(){
   document.getElementById('r-r3i').textContent=I.toFixed(1)+' A';
   document.getElementById('r-r3sub').textContent='안전율 1.25배 → '+I125.toFixed(1)+' A 이상 차단기 선정';
 }
+
+/* ── 배경 파티클 네트워크 ── */
+(function(){
+  var cv=document.getElementById('bg-canvas');
+  if(!cv)return;
+  var ctx=cv.getContext('2d');
+  var W,H,pts=[],mouse={x:-9999,y:-9999};
+  var COLS=['#38bdf8','#7dd3fc','#22d3ee'];
+  var ALPHA=0.12,DIST=120,SPEED=0.32;
+  var COUNT=28;
+
+  function resize(){
+    W=cv.width=window.innerWidth;
+    H=cv.height=window.innerHeight;
+  }
+
+  function mkpt(){
+    return{
+      x:Math.random()*W,
+      y:H+Math.random()*80,
+      r:0.8+Math.random()*1.5,
+      vy:-(0.1+Math.random()*0.22)*SPEED,
+      vx:(Math.random()-.5)*0.07*SPEED,
+      a:0.45+Math.random()*0.55,
+      life:0,
+      max:220+Math.random()*320,
+      col:COLS[Math.floor(Math.random()*3)]
+    };
+  }
+
+  function init(){
+    resize();
+    pts=[];
+    for(var i=0;i<COUNT;i++){
+      var p=mkpt();
+      p.y=Math.random()*H;
+      p.life=Math.floor(Math.random()*p.max);
+      pts.push(p);
+    }
+  }
+
+  function fade(p){
+    var lf=p.life/p.max;
+    return lf<0.12?lf/0.12:lf>0.78?(1-lf)/0.22:1;
+  }
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+
+    /* 연결선 */
+    for(var i=0;i<pts.length;i++){
+      for(var j=i+1;j<pts.length;j++){
+        var dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y;
+        var d=Math.sqrt(dx*dx+dy*dy);
+        if(d<DIST){
+          var str=(1-d/DIST)*Math.min(fade(pts[i]),fade(pts[j]))*ALPHA*0.55;
+          ctx.beginPath();
+          ctx.moveTo(pts[i].x,pts[i].y);
+          ctx.lineTo(pts[j].x,pts[j].y);
+          ctx.strokeStyle='#38bdf8';
+          ctx.globalAlpha=str;
+          ctx.lineWidth=0.65;
+          ctx.stroke();
+          ctx.globalAlpha=1;
+        }
+      }
+    }
+
+    /* 파티클 */
+    for(var k=0;k<pts.length;k++){
+      var p=pts[k];
+
+      /* 마우스 밀어내기 */
+      var mdx=p.x-mouse.x,mdy=p.y-mouse.y;
+      var md=Math.sqrt(mdx*mdx+mdy*mdy);
+      if(md<90&&md>0){
+        var f=(90-md)/90*0.35;
+        p.x+=mdx/md*f;
+        p.y+=mdy/md*f;
+      }
+
+      p.x+=p.vx;
+      p.y+=p.vy;
+      p.life++;
+
+      var fd=fade(p);
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle=p.col;
+      ctx.globalAlpha=ALPHA*p.a*fd;
+      ctx.fill();
+      ctx.globalAlpha=1;
+
+      if(p.life>=p.max||p.y<-10){
+        pts[k]=mkpt();
+      }
+    }
+
+    requestAnimationFrame(draw);
+  }
+
+  /* 모션 감소 설정 시 비활성화 */
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    cv.style.display='none';
+    return;
+  }
+
+  window.addEventListener('resize',function(){
+    resize();
+    pts.forEach(function(p){
+      if(p.x>W)p.x=Math.random()*W;
+    });
+  });
+
+  document.addEventListener('mousemove',function(e){
+    mouse.x=e.clientX;mouse.y=e.clientY;
+  });
+  document.addEventListener('mouseleave',function(){
+    mouse.x=-9999;mouse.y=-9999;
+  });
+
+  init();
+  draw();
+})();
 
 /* 모바일 메뉴 닫기 */
 document.querySelectorAll('.nav-links a').forEach(a=>{
