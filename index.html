@@ -360,7 +360,7 @@ footer{background:var(--bg3);border-top:1px solid var(--b1);padding:1.8rem 2rem;
 #scroll-bar{position:fixed;top:56px;left:0;width:0%;height:3px;background:linear-gradient(90deg,#f59e0b,#fbbf24,#fb923c);z-index:300;transition:width .08s linear;border-radius:0 2px 2px 0;}
 
 /* ── TOP 버튼 ── */
-#top-btn{position:fixed;bottom:28px;right:22px;width:44px;height:44px;border-radius:50%;background:var(--ac);color:#000000;border:none;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;z-index:300;opacity:0;transform:translateY(10px);transition:opacity .25s,transform .25s;box-shadow:0 2px 12px rgba(56,189,248,.35);}
+#top-btn{position:fixed;bottom:28px;right:22px;width:44px;height:44px;border-radius:50%;background:var(--ac);color:#000000;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:300;opacity:0;transform:translateY(10px);transition:opacity .25s,transform .25s;box-shadow:0 2px 12px rgba(56,189,248,.35);}
 #top-btn.show{opacity:1;transform:translateY(0);}
 #top-btn:hover{background:var(--ac2);}
 @media print{#scroll-bar,#top-btn{display:none!important;}}
@@ -413,14 +413,237 @@ footer{background:var(--bg3);border-top:1px solid var(--b1);padding:1.8rem 2rem;
   width:100%;
 }
 
+
+/* ── QR코드 (히어로) ── */
+.qr-wrap{display:flex;flex-direction:column;align-items:center;gap:10px;margin-top:2.5rem;}
+.qr-inner{background:#fff;border-radius:14px;padding:10px;box-shadow:0 0 0 1px rgba(245,158,11,.35),0 0 24px rgba(245,158,11,.18);display:inline-block;}
+.qr-inner canvas{display:block;}
+.qr-lbl{font-size:11px;color:var(--tx3);font-family:var(--fm);letter-spacing:2px;text-transform:uppercase;}
+.qr-url{font-size:11px;color:var(--tx2);font-family:var(--fm);}
+
+/* ── QR 팝업 ── */
+#qr-nav-btn{background:rgba(245,158,11,.15);border:1px solid rgba(245,158,11,.4);color:var(--ac);padding:4px 10px;border-radius:6px;cursor:pointer;font-size:12px;font-family:var(--fm);transition:all .2s;letter-spacing:1px;}
+#qr-nav-btn:hover{background:rgba(245,158,11,.25);}
+#qr-popup{position:fixed;top:64px;left:50%;transform:translateX(-50%) scale(.92);background:rgba(10,10,10,.96);border:1px solid rgba(245,158,11,.4);border-radius:16px;padding:1.4rem 1.6rem;z-index:500;text-align:center;backdrop-filter:blur(16px);box-shadow:0 8px 32px rgba(0,0,0,.6),0 0 0 1px rgba(245,158,11,.2);opacity:0;pointer-events:none;transition:opacity .22s,transform .22s;}
+#qr-popup.show{opacity:1;transform:translateX(-50%) scale(1);pointer-events:auto;}
+.qr-pop-lbl{font-size:11px;color:var(--tx3);font-family:var(--fm);letter-spacing:2px;margin-bottom:.7rem;}
+.qr-pop-inner{background:#fff;border-radius:10px;padding:8px;display:inline-block;box-shadow:0 0 0 1px rgba(245,158,11,.3),0 0 16px rgba(245,158,11,.15);}
+.qr-pop-url{font-size:11px;color:var(--tx2);font-family:var(--fm);margin-top:.7rem;}
+.qr-pop-close{margin-top:.8rem;display:block;font-size:11px;color:var(--tx3);cursor:pointer;}
+.qr-pop-close:hover{color:var(--ac);}
+
+/* ── 모바일 계통도 말풍선 팝업 ── */
+#dev-tooltip{
+  display:none;
+  position:fixed;
+  top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  width:calc(100% - 2rem);
+  max-width:340px;
+  background:rgba(10,10,10,.97);
+  border:1px solid rgba(245,158,11,.45);
+  border-radius:14px;
+  padding:1.1rem 1.2rem;
+  z-index:600;
+  box-shadow:0 8px 40px rgba(0,0,0,.7);
+  backdrop-filter:blur(16px);
+  animation:tooltipIn .18s ease;
+}
+#dev-tooltip.show{display:block;}
+@keyframes tooltipIn{from{opacity:0;transform:translate(-50%,-48%);}to{opacity:1;transform:translate(-50%,-50%);}}
+#dev-tooltip-overlay{
+  display:none;position:fixed;inset:0;z-index:590;
+  background:rgba(0,0,0,.45);
+}
+#dev-tooltip-overlay.show{display:block;}
+.tt-tag{display:inline-block;font-family:var(--fm);font-size:10px;padding:2px 9px;border-radius:4px;margin-bottom:8px;}
+.tt-name{font-size:14px;font-weight:700;margin-bottom:4px;}
+.tt-role{font-size:12px;font-weight:600;margin-bottom:8px;}
+.tt-detail{font-size:12px;color:var(--tx2);line-height:1.65;margin-bottom:9px;}
+.tt-tip{background:rgba(251,191,36,.07);border-left:3px solid var(--gold);padding:8px 10px;border-radius:0 6px 6px 0;font-size:11px;color:var(--gold);}
+.tt-tip strong{display:block;margin-bottom:2px;}
+.tt-close{position:absolute;top:10px;right:12px;background:none;border:none;color:var(--tx3);font-size:18px;cursor:pointer;line-height:1;padding:2px 6px;}
+.tt-close:hover{color:var(--ac);}
 /* RESPONSIVE */
+/* ── 태블릿 (860px) ── */
 @media(max-width:860px){
   .sgrid,.cgrid,.prot-grid{grid-template-columns:1fr;}
   .sldbody{flex-direction:column;}
   .sldinf{width:100%;border-left:none;border-top:1px solid var(--b1);position:static;max-height:none;}
   .nav-links{display:none;}
-  .nav-links.open{display:flex;flex-direction:column;position:absolute;top:56px;left:0;right:0;background:rgba(10,14,26,.98);border-bottom:1px solid var(--b1);padding:12px;z-index:199;}
+  .nav-links.open{display:flex;flex-direction:column;position:absolute;top:56px;left:0;right:0;background:rgba(0,0,0,.97);border-bottom:1px solid var(--b1);padding:12px;z-index:199;}
   .ntog{display:block;}
+  .layout-grid,.compare-grid{grid-template-columns:1fr;}
+  .case-grid,.fault-grid{grid-template-columns:1fr;}
+  .cmp-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+}
+
+/* ══ 모바일 전용 UX 개선 (560px 이하) ══ */
+@media(max-width:560px){
+  /* 기본 레이아웃 */
+  .sw{padding:56px 1rem 2rem;}
+  nav{padding:0 .9rem;height:52px;}
+  #scroll-bar{top:52px;}
+
+  /* 히어로 */
+  #home{padding:66px 1rem 2rem;}
+  .qr-inner canvas{width:110px!important;height:110px!important;}
+  .hero h1{font-size:clamp(30px,9.5vw,48px);letter-spacing:0;}
+  .hsub{font-size:13px;line-height:1.65;margin-bottom:1.5rem;}
+  .htag{font-size:9px;letter-spacing:1.5px;}
+  .hbtns{flex-direction:column;align-items:center;gap:8px;width:100%;}
+  .bp,.bo{width:100%;max-width:280px;text-align:center;padding:11px 0;font-size:14px;}
+  .hstats{gap:1.2rem;margin-top:1.8rem;}
+  .snum{font-size:24px;}
+  .slbl{font-size:10px;}
+
+  /* 네비게이션 */
+  .logo{font-size:14px;}
+  .ntog{padding:4px 8px;font-size:14px;}
+  .nav-links.open a{font-size:14px;padding:10px 14px;border-bottom:1px solid rgba(245,158,11,.1);}
+
+  /* 섹션 공통 */
+  .stit{font-size:clamp(20px,6.5vw,30px);letter-spacing:0;}
+  .sdesc{font-size:12px;}
+  .sh{padding:10px 12px;margin-bottom:1.4rem;border-radius:8px;}
+  .stag{font-size:9px;letter-spacing:2px;}
+
+  /* 카드 공통 */
+  .card,.dcard,.fcard,.scard,.ccard,.prot-card,.fault-card,.case-card,.tariff-card,.law-card,.gloss-item{
+    padding:.85rem;border-radius:10px;
+  }
+
+  /* 계통도 */
+  .sldtab{padding:8px 10px;font-size:11px;}
+  .sldtabs{gap:0;}
+  .sldinf{padding:.9rem;}
+  .dname{font-size:13px;margin-bottom:3px;}
+  .drole{font-size:11px;margin-bottom:7px;}
+  .ddet{font-size:11px;line-height:1.65;}
+  .dtip{font-size:11px;padding:7px 9px;}
+  .dabbr,.dev-abbr{font-size:12px;min-width:46px;padding:4px 6px;}
+  .dtitle{font-size:13px;}
+  .dsub{font-size:10px;}
+
+  /* 비교표 */
+  .cmp-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:8px;}
+  .cmp-table{font-size:11px;min-width:400px;}
+  .cmp-table th,.cmp-table td{padding:6px 8px;white-space:nowrap;}
+
+  /* 안전관리 */
+  .sgrid{grid-template-columns:1fr;}
+  .scard[style*="grid-column"]{grid-column:auto!important;}
+  .stitle{font-size:13px;margin-bottom:.7rem;}
+  .step-n,.sn{min-width:22px;height:22px;font-size:10px;}
+  .slist li{font-size:12px;padding:7px 0;}
+  .cklist li{font-size:12px;padding:5px 0;}
+  .safe-grid-3col>div>div{font-size:10px;margin-bottom:6px;}
+
+  /* 안전 점검 3열 → 1열 */
+  .scard div[style*="grid-template-columns:1fr 1fr 1fr"]{
+    grid-template-columns:1fr!important;
+  }
+
+  /* 보호협조 */
+  .prot-grid{grid-template-columns:1fr;}
+  .prot-step{padding:7px 9px;font-size:12px;}
+  .prot-num{min-width:22px;height:22px;font-size:10px;}
+  .prot-info{font-size:11px;padding:7px 9px;}
+
+  /* 고장진단 */
+  .fault-grid{grid-template-columns:1fr;}
+  .fhdr{gap:8px;margin-bottom:7px;}
+  .fico{width:28px;height:28px;font-size:14px;}
+  .ftit{font-size:13px;}
+  .frow{font-size:12px;}
+  .fact{font-size:11px;padding:6px 9px;}
+
+  /* 사고사례 */
+  .case-grid{grid-template-columns:1fr;}
+  .case-title{font-size:13px;}
+  .case-row{font-size:12px;gap:6px;}
+  .case-label{font-size:10px;min-width:32px;}
+
+  /* 계산기 */
+  .ctabs{gap:3px;}
+  .ctab{padding:5px 9px;font-size:11px;}
+  .ctitle{font-size:13px;}
+  .fml{font-size:11px;padding:5px 8px;}
+  .cfield label{font-size:11px;}
+  .cfield input,.cfield select{font-size:12px;padding:7px 8px;}
+  .cresval{font-size:17px;}
+  .creslbl{font-size:10px;}
+  .cressub{font-size:11px;}
+  .stdg{grid-template-columns:1fr 1fr 1fr;}
+  .stdi{padding:4px 7px;font-size:12px;}
+
+  /* 요금계약 */
+  .tariff-grid{grid-template-columns:1fr;}
+  .tariff-title{font-size:13px;}
+  .tariff-desc{font-size:12px;}
+  .tariff-row{font-size:11px;}
+
+  /* 용어집 */
+  .gloss-grid{grid-template-columns:1fr;}
+  .gloss-search{font-size:13px;padding:9px 12px;}
+  .gloss-term{font-size:13px;}
+  .gloss-en{font-size:10px;}
+  .gloss-def{font-size:12px;}
+
+  /* 법규 */
+  .law-grid{grid-template-columns:1fr;}
+  .law-title{font-size:13px;}
+  .law-list li{font-size:12px;padding:4px 0;}
+
+  /* 현장 점검표 */
+  .cl-meta{grid-template-columns:1fr;}
+  .cl-meta-field input{font-size:13px;}
+  .cl-toolbar{gap:5px;flex-wrap:wrap;}
+  .cl-btn{padding:6px 11px;font-size:12px;}
+  .cl-section-title{font-size:13px;}
+  .cl-label{font-size:12px;line-height:1.5;}
+  .cl-sub{font-size:10px;}
+  .cl-note-inp{width:90px;font-size:11px;}
+  .cl-item{padding:8px 10px;}
+
+  /* 배치기준 */
+  .layout-tabs{gap:4px;}
+  .layout-tab{padding:6px 9px;font-size:11px;}
+  .layout-grid{grid-template-columns:1fr;}
+  .layout-card-title{font-size:12px;}
+  .layout-row{font-size:11px;}
+  .layout-row span:last-child{font-size:12px;}
+  .layout-warn,.layout-tip{font-size:11px;padding:8px 10px;}
+
+  /* 퀴즈 */
+  .quiz-nav{gap:4px;}
+  .quiz-cat{padding:5px 10px;font-size:11px;}
+  .quiz-box{padding:1rem;}
+  .quiz-q{font-size:13px;margin-bottom:1rem;}
+  .quiz-opt{padding:9px 11px;font-size:12px;}
+  .quiz-explain{font-size:11px;}
+  .quiz-btn{padding:7px 14px;font-size:12px;}
+  .quiz-score-num{font-size:38px;}
+
+  /* 심벌테이블 */
+  .stbl{font-size:11px;}
+  .stbl th,.stbl td{padding:6px 8px;}
+
+  /* TOP 버튼 */
+  #top-btn{bottom:14px;right:12px;width:38px;height:38px;font-size:15px;}
+
+  /* SVG 계통도 가로 스크롤 */
+  .slddg{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+  .slddg svg{min-width:280px;}
+}
+
+/* ── 초소형 (380px 이하) ── */
+@media(max-width:380px){
+  .sw{padding:52px .75rem 1.5rem;}
+  .hero h1{font-size:26px;}
+  .stit{font-size:18px;}
+  .ctab{padding:5px 7px;font-size:10px;}
+  .dcard,.fcard,.scard,.ccard{padding:.75rem;}
 }
 @keyframes fu{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
 .fu{animation:fu .55s ease both;}
@@ -432,7 +655,8 @@ footer{background:var(--bg3);border-top:1px solid var(--b1);padding:1.8rem 2rem;
 <div id="scroll-bar"></div>
 <nav>
   <a href="#home" class="logo">수변전<span>설비</span></a>
-  <button class="ntog" onclick="document.querySelector('.nav-links').classList.toggle('open')">&#9776;</button>
+  <button id="qr-nav-btn" onclick="toggleQR()" aria-label="QR코드">&#9638; QR</button>
+  <button class="ntog" onclick="toggleNavMenu()">&#9776;</button>
   <div class="nav-links">
     <a href="#diagram">계통도</a>
     <a href="#devices">기기</a>
@@ -450,8 +674,22 @@ footer{background:var(--bg3);border-top:1px solid var(--b1);padding:1.8rem 2rem;
     <a href="#quiz">퀴즈</a>
   </div>
 </nav>
+<div id="qr-popup">
+  <div class="qr-pop-lbl">접속 QR CODE</div>
+  <div class="qr-pop-inner"><canvas id="qr-canvas" width="140" height="140"></canvas></div>
+  <div class="qr-pop-url">bab92.github.io/HOME</div>
+  <span class="qr-pop-close" onclick="toggleQR()">✕ 닫기</span>
+</div>
+
 
 <!-- HERO -->
+<div id="qr-popup">
+  <div class="qr-pop-lbl">접속 QR CODE</div>
+  <div class="qr-pop-inner"><canvas id="qr-canvas" width="140" height="140"></canvas></div>
+  <div class="qr-pop-url">bab92.github.io/HOME</div>
+  <span class="qr-pop-close" onclick="toggleQR()">✕ 닫기</span>
+</div>
+
 <section id="home">
 <div class="hglow"></div>
 <div class="fu hero">
@@ -1546,7 +1784,22 @@ footer{background:var(--bg3);border-top:1px solid var(--b1);padding:1.8rem 2rem;
 </div>
 </section>
 
-<button id="top-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="맨 위로">&#8679;</button>
+<button id="top-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="맨 위로">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="17 11 12 6 7 11"></polyline>
+    <polyline points="17 18 12 13 7 18"></polyline>
+  </svg>
+</button>
+<div id="dev-tooltip-overlay" onclick="closeTooltip()"></div>
+<div id="dev-tooltip">
+  <button class="tt-close" onclick="closeTooltip()">&#10005;</button>
+  <span class="tt-tag" id="tt-tag"></span>
+  <div class="tt-name" id="tt-name"></div>
+  <div class="tt-role" id="tt-role"></div>
+  <div class="tt-detail" id="tt-detail"></div>
+  <div class="tt-tip" id="tt-tip"></div>
+</div>
+
 <footer>
   <div class="flogo">수변전설비 학습 포털</div>
   <div>본 사이트는 학습 목적으로 제작되었습니다. 실제 작업 시 반드시 전문가와 상담하세요.</div>
@@ -1572,11 +1825,30 @@ const DEV={
 };
 
 function showDev(id){
-  const d=DEV[id];if(!d)return;
+  var d=DEV[id]; if(!d) return;
+  /* 모바일(860px 이하)이면 말풍선 팝업 */
+  if(window.innerWidth <= 860){
+    document.getElementById('tt-tag').textContent=d.tag;
+    document.getElementById('tt-tag').style.cssText='color:'+d.tc+';background:'+d.tb+';border:1px solid '+d.tc+'40;';
+    document.getElementById('tt-name').textContent=d.name;
+    document.getElementById('tt-role').textContent=d.role;
+    document.getElementById('tt-detail').textContent=d.detail;
+    document.getElementById('tt-tip').innerHTML='<strong>실무 팁</strong>'+d.tip;
+    document.getElementById('dev-tooltip').classList.add('show');
+    document.getElementById('dev-tooltip-overlay').classList.add('show');
+    document.body.style.overflow='hidden';
+    return;
+  }
+  /* PC: 기존 사이드 패널 */
   document.getElementById('sld-empty').style.display='none';
-  const el=document.getElementById('sld-detail');
+  var el=document.getElementById('sld-detail');
   el.style.display='block';
   el.innerHTML='<span class="dtag" style="color:'+d.tc+';background:'+d.tb+';border:1px solid '+d.tc+'40;">'+d.tag+'</span><div class="dname">'+d.name+'</div><div class="drole">'+d.role+'</div><div class="ddet">'+d.detail+'</div><div class="dtip"><strong>실무 팁</strong>'+d.tip+'</div>';
+}
+function closeTooltip(){
+  document.getElementById('dev-tooltip').classList.remove('show');
+  document.getElementById('dev-tooltip-overlay').classList.remove('show');
+  document.body.style.overflow='';
 }
 function sldTab(id,btn){
   document.querySelectorAll('.sldtab').forEach(t=>t.classList.remove('on'));
@@ -1894,45 +2166,40 @@ function cRated3(){
 }
 
 
-/* ── 배경 파티클: 별자리 + 빛나는 별 + 마우스 반응 ── */
+/* ── 배경 파티클: 빛나는 별 + 별똥별 + 마우스 반응 ── */
 (function(){
   var cv=document.getElementById('bg-canvas');
-  if(!cv)return;
+  if(!cv) return;
   if(window.matchMedia('(prefers-reduced-motion:reduce)').matches){cv.style.display='none';return;}
   var ctx=cv.getContext('2d');
   var W,H;
 
-  /* ── 색상 팔레트 ── */
   var STAR_COLS=['#f59e0b','#fbbf24','#fde68a','#ffffff','#fef3c7','#fed7aa','#fb923c'];
+  var STAR_COUNT=130;
+  var MOV_COUNT=25;
+  var MOUSE_R=110;
 
-  /* ── 파라미터 ── */
-  var STAR_COUNT = 130;   /* 정적 별 수 */
-  var MOV_COUNT  = 25;    /* 움직이는 파티클 수 */
-  var CONN_DIST  = 160;   /* 별자리 연결 거리 */
-  var FLASH_INT  = 2200;  /* 번쩍 연결선 간격(ms) */
-  var MOUSE_R    = 110;   /* 마우스 반응 반경 */
+  var stars=[];
+  var moving=[];
+  var meteors=[];   /* 별똥별 */
+  var mouse={x:-9999,y:-9999};
+  var lastMeteor=0;
+  var METEOR_INT=2800; /* 별똥별 간격(ms) */
 
-  var stars  = [];
-  var moving = [];
-  var flashes = [];   /* 번쩍 연결선 목록 */
-  var mouse  = {x:-9999,y:-9999};
-  var lastFlash = 0;
-
-  /* ── 정적 별 초기화 ── */
+  /* ── 정적 별 ── */
   function initStars(){
     stars=[];
     for(var i=0;i<STAR_COUNT;i++){
-      var big = Math.random()<0.06;
-      var mid = Math.random()<0.22;
+      var big=Math.random()<0.06, mid=Math.random()<0.22;
       stars.push({
         x:Math.random()*W, y:Math.random()*H,
-        r: big?2.6:mid?1.5:0.65,
-        baseA: big?1.0:mid?0.72:0.30,
+        r:big?2.6:mid?1.5:0.6,
+        baseA:big?1.0:mid?0.72:0.28,
         phase:Math.random()*Math.PI*2,
         speed:0.007+Math.random()*0.014,
         col:STAR_COLS[Math.floor(Math.random()*STAR_COLS.length)],
         glow:big||mid,
-        glowR: big?5.0:2.8
+        glowR:big?5.0:2.8
       });
     }
   }
@@ -1952,39 +2219,33 @@ function cRated3(){
       glow:Math.random()<0.5
     };
   }
-
   function initMoving(){
     moving=[];
     for(var i=0;i<MOV_COUNT;i++){
-      var p=mkpt();
-      p.y=Math.random()*H;
+      var p=mkpt(); p.y=Math.random()*H;
       p.life=Math.floor(Math.random()*p.max);
       moving.push(p);
     }
   }
 
-  /* ── 번쩍 연결선 생성 ── */
-  function spawnFlash(now){
-    /* 중간 이상 별들 중 랜덤으로 2~4개 골라 체인 연결 */
-    var bright = stars.filter(function(s){return s.r>=1.5;});
-    if(bright.length<2) return;
-    var count = 2 + Math.floor(Math.random()*3);
-    var picked = [];
-    var copy = bright.slice();
-    for(var i=0;i<count&&copy.length>0;i++){
-      var idx = Math.floor(Math.random()*copy.length);
-      picked.push(copy.splice(idx,1)[0]);
-    }
-    /* 거리 제한 없이 체인으로 연결 (최대 3선분) */
-    var segments=[];
-    for(var j=0;j<picked.length-1;j++){
-      segments.push({x1:picked[j].x,y1:picked[j].y,x2:picked[j+1].x,y2:picked[j+1].y});
-    }
-    flashes.push({
-      segs: segments,
-      born: now,
-      life: 600 + Math.random()*400,   /* 0.6~1.0초 지속 */
-      maxA: 0.55 + Math.random()*0.35
+  /* ── 별똥별 생성 ── */
+  function spawnMeteor(){
+    var angle=Math.PI/5+Math.random()*(Math.PI/6); /* 36~66도 아래로 */
+    var speed=6+Math.random()*6;
+    var len=80+Math.random()*120;
+    /* 화면 상단 ~ 우측 상단에서 시작 */
+    var startX=Math.random()*W;
+    var startY=-20;
+    meteors.push({
+      x:startX, y:startY,
+      vx:Math.cos(angle)*speed,
+      vy:Math.sin(angle)*speed,
+      len:len,
+      life:0,
+      max:Math.ceil((H+len)/speed)+10,
+      alpha:0.9+Math.random()*0.1,
+      width:1.5+Math.random()*1.2,
+      col:STAR_COLS[Math.floor(Math.random()*4)] /* 황금/앰버 계열만 */
     });
   }
 
@@ -1994,99 +2255,70 @@ function cRated3(){
     return lf<0.1?lf/0.1:lf>0.78?(1-lf)/0.22:1;
   }
 
-  /* ── 일반 연결선 (항상) ── */
-  function drawLines(pts){
-    for(var i=0;i<pts.length;i++){
-      for(var j=i+1;j<pts.length;j++){
-        var dx=pts[i].x-pts[j].x, dy=pts[i].y-pts[j].y;
-        var d=Math.sqrt(dx*dx+dy*dy);
-        if(d<CONN_DIST){
-          var str=(1-d/CONN_DIST)*0.18;
-          ctx.beginPath();
-          ctx.moveTo(pts[i].x,pts[i].y);
-          ctx.lineTo(pts[j].x,pts[j].y);
-          ctx.strokeStyle='rgba(245,158,11,'+str.toFixed(3)+')';
-          ctx.lineWidth=0.5;
-          ctx.stroke();
-        }
-      }
-    }
-  }
-
-  /* ── 번쩍 연결선 그리기 ── */
-  function drawFlashes(now){
-    flashes = flashes.filter(function(f){return now-f.born < f.life;});
-    flashes.forEach(function(f){
-      var prog=(now-f.born)/f.life;
-      /* fade-in 0~15%, hold 15~70%, fade-out 70~100% */
-      var a = prog<0.15 ? prog/0.15 : prog>0.70 ? (1-prog)/0.30 : 1.0;
-      a *= f.maxA;
-      f.segs.forEach(function(seg){
-        /* 중심 빛나는 선 */
-        ctx.beginPath();
-        ctx.moveTo(seg.x1,seg.y1);
-        ctx.lineTo(seg.x2,seg.y2);
-        ctx.strokeStyle='rgba(253,230,138,'+a.toFixed(3)+')';
-        ctx.lineWidth=1.2;
-        ctx.stroke();
-        /* 바깥쪽 글로우 */
-        ctx.beginPath();
-        ctx.moveTo(seg.x1,seg.y1);
-        ctx.lineTo(seg.x2,seg.y2);
-        ctx.strokeStyle='rgba(245,158,11,'+(a*0.35).toFixed(3)+')';
-        ctx.lineWidth=3.5;
-        ctx.stroke();
-      });
-    });
-  }
-
-  var lastTime=0;
   function draw(now){
-    now = now||0;
+    now=now||0;
     ctx.clearRect(0,0,W,H);
 
-    /* 번쩍 연결선 타이밍 */
-    if(now-lastFlash > FLASH_INT){
-      spawnFlash(now);
-      lastFlash = now + (Math.random()*800);
+    /* 별똥별 타이밍 */
+    if(now-lastMeteor>METEOR_INT){
+      var count=1+(Math.random()<0.25?1:0); /* 가끔 2개 동시 */
+      for(var m=0;m<count;m++) spawnMeteor();
+      lastMeteor=now+(Math.random()*600);
     }
 
     /* ── 정적 별 ── */
-    var connPts=[];
     for(var s=0;s<stars.length;s++){
       var st=stars[s];
       st.phase+=st.speed;
       var tw=0.5+0.5*Math.sin(st.phase);
       var curA=st.baseA*(0.6+0.4*tw);
-
       if(st.glow){
         var grd=ctx.createRadialGradient(st.x,st.y,0,st.x,st.y,st.r*st.glowR);
         grd.addColorStop(0,'rgba(245,158,11,'+(curA*0.55).toFixed(3)+')');
         grd.addColorStop(0.35,'rgba(251,191,36,'+(curA*0.22).toFixed(3)+')');
         grd.addColorStop(1,'rgba(0,0,0,0)');
-        ctx.beginPath();
-        ctx.arc(st.x,st.y,st.r*st.glowR,0,Math.PI*2);
-        ctx.fillStyle=grd;
-        ctx.fill();
+        ctx.beginPath(); ctx.arc(st.x,st.y,st.r*st.glowR,0,Math.PI*2);
+        ctx.fillStyle=grd; ctx.fill();
       }
-
-      ctx.beginPath();
-      ctx.arc(st.x,st.y,st.r,0,Math.PI*2);
-      ctx.fillStyle=st.col;
-      ctx.globalAlpha=curA;
-      ctx.fill();
-      ctx.globalAlpha=1;
-
-      if(st.r>=1.5) connPts.push({x:st.x,y:st.y});
+      ctx.beginPath(); ctx.arc(st.x,st.y,st.r,0,Math.PI*2);
+      ctx.fillStyle=st.col; ctx.globalAlpha=curA; ctx.fill(); ctx.globalAlpha=1;
     }
 
-    /* ── 항상 켜진 연결선 ── */
-    var allPts=connPts.concat(moving.filter(function(p){return p.r>1.2;}).map(function(p){return{x:p.x,y:p.y};}));
-    if(allPts.length>55) allPts=allPts.slice(0,55);
-    drawLines(allPts);
+    /* ── 별똥별 그리기 ── */
+    meteors=meteors.filter(function(mt){return mt.life<mt.max;});
+    for(var mi=0;mi<meteors.length;mi++){
+      var mt=meteors[mi];
+      mt.x+=mt.vx; mt.y+=mt.vy; mt.life++;
 
-    /* ── 번쩍 연결선 ── */
-    drawFlashes(now);
+      /* 꼬리 길이에 따라 fade */
+      var prog=mt.life/mt.max;
+      var a=prog<0.1?prog/0.1:prog>0.75?(1-prog)/0.25:1;
+      a*=mt.alpha;
+
+      /* 꼬리 (gradient) */
+      var tailX=mt.x-mt.vx/Math.sqrt(mt.vx*mt.vx+mt.vy*mt.vy)*mt.len;
+      var tailY=mt.y-mt.vy/Math.sqrt(mt.vx*mt.vx+mt.vy*mt.vy)*mt.len;
+      var grd2=ctx.createLinearGradient(tailX,tailY,mt.x,mt.y);
+      grd2.addColorStop(0,'rgba(0,0,0,0)');
+      grd2.addColorStop(0.6,'rgba(245,158,11,'+(a*0.25).toFixed(3)+')');
+      grd2.addColorStop(1,'rgba(253,230,138,'+a.toFixed(3)+')');
+
+      ctx.beginPath();
+      ctx.moveTo(tailX,tailY);
+      ctx.lineTo(mt.x,mt.y);
+      ctx.strokeStyle=grd2;
+      ctx.lineWidth=mt.width;
+      ctx.lineCap='round';
+      ctx.stroke();
+
+      /* 머리 빛 */
+      var hgrd=ctx.createRadialGradient(mt.x,mt.y,0,mt.x,mt.y,mt.width*3);
+      hgrd.addColorStop(0,'rgba(255,255,220,'+a.toFixed(3)+')');
+      hgrd.addColorStop(0.4,'rgba(251,191,36,'+(a*0.6).toFixed(3)+')');
+      hgrd.addColorStop(1,'rgba(0,0,0,0)');
+      ctx.beginPath(); ctx.arc(mt.x,mt.y,mt.width*3,0,Math.PI*2);
+      ctx.fillStyle=hgrd; ctx.fill();
+    }
 
     /* ── 움직이는 파티클 ── */
     for(var k=0;k<moving.length;k++){
@@ -2098,20 +2330,16 @@ function cRated3(){
       p.phase+=p.speed;
       var tw2=0.6+0.4*Math.sin(p.phase);
       var fd=ff(p);
-
       if(p.glow){
-        var grd2=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*3.2);
-        grd2.addColorStop(0,'rgba(245,158,11,'+(0.40*p.a*fd).toFixed(3)+')');
-        grd2.addColorStop(1,'rgba(0,0,0,0)');
+        var grd3=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*3.2);
+        grd3.addColorStop(0,'rgba(245,158,11,'+(0.40*p.a*fd).toFixed(3)+')');
+        grd3.addColorStop(1,'rgba(0,0,0,0)');
         ctx.beginPath(); ctx.arc(p.x,p.y,p.r*3.2,0,Math.PI*2);
-        ctx.fillStyle=grd2; ctx.fill();
+        ctx.fillStyle=grd3; ctx.fill();
       }
-
       ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-      ctx.fillStyle=p.col;
-      ctx.globalAlpha=0.55*p.a*fd*tw2;
+      ctx.fillStyle=p.col; ctx.globalAlpha=0.55*p.a*fd*tw2;
       ctx.fill(); ctx.globalAlpha=1;
-
       if(p.life>=p.max||p.y<-10) moving[k]=mkpt();
     }
 
@@ -2161,9 +2389,210 @@ function cRated3(){
   onScroll();
 })();
 
-/* 모바일 메뉴 닫기 */
-document.querySelectorAll('.nav-links a').forEach(a=>{
-  a.addEventListener('click',()=>document.querySelector('.nav-links').classList.remove('open'));
+/* ══ QR코드 자체 생성기 (외부 라이브러리 없음) ══ */
+(function(){
+  var QR_URL = 'http://bab92.github.io/HOME';
+
+  /* GF(256) 갈루아 필드 */
+  var EXP = new Uint8Array(512);
+  var LOG = new Uint8Array(256);
+  (function(){
+    var x = 1;
+    for(var i = 0; i < 255; i++){
+      EXP[i] = x; LOG[x] = i;
+      x <<= 1; if(x & 256) x ^= 285;
+    }
+    for(var i = 255; i < 512; i++) EXP[i] = EXP[i - 255];
+  })();
+
+  function gfMul(a, b){ return (a && b) ? EXP[LOG[a] + LOG[b]] : 0; }
+
+  function gfPoly(n){
+    var g = [1];
+    for(var i = 0; i < n; i++){
+      var ng = [0];
+      for(var j = 0; j < g.length; j++) ng.push(g[j]);
+      for(var j = 0; j < g.length; j++) ng[j] ^= gfMul(g[j], EXP[i]);
+      g = ng;
+    }
+    return g;
+  }
+
+  function gfRem(msg, gen){
+    var r = msg.slice();
+    for(var i = 0; i < msg.length; i++){
+      var c = r[i];
+      if(c) for(var j = 1; j < gen.length; j++) r[i + j] ^= gfMul(gen[j], c);
+    }
+    return r.slice(msg.length);
+  }
+
+  /* 버전/EC 파라미터 테이블 (바이트 모드, L 레벨) */
+  var VER_TABLE = [
+    null,
+    {cap:17, dc:19, ec:7},
+    {cap:32, dc:34, ec:10},
+    {cap:53, dc:55, ec:15},
+    {cap:78, dc:80, ec:20},
+    {cap:106,dc:108,ec:26},
+  ];
+
+  function makeQR(text){
+    var bytes = [];
+    for(var i = 0; i < text.length; i++) bytes.push(text.charCodeAt(i) & 0xFF);
+    var len = bytes.length;
+
+    /* 버전 선택 */
+    var ver = 1;
+    for(var v = 1; v <= 5; v++){
+      if(len <= VER_TABLE[v].cap){ ver = v; break; }
+    }
+    var param = VER_TABLE[ver];
+    var size  = ver * 4 + 17;
+
+    /* 비트 스트림 */
+    var bits = [];
+    function pushBits(val, n){ for(var i = n-1; i >= 0; i--) bits.push((val >> i) & 1); }
+    pushBits(4, 4);       /* 바이트 모드 */
+    pushBits(len, 8);
+    for(var i = 0; i < len; i++) pushBits(bytes[i], 8);
+    for(var i = 0; i < 4 && bits.length < param.dc * 8; i++) bits.push(0);
+    while(bits.length % 8) bits.push(0);
+    var pad = [236, 17], pi = 0;
+    while(bits.length < param.dc * 8){ pushBits(pad[pi++ % 2], 8); }
+
+    /* 데이터 바이트 */
+    var data = [];
+    for(var i = 0; i < bits.length; i += 8){
+      var b = 0;
+      for(var j = 0; j < 8; j++) b = (b << 1) | bits[i + j];
+      data.push(b);
+    }
+
+    /* EC 바이트 */
+    var gen = gfPoly(param.ec);
+    var ec  = gfRem(data.concat(new Array(param.ec).fill(0)), gen);
+    var all = data.concat(ec);
+
+    /* 모듈 행렬 */
+    var mod  = [];
+    var func = [];
+    for(var i = 0; i < size; i++){
+      mod.push(new Array(size).fill(null));
+      func.push(new Array(size).fill(false));
+    }
+
+    function set(r, c, v){
+      if(r >= 0 && r < size && c >= 0 && c < size){ mod[r][c] = v; func[r][c] = true; }
+    }
+
+    /* 파인더 패턴 */
+    function finder(tr, tc){
+      for(var dr = -1; dr <= 7; dr++){
+        for(var dc = -1; dc <= 7; dc++){
+          var v;
+          if(dr < 0 || dr > 6 || dc < 0 || dc > 6) v = 0;
+          else if(dr === 0 || dr === 6 || dc === 0 || dc === 6) v = 1;
+          else if(dr >= 2 && dr <= 4 && dc >= 2 && dc <= 4) v = 1;
+          else v = 0;
+          set(tr + dr, tc + dc, v);
+        }
+      }
+    }
+    finder(0, 0); finder(0, size - 7); finder(size - 7, 0);
+
+    /* 타이밍 */
+    for(var i = 8; i < size - 8; i++){
+      set(6, i, i % 2 === 0 ? 1 : 0);
+      set(i, 6, i % 2 === 0 ? 1 : 0);
+    }
+
+    /* 다크 모듈 */
+    set(4 * ver + 9, 8, 1);
+
+    /* 포맷 정보 (마스크 0, EC-L → 비트: 111011111000100) */
+    var FMT = [1,1,1,0,1,1,1,1,1,0,0,0,1,0,0];
+    var FP1 = [[8,0],[8,1],[8,2],[8,3],[8,4],[8,5],[8,7],[8,8],[7,8],[5,8],[4,8],[3,8],[2,8],[1,8],[0,8]];
+    var FP2 = [[8,size-1],[8,size-2],[8,size-3],[8,size-4],[8,size-5],[8,size-6],[8,size-7],
+               [size-8,8],[size-7,8],[size-6,8],[size-5,8],[size-4,8],[size-3,8],[size-2,8],[size-1,8]];
+    for(var i = 0; i < 15; i++){ set(FP1[i][0], FP1[i][1], FMT[i]); }
+    for(var i = 0; i < 15; i++){ set(FP2[i][0], FP2[i][1], FMT[i]); }
+
+    /* 데이터 배치 */
+    var allBits = [];
+    for(var i = 0; i < all.length; i++)
+      for(var j = 7; j >= 0; j--) allBits.push((all[i] >> j) & 1);
+
+    var bitIdx = 0, col = size - 1, goUp = true;
+    while(col >= 0){
+      if(col === 6) col--;
+      for(var row = 0; row < size; row++){
+        var r = goUp ? size - 1 - row : row;
+        for(var d = 0; d < 2; d++){
+          var c = col - d;
+          if(!func[r][c] && bitIdx < allBits.length){
+            var bit = allBits[bitIdx++];
+            mod[r][c] = ((r + c) % 2 === 0) ? (bit ^ 1) : bit; /* 마스크 0 */
+          }
+        }
+      }
+      goUp = !goUp; col -= 2;
+    }
+
+    return { mod: mod, size: size };
+  }
+
+  function drawQR(id, text){
+    var cv = document.getElementById(id);
+    if(!cv) return;
+    var qr;
+    try { qr = makeQR(text); } catch(e){ return; }
+    var S = qr.size, M = qr.mod;
+    var CW = cv.width, CH = cv.height;
+    var cell = Math.floor(Math.min(CW, CH) / (S + 4));
+    var ox = Math.floor((CW - cell * S) / 2);
+    var oy = Math.floor((CH - cell * S) / 2);
+    var ctx = cv.getContext('2d');
+    ctx.fillStyle = '#fff';
+    ctx.fillRect(0, 0, CW, CH);
+    for(var r = 0; r < S; r++){
+      for(var c = 0; c < S; c++){
+        ctx.fillStyle = M[r][c] ? '#000' : '#fff';
+        ctx.fillRect(ox + c * cell, oy + r * cell, cell, cell);
+      }
+    }
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', function(){ drawQR('qr-canvas', QR_URL); });
+  } else {
+    drawQR('qr-canvas', QR_URL);
+  }
+})();
+
+/* 모바일 메뉴 + QR 팝업 JS */
+function toggleNavMenu(){
+  var nl=document.querySelector('.nav-links');
+  var isOpen=nl.classList.toggle('open');
+  document.body.style.overflow=isOpen?'hidden':'';
+}
+document.querySelectorAll('.nav-links a').forEach(function(a){
+  a.addEventListener('click',function(){
+    document.querySelector('.nav-links').classList.remove('open');
+    document.body.style.overflow='';
+  });
+});
+function toggleQR(){
+  var p=document.getElementById('qr-popup');
+  p.classList.toggle('show');
+}
+/* QR 팝업 외부 클릭 닫기 */
+document.addEventListener('click',function(e){
+  var p=document.getElementById('qr-popup');
+  var btn=document.getElementById('qr-nav-btn');
+  if(p&&p.classList.contains('show')&&!p.contains(e.target)&&e.target!==btn){
+    p.classList.remove('show');
+  }
 });
 /* ── 스크롤 진행바 + TOP 버튼 ── */
 (function(){
