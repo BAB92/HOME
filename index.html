@@ -25,13 +25,21 @@ body{background:var(--bg);color:var(--tx);font-family:var(--fs);font-size:15px;l
 body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(245,158,11,.04)1px,transparent 1px),linear-gradient(90deg,rgba(245,158,11,.04)1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0;}
 
 /* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(10,14,26,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--b1);display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;height:56px;}
-.logo{font-size:17px;font-weight:900;letter-spacing:1px;color:var(--ac);text-decoration:none;}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(10,14,26,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--b1);display:flex;align-items:center;padding:0 1rem;height:56px;gap:8px;}
+.logo{font-size:17px;font-weight:900;letter-spacing:1px;color:var(--ac);text-decoration:none;flex-shrink:0;margin-right:auto;}
 .logo span{color:var(--gold);}
-.nav-links{display:flex;gap:1px;flex-wrap:wrap;}
+.nav-links{display:flex;gap:1px;flex-wrap:wrap;margin-right:8px;}
 .nav-links a{color:var(--tx2);text-decoration:none;padding:5px 9px;border-radius:6px;font-size:12px;font-weight:500;transition:all .18s;}
 .nav-links a:hover{color:var(--ac);background:rgba(245,158,11,.08);}
-.ntog{display:none;background:none;border:1px solid var(--b2);color:var(--ac);padding:5px 10px;border-radius:6px;cursor:pointer;font-size:16px;font-family:var(--fs);}
+/* 모바일 드로어 — nav 바깥 독립 fixed overlay */
+#mobile-menu{display:none;position:fixed;top:52px;left:0;right:0;bottom:0;background:rgba(0,0,0,.97);z-index:198;overflow-y:auto;padding:8px 0;}
+#mobile-menu.open{display:flex;flex-direction:column;}
+#mobile-menu a{color:var(--tx2);text-decoration:none;padding:14px 20px;font-size:15px;font-weight:500;border-bottom:1px solid rgba(245,158,11,.08);transition:color .15s,background .15s;-webkit-tap-highlight-color:transparent;}
+#mobile-menu a:hover,#mobile-menu a:active{color:var(--ac);background:rgba(245,158,11,.06);}
+.nav-btns{display:flex;align-items:center;gap:6px;flex-shrink:0;}
+.ntog{display:none;background:none;border:1px solid var(--b2);color:var(--ac);padding:6px 12px;border-radius:6px;cursor:pointer;font-size:18px;font-family:var(--fs);line-height:1;touch-action:manipulation;-webkit-tap-highlight-color:transparent;user-select:none;}
+.ntog:active{background:rgba(245,158,11,.15);}
+#qr-nav-btn{touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
 
 /* HERO */
 #home{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;padding:80px 2rem 2rem;text-align:center;background:transparent;}
@@ -470,9 +478,8 @@ footer{background:var(--bg3);border-top:1px solid var(--b1);padding:1.8rem 2rem;
   .sgrid,.cgrid,.prot-grid{grid-template-columns:1fr;}
   .sldbody{flex-direction:column;}
   .sldinf{width:100%;border-left:none;border-top:1px solid var(--b1);position:static;max-height:none;}
-  .nav-links{display:none;}
-  .nav-links.open{display:flex;flex-direction:column;position:absolute;top:56px;left:0;right:0;background:rgba(0,0,0,.97);border-bottom:1px solid var(--b1);padding:12px;z-index:199;}
-  .ntog{display:block;}
+  .nav-links{display:none!important;}
+  .ntog{display:block!important;}
   .layout-grid,.compare-grid{grid-template-columns:1fr;}
   .case-grid,.fault-grid{grid-template-columns:1fr;}
   .cmp-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;}
@@ -481,29 +488,31 @@ footer{background:var(--bg3);border-top:1px solid var(--b1);padding:1.8rem 2rem;
 /* ══ 모바일 전용 UX 개선 (560px 이하) ══ */
 @media(max-width:560px){
   /* 기본 레이아웃 */
-  .sw{padding:56px 1rem 2rem;}
-  nav{padding:0 .9rem;height:52px;}
+  body{font-size:14px;}
+  .sw{padding:56px .9rem 2rem;}
+  nav{padding:0 .75rem;height:52px;}
   #scroll-bar{top:52px;}
+  #mobile-menu{top:52px;}
 
   /* 히어로 */
-  #home{padding:66px 1rem 2rem;}
-  .qr-inner canvas{width:110px!important;height:110px!important;}
-  .hero h1{font-size:clamp(30px,9.5vw,48px);letter-spacing:0;}
+  #home{padding:66px .9rem 2rem;}
+  .hero h1{font-size:clamp(28px,9vw,44px);letter-spacing:0;}
   .hsub{font-size:13px;line-height:1.65;margin-bottom:1.5rem;}
   .htag{font-size:9px;letter-spacing:1.5px;}
   .hbtns{flex-direction:column;align-items:center;gap:8px;width:100%;}
-  .bp,.bo{width:100%;max-width:280px;text-align:center;padding:11px 0;font-size:14px;}
-  .hstats{gap:1.2rem;margin-top:1.8rem;}
-  .snum{font-size:24px;}
+  .bp,.bo{width:100%;max-width:100%;text-align:center;padding:13px 0;font-size:15px;}
+  .hstats{gap:1rem;margin-top:1.8rem;}
+  .snum{font-size:22px;}
   .slbl{font-size:10px;}
+  .hglow{width:100%;height:200px;}
 
   /* 네비게이션 */
-  .logo{font-size:14px;}
-  .ntog{padding:4px 8px;font-size:14px;}
-  .nav-links.open a{font-size:14px;padding:10px 14px;border-bottom:1px solid rgba(245,158,11,.1);}
+  .logo{font-size:13px;letter-spacing:0;}
+  .ntog{padding:5px 9px;font-size:15px;}
+  #qr-nav-btn{font-size:11px;padding:4px 8px;}
 
   /* 섹션 공통 */
-  .stit{font-size:clamp(20px,6.5vw,30px);letter-spacing:0;}
+  .stit{font-size:clamp(20px,6.5vw,28px);letter-spacing:0;}
   .sdesc{font-size:12px;}
   .sh{padding:10px 12px;margin-bottom:1.4rem;border-radius:8px;}
   .stag{font-size:9px;letter-spacing:2px;}
@@ -538,11 +547,7 @@ footer{background:var(--bg3);border-top:1px solid var(--b1);padding:1.8rem 2rem;
   .slist li{font-size:12px;padding:7px 0;}
   .cklist li{font-size:12px;padding:5px 0;}
   .safe-grid-3col>div>div{font-size:10px;margin-bottom:6px;}
-
-  /* 안전 점검 3열 → 1열 */
-  .scard div[style*="grid-template-columns:1fr 1fr 1fr"]{
-    grid-template-columns:1fr!important;
-  }
+  .scard div[style*="grid-template-columns:1fr 1fr 1fr"]{grid-template-columns:1fr!important;}
 
   /* 보호협조 */
   .prot-grid{grid-template-columns:1fr;}
@@ -567,10 +572,11 @@ footer{background:var(--bg3);border-top:1px solid var(--b1);padding:1.8rem 2rem;
   /* 계산기 */
   .ctabs{gap:3px;}
   .ctab{padding:5px 9px;font-size:11px;}
+  .cgrid{grid-template-columns:1fr;}
   .ctitle{font-size:13px;}
   .fml{font-size:11px;padding:5px 8px;}
   .cfield label{font-size:11px;}
-  .cfield input,.cfield select{font-size:12px;padding:7px 8px;}
+  .cfield input,.cfield select{font-size:13px;padding:9px 8px;}
   .cresval{font-size:17px;}
   .creslbl{font-size:10px;}
   .cressub{font-size:11px;}
@@ -620,7 +626,7 @@ footer{background:var(--bg3);border-top:1px solid var(--b1);padding:1.8rem 2rem;
   .quiz-cat{padding:5px 10px;font-size:11px;}
   .quiz-box{padding:1rem;}
   .quiz-q{font-size:13px;margin-bottom:1rem;}
-  .quiz-opt{padding:9px 11px;font-size:12px;}
+  .quiz-opt,.qopt{padding:10px 12px;font-size:13px;}
   .quiz-explain{font-size:11px;}
   .quiz-btn{padding:7px 14px;font-size:12px;}
   .quiz-score-num{font-size:38px;}
@@ -630,20 +636,26 @@ footer{background:var(--bg3);border-top:1px solid var(--b1);padding:1.8rem 2rem;
   .stbl th,.stbl td{padding:6px 8px;}
 
   /* TOP 버튼 */
-  #top-btn{bottom:14px;right:12px;width:38px;height:38px;font-size:15px;}
+  #top-btn{bottom:16px;right:14px;width:40px;height:40px;font-size:16px;}
 
   /* SVG 계통도 가로 스크롤 */
   .slddg{overflow-x:auto;-webkit-overflow-scrolling:touch;}
-  .slddg svg{min-width:280px;}
+  .slddg svg{min-width:300px;}
+
+  /* QR 팝업 모바일 */
+  #qr-popup{width:calc(100% - 2rem);max-width:280px;}
+  .qr-pop-inner #qr-canvas,.qr-pop-inner img{width:140px!important;height:140px!important;}
+  .qr-pop-inner #qr-canvas canvas,.qr-pop-inner #qr-canvas img{width:140px!important;height:140px!important;}
 }
 
 /* ── 초소형 (380px 이하) ── */
 @media(max-width:380px){
-  .sw{padding:52px .75rem 1.5rem;}
-  .hero h1{font-size:26px;}
+  .sw{padding:52px .65rem 1.5rem;}
+  .hero h1{font-size:24px;}
   .stit{font-size:18px;}
   .ctab{padding:5px 7px;font-size:10px;}
   .dcard,.fcard,.scard,.ccard{padding:.75rem;}
+  body{font-size:13px;}
 }
 @keyframes fu{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
 .fu{animation:fu .55s ease both;}
@@ -655,8 +667,6 @@ footer{background:var(--bg3);border-top:1px solid var(--b1);padding:1.8rem 2rem;
 <div id="scroll-bar"></div>
 <nav>
   <a href="#home" class="logo">수변전<span>설비</span></a>
-  <button id="qr-nav-btn" onclick="toggleQR()" aria-label="QR코드">&#9638; QR</button>
-  <button class="ntog" onclick="toggleNavMenu()">&#9776;</button>
   <div class="nav-links">
     <a href="#diagram">계통도</a>
     <a href="#devices">기기</a>
@@ -673,22 +683,38 @@ footer{background:var(--bg3);border-top:1px solid var(--b1);padding:1.8rem 2rem;
     <a href="#layout">배치기준</a>
     <a href="#quiz">퀴즈</a>
   </div>
+  <div class="nav-btns">
+    <button id="qr-nav-btn" onclick="toggleQR()" aria-label="QR코드">&#9638; QR</button>
+    <button class="ntog" id="nav-tog-btn" onclick="toggleNavMenu()">&#9776;</button>
+  </div>
 </nav>
 <div id="qr-popup">
   <div class="qr-pop-lbl">접속 QR CODE</div>
-  <div class="qr-pop-inner"><canvas id="qr-canvas" width="140" height="140"></canvas></div>
+  <div class="qr-pop-inner"><div id="qr-canvas" style="width:160px;height:160px;"></div></div>
   <div class="qr-pop-url">bab92.github.io/HOME</div>
   <span class="qr-pop-close" onclick="toggleQR()">✕ 닫기</span>
+</div>
+
+<!-- 모바일 드로어 메뉴 (nav 바깥 독립 오버레이) -->
+<div id="mobile-menu">
+  <a href="#diagram" onclick="closeMobileMenu()">계통도</a>
+  <a href="#devices" onclick="closeMobileMenu()">기기</a>
+  <a href="#compare" onclick="closeMobileMenu()">비교</a>
+  <a href="#protect" onclick="closeMobileMenu()">보호협조</a>
+  <a href="#safety" onclick="closeMobileMenu()">안전</a>
+  <a href="#fault" onclick="closeMobileMenu()">고장</a>
+  <a href="#cases" onclick="closeMobileMenu()">사례</a>
+  <a href="#calc" onclick="closeMobileMenu()">계산기</a>
+  <a href="#tariff" onclick="closeMobileMenu()">요금</a>
+  <a href="#glossary" onclick="closeMobileMenu()">용어집</a>
+  <a href="#regulation" onclick="closeMobileMenu()">법규</a>
+  <a href="#checklist" onclick="closeMobileMenu()">점검표</a>
+  <a href="#layout" onclick="closeMobileMenu()">배치기준</a>
+  <a href="#quiz" onclick="closeMobileMenu()">퀴즈</a>
 </div>
 
 
 <!-- HERO -->
-<div id="qr-popup">
-  <div class="qr-pop-lbl">접속 QR CODE</div>
-  <div class="qr-pop-inner"><canvas id="qr-canvas" width="140" height="140"></canvas></div>
-  <div class="qr-pop-url">bab92.github.io/HOME</div>
-  <span class="qr-pop-close" onclick="toggleQR()">✕ 닫기</span>
-</div>
 
 <section id="home">
 <div class="hglow"></div>
@@ -1828,12 +1854,17 @@ function showDev(id){
   var d=DEV[id]; if(!d) return;
   /* 모바일(860px 이하)이면 말풍선 팝업 */
   if(window.innerWidth <= 860){
-    document.getElementById('tt-tag').textContent=d.tag;
-    document.getElementById('tt-tag').style.cssText='color:'+d.tc+';background:'+d.tb+';border:1px solid '+d.tc+'40;';
+    var ttTag = document.getElementById('tt-tag');
+    ttTag.textContent=d.tag;
+    ttTag.style.color=d.tc;
+    ttTag.style.background=d.tb;
+    ttTag.style.border='1px solid '+d.tc+'40';
     document.getElementById('tt-name').textContent=d.name;
-    document.getElementById('tt-role').textContent=d.role;
+    var ttRole = document.getElementById('tt-role');
+    ttRole.textContent=d.role;
+    ttRole.style.color=d.tc;
     document.getElementById('tt-detail').textContent=d.detail;
-    document.getElementById('tt-tip').innerHTML='<strong>실무 팁</strong>'+d.tip;
+    document.getElementById('tt-tip').innerHTML='<strong>실무 팁</strong> '+d.tip;
     document.getElementById('dev-tooltip').classList.add('show');
     document.getElementById('dev-tooltip-overlay').classList.add('show');
     document.body.style.overflow='hidden';
@@ -2389,208 +2420,110 @@ function cRated3(){
   onScroll();
 })();
 
-/* ══ QR코드 자체 생성기 (외부 라이브러리 없음) ══ */
+/* ══ QR코드 생성 (qrcodejs 라이브러리 사용) ══ */
 (function(){
-  var QR_URL = 'http://bab92.github.io/HOME';
+  var QR_URL = 'https://bab92.github.io/HOME';
 
-  /* GF(256) 갈루아 필드 */
-  var EXP = new Uint8Array(512);
-  var LOG = new Uint8Array(256);
-  (function(){
-    var x = 1;
-    for(var i = 0; i < 255; i++){
-      EXP[i] = x; LOG[x] = i;
-      x <<= 1; if(x & 256) x ^= 285;
-    }
-    for(var i = 255; i < 512; i++) EXP[i] = EXP[i - 255];
-  })();
 
-  function gfMul(a, b){ return (a && b) ? EXP[LOG[a] + LOG[b]] : 0; }
-
-  function gfPoly(n){
-    var g = [1];
-    for(var i = 0; i < n; i++){
-      var ng = [0];
-      for(var j = 0; j < g.length; j++) ng.push(g[j]);
-      for(var j = 0; j < g.length; j++) ng[j] ^= gfMul(g[j], EXP[i]);
-      g = ng;
-    }
-    return g;
+  /* qrcodejs CDN 로드 후 렌더 */
+  function renderWithLib() {
+    var container = document.getElementById('qr-canvas');
+    if (!container) return;
+    /* canvas → div로 교체 (qrcodejs는 div에 렌더) */
+    var div = document.createElement('div');
+    div.id = 'qr-canvas';
+    div.style.cssText = 'width:160px;height:160px;';
+    container.parentNode.replaceChild(div, container);
+    try {
+      new QRCode(div, {
+        text: QR_URL,
+        width: 160,
+        height: 160,
+        colorDark: '#000000',
+        colorLight: '#ffffff',
+        correctLevel: QRCode.CorrectLevel.M
+      });
+    } catch(e) { imgFallback(); }
   }
 
-  function gfRem(msg, gen){
-    var r = msg.slice();
-    for(var i = 0; i < msg.length; i++){
-      var c = r[i];
-      if(c) for(var j = 1; j < gen.length; j++) r[i + j] ^= gfMul(gen[j], c);
-    }
-    return r.slice(msg.length);
+  function imgFallback() {
+    var el = document.getElementById('qr-canvas');
+    if (!el) return;
+    var img = document.createElement('img');
+    img.src = 'https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=' + encodeURIComponent(QR_URL);
+    img.alt = 'QR Code';
+    img.style.cssText = 'width:160px;height:160px;display:block;border-radius:6px;';
+    if (el.parentNode) el.parentNode.replaceChild(img, el);
   }
 
-  /* 버전/EC 파라미터 테이블 (바이트 모드, L 레벨) */
-  var VER_TABLE = [
-    null,
-    {cap:17, dc:19, ec:7},
-    {cap:32, dc:34, ec:10},
-    {cap:53, dc:55, ec:15},
-    {cap:78, dc:80, ec:20},
-    {cap:106,dc:108,ec:26},
-  ];
-
-  function makeQR(text){
-    var bytes = [];
-    for(var i = 0; i < text.length; i++) bytes.push(text.charCodeAt(i) & 0xFF);
-    var len = bytes.length;
-
-    /* 버전 선택 */
-    var ver = 1;
-    for(var v = 1; v <= 5; v++){
-      if(len <= VER_TABLE[v].cap){ ver = v; break; }
-    }
-    var param = VER_TABLE[ver];
-    var size  = ver * 4 + 17;
-
-    /* 비트 스트림 */
-    var bits = [];
-    function pushBits(val, n){ for(var i = n-1; i >= 0; i--) bits.push((val >> i) & 1); }
-    pushBits(4, 4);       /* 바이트 모드 */
-    pushBits(len, 8);
-    for(var i = 0; i < len; i++) pushBits(bytes[i], 8);
-    for(var i = 0; i < 4 && bits.length < param.dc * 8; i++) bits.push(0);
-    while(bits.length % 8) bits.push(0);
-    var pad = [236, 17], pi = 0;
-    while(bits.length < param.dc * 8){ pushBits(pad[pi++ % 2], 8); }
-
-    /* 데이터 바이트 */
-    var data = [];
-    for(var i = 0; i < bits.length; i += 8){
-      var b = 0;
-      for(var j = 0; j < 8; j++) b = (b << 1) | bits[i + j];
-      data.push(b);
-    }
-
-    /* EC 바이트 */
-    var gen = gfPoly(param.ec);
-    var ec  = gfRem(data.concat(new Array(param.ec).fill(0)), gen);
-    var all = data.concat(ec);
-
-    /* 모듈 행렬 */
-    var mod  = [];
-    var func = [];
-    for(var i = 0; i < size; i++){
-      mod.push(new Array(size).fill(null));
-      func.push(new Array(size).fill(false));
-    }
-
-    function set(r, c, v){
-      if(r >= 0 && r < size && c >= 0 && c < size){ mod[r][c] = v; func[r][c] = true; }
-    }
-
-    /* 파인더 패턴 */
-    function finder(tr, tc){
-      for(var dr = -1; dr <= 7; dr++){
-        for(var dc = -1; dc <= 7; dc++){
-          var v;
-          if(dr < 0 || dr > 6 || dc < 0 || dc > 6) v = 0;
-          else if(dr === 0 || dr === 6 || dc === 0 || dc === 6) v = 1;
-          else if(dr >= 2 && dr <= 4 && dc >= 2 && dc <= 4) v = 1;
-          else v = 0;
-          set(tr + dr, tc + dc, v);
-        }
-      }
-    }
-    finder(0, 0); finder(0, size - 7); finder(size - 7, 0);
-
-    /* 타이밍 */
-    for(var i = 8; i < size - 8; i++){
-      set(6, i, i % 2 === 0 ? 1 : 0);
-      set(i, 6, i % 2 === 0 ? 1 : 0);
-    }
-
-    /* 다크 모듈 */
-    set(4 * ver + 9, 8, 1);
-
-    /* 포맷 정보 (마스크 0, EC-L → 비트: 111011111000100) */
-    var FMT = [1,1,1,0,1,1,1,1,1,0,0,0,1,0,0];
-    var FP1 = [[8,0],[8,1],[8,2],[8,3],[8,4],[8,5],[8,7],[8,8],[7,8],[5,8],[4,8],[3,8],[2,8],[1,8],[0,8]];
-    var FP2 = [[8,size-1],[8,size-2],[8,size-3],[8,size-4],[8,size-5],[8,size-6],[8,size-7],
-               [size-8,8],[size-7,8],[size-6,8],[size-5,8],[size-4,8],[size-3,8],[size-2,8],[size-1,8]];
-    for(var i = 0; i < 15; i++){ set(FP1[i][0], FP1[i][1], FMT[i]); }
-    for(var i = 0; i < 15; i++){ set(FP2[i][0], FP2[i][1], FMT[i]); }
-
-    /* 데이터 배치 */
-    var allBits = [];
-    for(var i = 0; i < all.length; i++)
-      for(var j = 7; j >= 0; j--) allBits.push((all[i] >> j) & 1);
-
-    var bitIdx = 0, col = size - 1, goUp = true;
-    while(col >= 0){
-      if(col === 6) col--;
-      for(var row = 0; row < size; row++){
-        var r = goUp ? size - 1 - row : row;
-        for(var d = 0; d < 2; d++){
-          var c = col - d;
-          if(!func[r][c] && bitIdx < allBits.length){
-            var bit = allBits[bitIdx++];
-            mod[r][c] = ((r + c) % 2 === 0) ? (bit ^ 1) : bit; /* 마스크 0 */
-          }
-        }
-      }
-      goUp = !goUp; col -= 2;
-    }
-
-    return { mod: mod, size: size };
-  }
-
-  function drawQR(id, text){
-    var cv = document.getElementById(id);
-    if(!cv) return;
-    var qr;
-    try { qr = makeQR(text); } catch(e){ return; }
-    var S = qr.size, M = qr.mod;
-    var CW = cv.width, CH = cv.height;
-    var cell = Math.floor(Math.min(CW, CH) / (S + 4));
-    var ox = Math.floor((CW - cell * S) / 2);
-    var oy = Math.floor((CH - cell * S) / 2);
-    var ctx = cv.getContext('2d');
-    ctx.fillStyle = '#fff';
-    ctx.fillRect(0, 0, CW, CH);
-    for(var r = 0; r < S; r++){
-      for(var c = 0; c < S; c++){
-        ctx.fillStyle = M[r][c] ? '#000' : '#fff';
-        ctx.fillRect(ox + c * cell, oy + r * cell, cell, cell);
-      }
+  function initQR() {
+    if (window.QRCode) {
+      renderWithLib();
+    } else {
+      /* qrcodejs 동적 로드 */
+      var s = document.createElement('script');
+      s.src = 'https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js';
+      s.onload = function() { renderWithLib(); };
+      s.onerror = function() { imgFallback(); };
+      document.head.appendChild(s);
     }
   }
 
-  if(document.readyState === 'loading'){
-    document.addEventListener('DOMContentLoaded', function(){ drawQR('qr-canvas', QR_URL); });
+  /* drawQR 전역 노출 (toggleQR에서 재호출용) */
+  window.drawQR = function() { initQR(); };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initQR);
   } else {
-    drawQR('qr-canvas', QR_URL);
+    initQR();
   }
 })();
 
 /* 모바일 메뉴 + QR 팝업 JS */
 function toggleNavMenu(){
-  var nl=document.querySelector('.nav-links');
-  var isOpen=nl.classList.toggle('open');
-  document.body.style.overflow=isOpen?'hidden':'';
+  var mm = document.getElementById('mobile-menu');
+  var btn = document.getElementById('nav-tog-btn');
+  if(!mm) return;
+  var isOpen = mm.classList.toggle('open');
+  document.body.style.overflow = isOpen ? 'hidden' : '';
+  if(btn) btn.textContent = isOpen ? '✕' : '☰';
 }
-document.querySelectorAll('.nav-links a').forEach(function(a){
-  a.addEventListener('click',function(){
-    document.querySelector('.nav-links').classList.remove('open');
-    document.body.style.overflow='';
-  });
-});
+function closeMobileMenu(){
+  var mm = document.getElementById('mobile-menu');
+  var btn = document.getElementById('nav-tog-btn');
+  if(!mm) return;
+  mm.classList.remove('open');
+  document.body.style.overflow = '';
+  if(btn) btn.textContent = '☰';
+}
+/* 모바일 메뉴 외부 클릭 닫기 */
+document.addEventListener('click', function(e){
+  var mm = document.getElementById('mobile-menu');
+  var btn = document.getElementById('nav-tog-btn');
+  if(!mm || !mm.classList.contains('open')) return;
+  if(!mm.contains(e.target) && !btn.contains(e.target)){
+    closeMobileMenu();
+  }
+}, true);
 function toggleQR(){
-  var p=document.getElementById('qr-popup');
+  var p = document.getElementById('qr-popup');
+  if(!p) return;
+  var opening = !p.classList.contains('show');
   p.classList.toggle('show');
+  /* 팝업 열릴 때 QR 없으면 초기화 */
+  if(opening){
+    var el = document.getElementById('qr-canvas');
+    /* 아직 렌더 안 됐으면(비어있는 div/canvas) 재실행 */
+    if(el && !el.hasChildNodes() && el.tagName !== 'IMG'){
+      if(window.drawQR) window.drawQR();
+    }
+  }
 }
 /* QR 팝업 외부 클릭 닫기 */
-document.addEventListener('click',function(e){
-  var p=document.getElementById('qr-popup');
-  var btn=document.getElementById('qr-nav-btn');
-  if(p&&p.classList.contains('show')&&!p.contains(e.target)&&e.target!==btn){
+document.addEventListener('click', function(e){
+  var p = document.getElementById('qr-popup');
+  var btn = document.getElementById('qr-nav-btn');
+  if(p && p.classList.contains('show') && !p.contains(e.target) && e.target !== btn && !btn.contains(e.target)){
     p.classList.remove('show');
   }
 });
